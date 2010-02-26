@@ -196,6 +196,7 @@ function setEmitter() {
        pointer.botm_right_x = Util.getCoordxByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.botm_right_y = Util.getCoordyByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.genPoints();
+       pointer.color = Model.getCurrentBullet().imageIndex;
    }else{
        pointer.visible = false;
    }

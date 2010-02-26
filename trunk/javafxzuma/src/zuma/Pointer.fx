@@ -11,11 +11,24 @@ import javafx.scene.shape.Polygon;
 
 import javafx.scene.Node;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 /**
  * @author javatest
  */
 
 public class Pointer extends CustomNode{
+public var color : Integer = 0 on replace {
+    color0 = colors[color];
+};
+public var color0 : Paint = Color.BLACK;
+var colors : Color[] = [Color.BLUE,
+                        Color.GREEN,
+                        Color.PURPLE,
+                        Color.RED,
+                        Color.WHITE,
+                        Color.YELLOW];
 public var topx = 0.0;
 public var topy = 0.0;
 public var botm_left_x = 20.0;
@@ -25,6 +38,7 @@ public var botm_right_y = 20.0;
 public var point : Number[];
 var p = Polygon {
     points: bind point;
+    fill : bind color0;
 }
 override public function create(): Node {
     p;

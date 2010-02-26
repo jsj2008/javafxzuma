@@ -41,7 +41,7 @@ var v1 : Integer = 0;
 var text = Text {
     font: bind font
     content: bind t.toString()
-    stroke: bind colors[color_index]
+    fill: bind colors[color_index]
 }
 def scaleTransition = ScaleTransition {
         duration: 0.1s node: this
