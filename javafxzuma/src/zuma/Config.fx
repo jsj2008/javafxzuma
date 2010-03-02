@@ -45,3 +45,8 @@ public def SPECIAL_ACC_RATE = 3;
 public def SPECIAL_SLOW_RATE = 0;
 public def SPECIAL_BACK_RATE = -5;
 
+public def INITIAL_OFFSET = 6;
+public def NORMAL_OFFSET = 2;
+public def SHIFT_OFFSET = 2;
+public def BACK_OFFSET = 2;
+public def PAUSE_OFFSET = 3;

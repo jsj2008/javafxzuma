@@ -67,6 +67,7 @@ public-read var defaultRate = initial_rate on replace oldvalue{
         return false;
     });
 };
+public var generedoffset = Config.INITIAL_OFFSET;
 /*
 *  private functions ---------------------------------------------------------------------------------------------
 */
@@ -147,7 +148,7 @@ function backHitted(){
             return false;
         }
         var backhitBall = runningBalls.get(index - 1) as GameBall;
-        if(hitted(backhead as ScrollBall,backhitBall,4)){
+        if(hitted(backhead as ScrollBall,backhitBall,Config.BACK_OFFSET)){
                 playHitSound2();
                 return true;
         }
@@ -289,7 +290,7 @@ public function generBall() : ScrollBall{
                return null;
        }
        var dist = getDistance(ox,oy,x,y) - (Config.BALL_DIAMETER);
-       if((not (lastGenered == null)) and dist < -4){
+       if((not (lastGenered == null)) and dist < -generedoffset){
             return null;
        }
 //       Logger.log("ball generating ...");
@@ -617,7 +618,7 @@ public function stopShift():Void{
      var x = shifthead.translateX;
      var y = shifthead.translateY;
      //shiftting balls have reached the position.
-     if(getDistance(ox,oy,x,y) >= Config.BALL_DIAMETER){
+     if(getDistance(ox,oy,x,y) + Config.SHIFT_OFFSET > Config.BALL_DIAMETER){
             for(ball in runningBalls){
                 if((ball as ScrollBall).isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                     (ball as ScrollBall).unsetStatus(GameBall.SHIFT_RUNNING_STATE);
@@ -656,7 +657,7 @@ public function stopPause():Void{
         if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
                 return true;
         }
-        if(not Model.hitted(running as ScrollBall,paused,3)){
+        if(not Model.hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
                 return true;
         }
         if(firsthitted){
