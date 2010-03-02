@@ -57,6 +57,15 @@ public def specialEffectImage = [Image { url: "{__DIR__}images/BomEffect.png" }
                                  Image { url: "{__DIR__}images/BackwardsEffect.png" }
                                  Image { url: "{__DIR__}images/AccuracyEffect.png" }
                                  Image { url: "{__DIR__}images/SlowEffect.png" }];
+public def purgeffectImage = [Image { url: "{__DIR__}images/effect.000.png" }
+                                 Image { url: "{__DIR__}images/effect.001.png" }
+                                 Image { url: "{__DIR__}images/effect.002.png" }
+                                 Image { url: "{__DIR__}images/effect.003.png" }
+                                 Image { url: "{__DIR__}images/effect.004.png" }
+                                 Image { url: "{__DIR__}images/effect.005.png" }
+                                 Image { url: "{__DIR__}images/effect.006.png" }
+                                 Image { url: "{__DIR__}images/effect.007.png" }
+                                 Image { url: "{__DIR__}images/effect.008.png" }];
 public def scrollBallBlue = Image{url : "{__DIR__}images/baBallBlue.gif"};
 public def scrollBallGreen = Image{url : "{__DIR__}images/baBallGreen.gif"};
 public def patharray = MapLoader.getMap(Config.PATH_DATA_FILE);

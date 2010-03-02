@@ -23,6 +23,7 @@ public var initial_rate = Config.INITIAL_RATE;
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
 public-read var runningBalls : LinkedList = new LinkedList();
+public var runningbullets : LinkedList =  new LinkedList();
 //purge special ball listener
 public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 //score changed listener
@@ -32,7 +33,7 @@ public-read var ending = false;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
-var currentbullet : BulletBall;
+public var currentbullet : BulletBall;
 var bullet_stop = true;
 var generedBall = 0;
 var specialeffect_counter = 0 on replace {
@@ -684,19 +685,19 @@ public function stopBack():Void{
     }
 }
 public function dectectHit(){
-    for(bullet in Model.getBullets()){
-        if(not (bullet.state == GameBall.RUNNING_STATE)){
-                continue;
+        if(runningbullets.isEmpty()){
+                return;
         }
+        var bullet : BulletBall = runningbullets.peek() as BulletBall;
         for(ball in Model.runningBalls){
           if (Model.hitted(bullet,(ball as ScrollBall))) {
              bullet.pause();
              playHitSound();
              var newBall = bullet.hitmove(ball as ScrollBall,null);
+             runningbullets.poll();
              break;
            }
          }
-    }
 }
 public function shiftFrom(ball : GameBall){
     var index = (Model.runningBalls as LinkedList).indexOf(ball);

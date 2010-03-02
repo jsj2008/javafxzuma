@@ -58,7 +58,7 @@ var anim = PathTransition {
         path: AnimationPath.createFromPath(track)
         orientation: OrientationType.ORTHOGONAL_TO_TANGENT
         interpolator: Interpolator.LINEAR
-        duration: 300s
+        duration: 100s
         action : function () {
             timer.stop();
             print(count);
@@ -74,7 +74,7 @@ var timer = Timeline {
         repeatCount: Timeline.INDEFINITE
         keyFrames : [
             KeyFrame {
-                time: 0.1s
+                time: 0.001s
                 action: function () {
                 arraylist.add(animball.translateX);
                 arraylist.add(animball.translateY);
