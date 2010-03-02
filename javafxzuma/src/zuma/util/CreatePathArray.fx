@@ -74,7 +74,7 @@ var timer = Timeline {
         repeatCount: Timeline.INDEFINITE
         keyFrames : [
             KeyFrame {
-                time: 0.001s
+                time: 0.03s
                 action: function () {
                 arraylist.add(animball.translateX);
                 arraylist.add(animball.translateY);

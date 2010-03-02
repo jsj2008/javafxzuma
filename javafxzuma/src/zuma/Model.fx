@@ -30,6 +30,9 @@ public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 public-read var popScore : function(x : Number,y : Number,score : Integer,color : Integer);
 public-read var addScore : function(score : Integer);
 public-read var ending = false;
+var backcount = 0;
+var shiftcount = 0;
+var pausecount = 0;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
@@ -132,6 +135,9 @@ function applyToAll(action : function(ball:ScrollBall):Boolean){
     }
 }
 function backHitted(){
+        if(backcount == 0){
+                return false;
+        }
         var backhead = getHeadOfBacking();
         if(backhead == null){
              return false;
@@ -141,7 +147,7 @@ function backHitted(){
             return false;
         }
         var backhitBall = runningBalls.get(index - 1) as GameBall;
-        if(hitted(backhead as ScrollBall,backhitBall)){
+        if(hitted(backhead as ScrollBall,backhitBall,4)){
                 playHitSound2();
                 return true;
         }
@@ -168,6 +174,7 @@ function pauseRunningBall(fromBall : ScrollBall){
         if(counter >= index){
 //             Logger.log("back change rate : {counter} of runningballs sizeof {balls.size()}");
              tmpball.setRate(Config.PAUSED_STOPPED_RATE);
+             pausecount++;
         }
         counter ++;
     }
@@ -281,7 +288,8 @@ public function generBall() : ScrollBall{
        if(x < 0 and y < 0){
                return null;
        }
-       if((not (lastGenered == null)) and getDistance(ox,oy,x,y) < (Config.BALL_DIAMETER - 5)){
+       var dist = getDistance(ox,oy,x,y) - (Config.BALL_DIAMETER);
+       if((not (lastGenered == null)) and dist < -4){
             return null;
        }
 //       Logger.log("ball generating ...");
@@ -583,6 +591,9 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
     return true
 }
 public function stopShift():Void{
+     if(shiftcount == 0){
+             return;
+     }
      var shifthead : ScrollBall= getHeadOfShift() as ScrollBall;
      if(shifthead == null){
           return;
@@ -620,11 +631,12 @@ public function stopShift():Void{
                     }
                 }
             }
+         shiftcount--;
      }
 }
 public function stopPause():Void{
-    if(getHeadOfPaused() == null){
-            return;
+    if(pausecount == 0){
+        return;
     }
     var running;
     for(ball in runningBalls){
@@ -641,7 +653,10 @@ public function stopPause():Void{
         if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                 return true;
         }
-        if(not Model.hitted(running as ScrollBall,paused)){
+        if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
+                return true;
+        }
+        if(not Model.hitted(running as ScrollBall,paused,3)){
                 return true;
         }
         if(firsthitted){
@@ -649,6 +664,7 @@ public function stopPause():Void{
             firsthitted = false;
         }
         paused.setRate((running as ScrollBall).rate);
+        pausecount--;
         paused.unsetStatus(GameBall.PAUSED_STATE);
     });
 }
@@ -683,6 +699,7 @@ public function stopBack():Void{
 //        specialeffect_counter = 25;
 //        specialEffectBegin();
     }
+    backcount--;
 }
 public function dectectHit(){
         if(runningbullets.isEmpty()){
@@ -721,6 +738,7 @@ public function shiftFrom(ball : GameBall){
     for(aball in tmparray){
         (aball as ScrollBall).setRate(Config.SHIFT_RATE);
     }
+    shiftcount++;
 }
 public function restoreRateWhenAllPaused(){
       var count = 0;
@@ -760,6 +778,7 @@ public function backRunningBall(fromBall : ScrollBall){
     for(ball in tmparray){
         (ball as ScrollBall).setRate(Config.BACK_RATE);
     }
+    backcount++;
 }
 public function restoreAllRunning():Void{
     stopRollingSound();
