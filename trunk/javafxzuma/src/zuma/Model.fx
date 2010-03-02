@@ -745,24 +745,24 @@ public function shiftFrom(ball : GameBall){
     }
     shiftcount++;
 }
-public function restoreRateWhenAllPaused(){
-      var count = 0;
-      applyToPausedBall(function(ball : ScrollBall):Boolean{
-              count++;
-              return false;
-      });
-      //TODO : what if there is a break between two paused sequeus
-      if((runningBalls.size()) == count){
-           applyToAll(function(ball : ScrollBall):Boolean{
-                ball.setRate(defaultRate);
-                ball.unsetStatus(GameBall.PAUSED_STATE);
-                ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
-                ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
-                return false;
-           });
-      }
-
-}
+//public function restoreRateWhenAllPaused(){
+//      var count = 0;
+//      applyToPausedBall(function(ball : ScrollBall):Boolean{
+//              count++;
+//              return false;
+//      });
+//      //TODO : what if there is a break between two paused sequeus
+//      if((runningBalls.size()) == count){
+//           applyToAll(function(ball : ScrollBall):Boolean{
+//                ball.setRate(defaultRate);
+//                ball.unsetStatus(GameBall.PAUSED_STATE);
+//                ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
+//                ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
+//                return false;
+//           });
+//      }
+//
+//}
 public function backRunningBall(fromBall : ScrollBall){
     var index = runningBalls.indexOf(fromBall);
     if(index < 0 or index == runningBalls.size()){
