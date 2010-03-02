@@ -47,10 +47,10 @@ var backgroundview = ImageView {
     }
     onKeyPressed: function( e: KeyEvent ):Void {
                 if(e.code == KeyCode.VK_UP){
-//                        ball.rate++;
+                        ball.setRate(ball.rate+1);
                 }
                 if(e.code == KeyCode.VK_DOWN){
-                        println(ball.anim1.isRunning());
+                        ball.setRate(ball.rate-1);
                 }
                 if(e.code == KeyCode.VK_ENTER){
                         ball.start();
