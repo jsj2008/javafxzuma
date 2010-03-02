@@ -652,10 +652,14 @@ public function stopPause():Void{
                 return true;
         }
         if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                return true;
+                paused.setRate(Config.SHIFT_RATE);
+                paused.unsetStatus(GameBall.PAUSED_STATE);
+                return false;
         }
         if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                return true;
+                paused.setRate(Config.BACK_RATE);
+                paused.unsetStatus(GameBall.PAUSED_STATE);
+                return false;
         }
         if(not Model.hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
                 return true;
