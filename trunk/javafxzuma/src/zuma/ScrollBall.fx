@@ -22,6 +22,9 @@ import zuma.components.SVGTransition;
 
 import zuma.util.Util;
 
+import zuma.components.ImagesPlayer;
+import zuma.Resources;
+
 /**
  * @author javatest
  */
@@ -157,9 +160,15 @@ var parTransition = ParallelTransition {
             this.scaleX = 1;
             this.scaleY = 1;
         }
-    }
+}
+public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 0.1s,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
 public function ScalingAndUnvisable(){
-        parTransition.playFromStart();
+        makeUnvisable();
+//        parTransition.playFromStart();
+effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
+effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
+effectplayer.opacity = 1.0;
+effectplayer.play();
 }
 public function show(){
     vis = true;

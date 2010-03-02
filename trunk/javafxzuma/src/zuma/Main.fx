@@ -65,12 +65,16 @@ var backgroundview = ImageView {
                 visible: true
                 onMousePressed: function( e: MouseEvent ):Void {
 //                    Logger.log("currentbullet is {Model.getCurrentBullet()}");
-                    Model.getCurrentBullet().dx = e.x - Config.BALL_DIAMETER/2;
-                    Model.getCurrentBullet().dy = e.y - Config.BALL_DIAMETER/2;
+                    Model.currentbullet.dx = e.x - Config.BALL_DIAMETER/2;
+                    Model.currentbullet.dy = e.y - Config.BALL_DIAMETER/2;
                     emitter.dx = e.x - Config.EMITTER_DIAMETER/2;
                     emitter.dy = e.y - Config.EMITTER_DIAMETER/2;
 //                    Logger.log("before send, bullet is at {Model.getCurrentBullet().translateX} {Model.getCurrentBullet().translateY}");
-                    Model.getCurrentBullet().translate();
+                    Model.currentbullet.translate();
+                    if(Model.runningbullets.size() >= 1){
+                            Model.runningbullets.poll();
+                    }
+                    Model.runningbullets.add(Model.currentbullet);
                     emitter.hitmove();
                     Model.setCurrentBullet(null);
 
@@ -150,12 +154,12 @@ def detector = Timeline {
                     if(Model.ended()){
                             door.close();
                     }
-                    Model.restoreRateWhenAllPaused();
+                    //TODO : performance issue
+                    //Model.restoreRateWhenAllPaused();
                     Model.stopShift();
                     Model.stopBack();
                     Model.stopPause();
                     Model.dectectHit();
-                    
                 }
             }
         ]
@@ -196,13 +200,13 @@ function setEmitter() {
        pointer.botm_right_x = Util.getCoordxByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.botm_right_y = Util.getCoordyByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.genPoints();
-       pointer.color = Model.getCurrentBullet().imageIndex;
+       pointer.color = Model.currentbullet.imageIndex;
    }else{
        pointer.visible = false;
    }
    var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   Model.getCurrentBullet().setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
+   Model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
 }
 function startgame(){
 //    Thread.setDefaultUncaughtExceptionHandler(eh);
@@ -216,6 +220,7 @@ function startgame(){
     while (Model.sizeofRecycled() < Config.PRE_CREATE_BALL){
          def ball0 = ScrollBall{};
          insert ball0 into group.content;
+         insert ball0.effectplayer into group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
          Model.recycleBall(ball0);

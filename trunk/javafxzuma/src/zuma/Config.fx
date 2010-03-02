@@ -35,7 +35,7 @@ public def SPECILA_PERCENTAGE = 10;
 public def MAX_BALL_NUM = 40;
 
 public def END_RATE : Float = 8;
-public def BACK_RATE : Float= -2;
+public def BACK_RATE : Float= -8;
 public def SHIFT_RATE :Float = 5;
 public def RUNNING_RATE = 1;
 public def INITIAL_RATE = 6;
