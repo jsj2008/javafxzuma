@@ -147,6 +147,7 @@ def detector = Timeline {
                                 Model.restoreAllRunning();
                                 Model.startBulletGenor();
                                 Model.setDefaultRate(Config.RUNNING_RATE);
+                                Model.generedoffset = Config.NORMAL_OFFSET;
                     }
                     if(Model.ending){
                             door.open();
