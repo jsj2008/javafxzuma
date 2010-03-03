@@ -36,7 +36,7 @@ var MAX_GIVEN = 5;
 public var fromIndex = 0;
 public var stopped = false;
 public var animball : Ball= AnimBall {
-        rate : bind rate
+        rate : bind rate with inverse
         rotate : -90
         ball_deameter : Config.BALL_DIAMETER
         smooth: true
@@ -109,24 +109,22 @@ public function clearStatus(){
     statusList =  [false,false,false,false,false,false,false];
 }
 public var anim1 = SVGTransition {
-        rate: bind rate
+        rate: bind rate with inverse
         node: this
         fromIndex : bind fromIndex
         //offsetX : bind offsetX
         //offsetY : bind offsetY
         pathArray : Resources.patharray
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
-//        action : atTheEndOfTransition
+        action : atTheEndOfTransition
 };
 public function atTheEndOfTransition(){
-        println("at the end of svg");
         if(rate < 0){
                  return;
         }
-//            if(Model.isInRunningQueue(this)){
-//                Model.endingRunning();
-//            }
-
+        if(Model.isInRunningQueue(this)){
+            Model.endingRunning();
+        }
 }
 var scaleTransition = ScaleTransition {
         duration: 0.5s node: this
@@ -204,12 +202,8 @@ public function pause(){
     //rotatetimeline.pause();
 }
 public function stop(){
-    setStatus(GameBall.STOPED_STATE);
     anim1.stop();
-    setStatus(GameBall.DEAD_STATE);
-    vis = false;
     Model.recycleBall(this);
-    Model.delfromRunning(this);
 }
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");

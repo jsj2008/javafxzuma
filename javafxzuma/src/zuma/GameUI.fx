@@ -90,6 +90,11 @@ var backgroundview = ImageView {
                                     (ball as ScrollBall).debuginfo();
                             }
                             println("default rate is {Model.defaultRate}");
+                            if(detector.paused){
+                                    detector.play();
+                            }else{
+                                    detector.pause();
+                            }
                     }
                 }
 }
@@ -153,10 +158,10 @@ function detect() {
                     Model.generedoffset = Config.NORMAL_OFFSET;
         }
         if(Model.ending){
-                door.open();
+            door.open();
         }
         if(Model.ended()){
-                door.close();
+            door.close();
         }
         //TODO : performance issue
         //Model.restoreRateWhenAllPaused();
@@ -247,8 +252,11 @@ override public function start(){
 }
 override public function stop(){
 //    Main.mainscene = null;
-    Model.detector.stop();
+    detector.stop();
     Main.mainscene.content = [];
+}
+override public function pause(){
+    detector.pause();
 }
 }
 

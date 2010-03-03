@@ -86,7 +86,7 @@ function rebuild(ball : ScrollBall){
     ball.scaleY = 1;
     ball.stopped = false;
     ball.clearStatus();
-    removeBallFromDetectThread(ball);
+    delfromRunning(ball);
     return ball;
 }
 function effectAction(effect : Integer):Void{
@@ -237,14 +237,6 @@ function getNextIndex(ball : ScrollBall){
      };
      return newindex;
 }
-function addBallToDetectThread(ball : ScrollBall){
-    detector.addTask(ball.animball as Schedulable, Config.MOVE_FREQUENCY);
-    detector.addTask(ball.anim1, Config.MOVE_FREQUENCY);
-}
-function removeBallFromDetectThread(ball : ScrollBall){
-    detector.deleteTask(ball.animball as Schedulable);
-    detector.deleteTask(ball.anim1);
-}
 /*
 * play sound functions ---------------------------------------------------------------
 */
@@ -320,14 +312,16 @@ public function generBall() : ScrollBall{
        Model.addtoRunningTail(lastGenered);
        lastGenered.makeVisable();
        lastGenered.rate = (defaultRate);
-       addBallToDetectThread(lastGenered);
        return  lastGenered;
 }
 public function endingRunning(){
+//    if(ending){
+//        return;
+//    }
     ending = true;
-    for(ball in runningBalls){
-        (ball as ScrollBall).rate = (Config.END_RATE);
-    }
+//    for(ball in runningBalls){
+//        (ball as ScrollBall).rate = (Config.END_RATE);
+//    }
 }
 public function ended(){
     if(sizeofRunning() == 0){
@@ -367,7 +361,6 @@ public function getNextBall(ball : ScrollBall){
      newball.fromIndex = newindex;
      newball.translateX = tmpx;
      newball.translateY = tmpy;
-     addBallToDetectThread(newball);
      return newball;
 }
 public function getMinDegreesBall(degreens : Number):ScrollBall{
@@ -589,11 +582,7 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
         insert pball into temparray;
     }
     for(pball in temparray){
-        Model.delfromRunning(pball);
         pball.stop();
-        pball.unsetStatus(GameBall.PAUSED_STATE);
-        pball.unsetStatus(GameBall.BACK_RUNNING_STATE);
-        pball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
     }
     if(hittedBall == null or backfromBall == null){
             return true;
