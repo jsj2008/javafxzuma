@@ -6,7 +6,6 @@
 
 package zuma.components;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import java.util.ArrayList;
@@ -20,8 +19,7 @@ import javafx.util.Math;
  * @author tzp
  */
 
-public class SVGTransition {
-public var rate : Number = 1;
+public class SVGTransition extends Schedulable{
 public var node : Node;
 public var pathArray : ArrayList;
 public var repeatCount : Float = 1;
@@ -35,83 +33,67 @@ public var action : function():Void;
 var stopped = false;
 var direct = 1;
 var count : Number= bind fromIndex*3;
-var timer = Timeline {
-        rate : bind setRate(rate)
-        repeatCount: Timeline.INDEFINITE;
-        keyFrames : [
-            KeyFrame {
-                time: bind 0.03s
-                action: function () {
-                   if(count < 0){
-                           return;
-                   }
-                   if(count >= pathArray.size()){
-                           if(repeatCount == Timeline.INDEFINITE){
-                                 count = fromIndex;
-                                 return;
-                           }
-                           if(repeatCount0 == 0){
-                                 count = -1;
-                                 stopped = true;
-                                 action();
-                                 return;
-                           }
-                           repeatCount --;
-                           count = fromIndex;
-                           return;
-                   }
-                   node.translateX = (pathArray.get(count) as Float) - offsetX;
-                   node.translateY = (pathArray.get(count+1) as Float)- offsetY;
-                   if(orientation == OrientationType.ORTHOGONAL_TO_TANGENT){
-                        node.rotate = (pathArray.get(count+2) as Float) +rotate as Float
-                   }
-                   count = count+3*direct;
-                }
-            }
-        ]
+public var rate : Integer = 0 on replace{
+    tick = 0;
+    if(rate == 0){
+            ontick = -1;
+            direct = 0;
+    }
+    if(rate > 0){
+            ontick = maxrate/rate;
+            direct = 1;
+    }
+    if(rate < 0){
+            ontick = maxrate/Math.abs(rate);
+            direct = -1;
+    }
 };
+override public function update():Void{
+   if(count >= pathArray.size()){
+           if(repeatCount == Timeline.INDEFINITE){
+                 count = fromIndex;
+                 return;
+           }
+           if(repeatCount0 == 0){
+                 count = -1;
+                 stopped = true;
+                 action();
+                 return;
+           }
+           repeatCount --;
+           count = fromIndex;
+           return;
+   }
+   node.translateX = (pathArray.get(count) as Float) - offsetX;
+   node.translateY = (pathArray.get(count+1) as Float)- offsetY;
+   if(orientation == OrientationType.ORTHOGONAL_TO_TANGENT){
+        node.rotate = (pathArray.get(count+2) as Float) +rotate as Float
+   }
+   count = count+3*direct;
+}
 public function play(){
     if(stopped){
         count =fromIndex*3;
-        timer.playFromStart();
         return;
     }
-    timer.play();
     stopped = false;
 }
 public function playFromStart(){
     if(stopped){
         count = 0;
-        timer.playFromStart();
     }
     count = 0;
-    timer.play();
     stopped = false;
 }
 public function pause(){
-    timer.pause();
+    rate = 0;
+//    timer.pause();
 }
 public function stop(){
     stopped = true;
-    timer.stop();
-}
-public function isRunning(){
-    return timer.running;
-}
-public function setRate(r : Double):Number{
-    if(r == 0){
-            direct = 0;
-            return 1;
-    }
-    if(r > 0){
-            direct = 1;
-            return r;
-    }
-    if(r < 0){
-            direct = -1;
-            return Math.abs(r);
-    }
-    return 1;
+    //TODO : why throw exectiopn here? if I set rate to 0
+//    rate = 0;
+//    timer.stop();
 }
 }
 

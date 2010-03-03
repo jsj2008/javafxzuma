@@ -13,18 +13,29 @@ import javafx.scene.shape.Circle;
 import javafx.scene.Node;
 
 import zuma.Config;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
+
+import javafx.util.Math;
 
 /**
  * @author javatest
  */
 
-public class AnimBall extends Ball{
+public class AnimBall extends Ball,Schedulable{
 public var ball_deameter : Float= 10;
 public-read var paused = false;
 var ajust = false;
-public var rate = 1.0;
+public var rate : Integer = 0 on replace {
+    tick = 0;
+    if(rate == 0){
+            ontick = -1;
+    }
+    if(rate > 0){
+            ontick = maxrate/rate;
+    }
+    if(rate < 0){
+            ontick = maxrate/Math.abs(rate);
+    }
+};
 var cy  = Circle {
                 centerX: ball_deameter/2 centerY: ball_deameter/2
                 radius: Config.BALL_DIAMETER/2
@@ -40,14 +51,6 @@ def imageview = ImageView {
         clip : cy
         cache : false
         opacity : bind opacity
-//        effect : DropShadow {
-//                offsetX: 10
-//                offsetY: 10
-//                color: Color.BLACK
-//                radius: 10
-//        }
-
-
 };
 var imy : Number = 0;
 var cyy : Number = 0;
@@ -56,43 +59,54 @@ var timer = Timeline {
         keyFrames : [
             KeyFrame {
                 time: bind 0.05s
-                action: function () {
-                    if(ajust){
-                        if(rate < 0){
-                            imageview.translateY = - ball_deameter/ratio + ball_deameter;
-                            cy.centerY = ball_deameter/ratio - ball_deameter/2;
-                        }else{
-                            imageview.translateY = 0;
-                            cy.centerY = ball_deameter/2;
-                        }
-                        ajust = false;
-                        return;
-                    }
-                    imy = imageview.translateY-ball_deameter*rate;
-                    cyy = cy.centerY+ball_deameter*rate;
-                    if(imy < -ball_deameter/ratio + ball_deameter
-                        or imy > ball_deameter or cyy < ball_deameter/2 or cyy > ball_deameter/ratio - ball_deameter/2){
-                        ajust  = true;
-                    }else{
-                        imageview.translateY=imy;
-                        cy.centerY=cyy;
-                    }
-                }
+                action: update
             }
         ]
 };
+override public function update():Void{
+    if(rate == 0){
+            return;
+    }
+    if(ajust){
+        if(rate < 0){
+            imageview.translateY = - ball_deameter/ratio + ball_deameter;
+            cy.centerY = ball_deameter/ratio - ball_deameter/2;
+        }else{
+            imageview.translateY = 0;
+            cy.centerY = ball_deameter/2;
+        }
+        ajust = false;
+        return;
+    }
+    imy = imageview.translateY-ball_deameter*rate;
+    cyy = cy.centerY+ball_deameter*rate;
+    if(imy < -ball_deameter/ratio + ball_deameter
+        or imy > ball_deameter or cyy < ball_deameter/2 or cyy > ball_deameter/ratio - ball_deameter/2){
+        ajust  = true;
+    }else{
+        imageview.translateY=imy;
+        cy.centerY=cyy;
+    }
+}
 override public function create(): Node {
        imageview
 }
 override public function start(){
-    timer.playFromStart();
+      if(rate == 0){
+              rate = 1;
+      }
+//    timer.playFromStart();
 }
 override public function pause(){
     paused = true;
-    timer.pause();
+    rate = 0;
+//    timer.pause();
 }
 override public function resume(){
+    if(rate == 0){
+         rate = 1;
+    }
     paused = false;
-    timer.play();
+//    timer.play();
 }
 }

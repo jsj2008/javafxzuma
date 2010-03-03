@@ -5,11 +5,9 @@
  */
 
 package zuma;
-import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Group;
-import javafx.animation.KeyFrame;
 import zuma.BulletBall;
 import zuma.Resources;
 import zuma.ScrollBall;
@@ -24,8 +22,13 @@ import javafx.scene.input.KeyEvent;
 
 import zuma.util.Util;
 import zuma.components.AnimText;
+import zuma.components.Schedulable;
 
 import javafx.util.Math;
+
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 /**
  * @author javatest
  */
@@ -131,34 +134,39 @@ def detector = Timeline {
         repeatCount: Timeline.INDEFINITE
         keyFrames : [
             KeyFrame {
-                time: Config.DETECTOR_FREQUENCY
-                action: function () {
-                    Model.specialEffectCount();
-                    Model.generBall();
-                    if(Model.sizeofRunning() == 10 and Model.defaultRate == Config.INITIAL_RATE){
-                                Model.restoreAllRunning();
-                                Model.startBulletGenor();
-                                Model.setDefaultRate(Config.RUNNING_RATE);
-                                Model.generedoffset = Config.NORMAL_OFFSET;
-                    }
-                    if(Model.ending){
-                            door.open();
-                    }
-                    if(Model.ended()){
-                            door.close();
-                    }
-                    //TODO : performance issue
-                    //Model.restoreRateWhenAllPaused();
-                    Model.stopShift();
-                    Model.stopBack();
-                    Model.stopPause();
-                    Model.dectectHit();
-                    if(Model.sizeofRunning() == 0){
-                        Main.gamestat = 0;
-                    }
-                }
+                time: bind Config.DETECTOR_FREQUENCY
+                action: detect
             }
         ]
+}
+function detect() {
+        for(ball in Model.runningBalls){
+            (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate();
+            (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate();
+        }
+        Model.specialEffectCount();
+        Model.generBall();
+        if(Model.sizeofRunning() == 10 and Model.defaultRate == Config.INITIAL_RATE){
+                    Model.setDefaultRate(Config.RUNNING_RATE);
+                    Model.restoreAllRunning();
+                    Model.startBulletGenor();
+                    Model.generedoffset = Config.NORMAL_OFFSET;
+        }
+        if(Model.ending){
+                door.open();
+        }
+        if(Model.ended()){
+                door.close();
+        }
+        //TODO : performance issue
+        //Model.restoreRateWhenAllPaused();
+        Model.stopShift();
+        Model.stopBack();
+        Model.stopPause();
+        Model.dectectHit();
+        if(Model.sizeofRunning() == 0){
+            Main.gamestat = 0;
+        }
 }
 var initial_rate = 1;
 function generBall() : Void{
@@ -166,7 +174,7 @@ function generBall() : Void{
        if(ball == null){
                return;
        }
-       ball.setRate(initial_rate);
+       ball.rate = (initial_rate);
 }
 function setEmitter() {
    var deg = Util.getDegrees(Config.EMITTER_X,Config.EMITTER_Y,curx,cury,100000000);
@@ -234,13 +242,12 @@ override public function start(){
     for(bullet in Model.getBullets()){
             bullet.rate = 1;
     }
-    println("gamestat");
     Main.mainscene.content = gamecontent;
     detector.play();
 }
 override public function stop(){
 //    Main.mainscene = null;
-    detector.stop();
+    Model.detector.stop();
     Main.mainscene.content = [];
 }
 }

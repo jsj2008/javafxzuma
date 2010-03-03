@@ -19,6 +19,10 @@ import zuma.GameBall;
 import zuma.util.Util;
 import zuma.SpecialScrollBall;
 
+import zuma.components.ScheduleTimer;
+
+import zuma.components.Schedulable;
+
 public var initial_rate = Config.INITIAL_RATE;
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
@@ -30,6 +34,7 @@ public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 public-read var popScore : function(x : Number,y : Number,score : Integer,color : Integer);
 public-read var addScore : function(score : Integer);
 public-read var ending = false;
+public def detector = ScheduleTimer {frequency : Config.DETECTOR_FREQUENCY};
 var backcount = 0;
 var shiftcount = 0;
 var pausecount = 0;
@@ -62,7 +67,7 @@ public-read var defaultRate = initial_rate on replace oldvalue{
 //            return false;
 //        }
         if(ball.rate == oldvalue){
-            ball.setRate(defaultRate);
+            ball.rate = (defaultRate);
         }
         return false;
     });
@@ -81,6 +86,7 @@ function rebuild(ball : ScrollBall){
     ball.scaleY = 1;
     ball.stopped = false;
     ball.clearStatus();
+    removeBallFromDetectThread(ball);
     return ball;
 }
 function effectAction(effect : Integer):Void{
@@ -174,7 +180,7 @@ function pauseRunningBall(fromBall : ScrollBall){
         tmpball = iter.next() as ScrollBall;
         if(counter >= index){
 //             Logger.log("back change rate : {counter} of runningballs sizeof {balls.size()}");
-             tmpball.setRate(Config.PAUSED_STOPPED_RATE);
+             tmpball.rate = (Config.PAUSED_STOPPED_RATE);
              pausecount++;
         }
         counter ++;
@@ -230,6 +236,14 @@ function getNextIndex(ball : ScrollBall){
         n++;
      };
      return newindex;
+}
+function addBallToDetectThread(ball : ScrollBall){
+    detector.addTask(ball.animball as Schedulable, Config.MOVE_FREQUENCY);
+    detector.addTask(ball.anim1, Config.MOVE_FREQUENCY);
+}
+function removeBallFromDetectThread(ball : ScrollBall){
+    detector.deleteTask(ball.animball as Schedulable);
+    detector.deleteTask(ball.anim1);
 }
 /*
 * play sound functions ---------------------------------------------------------------
@@ -305,13 +319,14 @@ public function generBall() : ScrollBall{
        generedBall++;
        Model.addtoRunningTail(lastGenered);
        lastGenered.makeVisable();
-       lastGenered.setRate(defaultRate);
+       lastGenered.rate = (defaultRate);
+       addBallToDetectThread(lastGenered);
        return  lastGenered;
 }
 public function endingRunning(){
     ending = true;
     for(ball in runningBalls){
-        (ball as ScrollBall).setRate(Config.END_RATE);
+        (ball as ScrollBall).rate = (Config.END_RATE);
     }
 }
 public function ended(){
@@ -352,6 +367,7 @@ public function getNextBall(ball : ScrollBall){
      newball.fromIndex = newindex;
      newball.translateX = tmpx;
      newball.translateY = tmpy;
+     addBallToDetectThread(newball);
      return newball;
 }
 public function getMinDegreesBall(degreens : Number):ScrollBall{
@@ -569,11 +585,12 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
         addScore(10);
         playPurgeSound();
         pball.ScalingAndUnvisable();
-        pball.setRate(Config.END_RATE);
+        pball.rate = (Config.END_RATE);
         insert pball into temparray;
     }
     for(pball in temparray){
         Model.delfromRunning(pball);
+        pball.stop();
         pball.unsetStatus(GameBall.PAUSED_STATE);
         pball.unsetStatus(GameBall.BACK_RUNNING_STATE);
         pball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
@@ -604,7 +621,7 @@ public function stopShift():Void{
      //when all balls are shifting,stop.
      if(indexOfShift <=0){
         applyToAll(function(ball : ScrollBall):Boolean{
-            ball.setRate(Config.RUNNING_RATE);
+            ball.rate = (Config.RUNNING_RATE);
             ball.unsetStatus(GameBall.PAUSED_STATE);
             ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
             ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
@@ -622,13 +639,13 @@ public function stopShift():Void{
             for(ball in runningBalls){
                 if((ball as ScrollBall).isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                     (ball as ScrollBall).unsetStatus(GameBall.SHIFT_RUNNING_STATE);
-                    (ball as ScrollBall).setRate(defaultRate);
+                    (ball as ScrollBall).rate = (defaultRate);
                     //restore the rate,backrunning has a higher priority
                     if((ball as ScrollBall).isInStatus(GameBall.PAUSED_STATE)){
-                        (ball as ScrollBall).setRate(Config.PAUSED_STOPPED_RATE);
+                        (ball as ScrollBall).rate = (Config.PAUSED_STOPPED_RATE);
                     }
                     if((ball as ScrollBall).isInStatus(GameBall.BACK_RUNNING_STATE)){
-                        (ball as ScrollBall).setRate(Config.BACK_RATE);
+                        (ball as ScrollBall).rate =(Config.BACK_RATE);
                     }
                 }
             }
@@ -652,12 +669,12 @@ public function stopPause():Void{
                 return true;
         }
         if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                paused.setRate(Config.SHIFT_RATE);
+                paused.rate = (Config.SHIFT_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
                 return false;
         }
         if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                paused.setRate(Config.BACK_RATE);
+                paused.rate = (Config.BACK_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
                 return false;
         }
@@ -668,7 +685,7 @@ public function stopPause():Void{
             playHitSound2();
             firsthitted = false;
         }
-        paused.setRate((running as ScrollBall).rate);
+        paused.rate = ((running as ScrollBall).rate);
         pausecount--;
         paused.unsetStatus(GameBall.PAUSED_STATE);
     });
@@ -684,13 +701,13 @@ public function stopBack():Void{
     for(ball in runningBalls){
          if((ball as ScrollBall).isInStatus(GameBall.BACK_RUNNING_STATE)){
             (ball as ScrollBall).unsetStatus(GameBall.BACK_RUNNING_STATE);
-            (ball as ScrollBall).setRate(defaultRate);
+            (ball as ScrollBall).rate = (defaultRate);
             //restore rate,shiftrunning has higher priority
             if((ball as ScrollBall).isInStatus(GameBall.PAUSED_STATE)){
-                (ball as ScrollBall).setRate(Config.PAUSED_STOPPED_RATE);
+                (ball as ScrollBall).rate = (Config.PAUSED_STOPPED_RATE);
             }
             if((ball as ScrollBall).isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                (ball as ScrollBall).setRate(Config.SHIFT_RATE);
+                (ball as ScrollBall).rate = (Config.SHIFT_RATE);
             }
          }
     }
@@ -741,7 +758,7 @@ public function shiftFrom(ball : GameBall){
         counter ++;
     }
     for(aball in tmparray){
-        (aball as ScrollBall).setRate(Config.SHIFT_RATE);
+        (aball as ScrollBall).rate = (Config.SHIFT_RATE);
     }
     shiftcount++;
 }
@@ -781,7 +798,7 @@ public function backRunningBall(fromBall : ScrollBall){
         counter ++;
     }
     for(ball in tmparray){
-        (ball as ScrollBall).setRate(Config.BACK_RATE);
+        (ball as ScrollBall).rate = (Config.BACK_RATE);
     }
     backcount++;
 }
@@ -797,7 +814,7 @@ public function restoreAllRunning():Void{
          if(ball.isInStatus(GameBall.BACK_RUNNING_STATE)){
                  return false;
          };
-        (ball as ScrollBall).setRate(defaultRate);
+        (ball as ScrollBall).rate = (defaultRate);
         return false;
     });
 }

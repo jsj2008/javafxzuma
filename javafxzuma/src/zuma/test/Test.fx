@@ -76,7 +76,7 @@ var backgroundview = ImageView {
                         image: background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
-                                shiftball.setRate(-2);
+                                shiftball.rate = (-2);
                                 println(shiftball.translateX);
                                 println(shiftball.translateY);
 
