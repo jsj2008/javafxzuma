@@ -119,7 +119,7 @@ public function hitmove(ball : ScrollBall,atEnd : function(newBall : ScrollBall)
         var newBall = Model.getNextBall(ball) as ScrollBall;
         newBall.start();
         newBall.imageIndex = imageIndex;
-        newBall.setRate(ball.currentRate());
+        newBall.rate = (ball.currentRate());
         Model.shiftFrom(ball);
         Model.addtoRunningAt(newBall, ball);
         if(ball.isInStatus(GameBall.PAUSED_STATE)){

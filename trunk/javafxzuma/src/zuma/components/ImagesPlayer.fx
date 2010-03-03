@@ -18,6 +18,8 @@ import javafx.scene.CustomNode;
 
 import javafx.scene.Node;
 
+import javafx.util.Math;
+
 /**
  * @author javatest
  */
@@ -30,8 +32,8 @@ public-read var paused = false;
 var ajust = false;
 var index = 0;
 var max = bind sizeof(images);
-public var rate = 0.05s;
 public var repeatCount = Timeline.INDEFINITE;
+public var rate = 0;
 def imageview = ImageView {
         fitWidth : bind width
         fitHeight : bind height
@@ -45,23 +47,29 @@ var timer = Timeline {
         repeatCount: repeatCount
         keyFrames : [
             KeyFrame {
-                time: bind rate
-                action: function () {
-                        if(index >= max){
-                            index = 0;
-                        }
-                        index++;
-                    }
+                time: 0.05s
+                action: update
                 }
         ]
 };
+public function update():Void{
+    if(index >= max){
+        index = 0;
+    }
+    index++;
+}
 public function play(){
+    if(rate == 0){
+        rate = 1;
+    }
     timer.playFromStart();
 }
 public function pause(){
+    rate = 0;
     timer.pause();
 }
 public function stop(){
+    rate = 0;
     timer.stop();
 }
 override public function create(): Node {

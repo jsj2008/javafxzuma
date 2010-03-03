@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
  * @author javatest
  */
 
-public class FadeBall extends Ball{
+public class FadeBall extends Ball,Schedulable{
 public var ball_deameter : Float= 10;
 public-read var paused = false;
 public var fade = true;
@@ -57,4 +57,5 @@ override public function resume(){
             fadeTransition.play();
         }
 }
+override public function update():Void{}
 }

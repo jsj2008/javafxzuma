@@ -14,7 +14,7 @@ import zuma.components.ImagesPlayer;
  * @author javatest
  */
 
-var player = ImagesPlayer{images: Resources.purgeffectImage,rate : 0.03s,opacity:1.0};
+var player = ImagesPlayer{images: Resources.purgeffectImage,rate : 1 ,opacity:1.0};
 var counter = 1;
 Stage {
     title: "Application title"

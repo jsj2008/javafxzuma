@@ -35,7 +35,7 @@ var MAX_CHADOWS = 10;
 var MAX_GIVEN = 5;
 public var fromIndex = 0;
 public var stopped = false;
-protected var animball : Ball= AnimBall {
+public var animball : Ball= AnimBall {
         rate : bind rate
         rotate : -90
         ball_deameter : Config.BALL_DIAMETER
@@ -47,19 +47,10 @@ protected var animball : Ball= AnimBall {
        // rotate: bind rotatedegrees
         opacity : bind opac
 };
-public-read var rate : Number = 1 on replace{
+public var rate : Integer = 1 on replace{
         if(rate == Config.RUNNING_RATE or rate == Config.SPECIAL_ACC_RATE or rate == Config.SPECIAL_SLOW_RATE or rate == Config.SPECIAL_BACK_RATE){
                 stopped = false;
                 setStatus(GameBall.RUNNING_STATE);
-//                if(isInStatus(GameBall.PAUSED_STATE)){
-//                   setRate(Config.PAUSED_STOPPED_RATE);
-//                }
-//                if(isInStatus(GameBall.BACK_RUNNING_STATE)){
-//                   setRate(Config.BACK_RATE);
-//                }
-//                if(isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-//                   setRate(Config.SHIFT_RATE);
-//                }
         }
         if(rate == Config.BACK_RATE){
                 stopped = false;
@@ -125,19 +116,17 @@ public var anim1 = SVGTransition {
         //offsetY : bind offsetY
         pathArray : Resources.patharray
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
-        action : atTheEndOfTransition
+//        action : atTheEndOfTransition
 };
 public function atTheEndOfTransition(){
+        println("at the end of svg");
         if(rate < 0){
                  return;
-            }
-            if(Model.isInRunningQueue(this)){
-                Model.endingRunning();
-            }
-            setStatus(GameBall.DEAD_STATE);
-            vis = false;
-            Model.recycleBall(this);
-            Model.delfromRunning(this);
+        }
+//            if(Model.isInRunningQueue(this)){
+//                Model.endingRunning();
+//            }
+
 }
 var scaleTransition = ScaleTransition {
         duration: 0.5s node: this
@@ -161,34 +150,31 @@ var parTransition = ParallelTransition {
             this.scaleY = 1;
         }
 }
-public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 0.1s,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
+public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 1,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
 public function ScalingAndUnvisable(){
-        makeUnvisable();
-//        parTransition.playFromStart();
-effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
-effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
-effectplayer.opacity = 1.0;
-effectplayer.play();
+    makeUnvisable();
+//    parTransition.playFromStart();
+    effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
+    effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
+    effectplayer.opacity = 1.0;
+    effectplayer.play();
 }
 public function show(){
     vis = true;
-}
-public function setRate(rate : Number){
-    this.rate = rate;
 }
 public function currentRate(){
     return this.rate;
 }
 function isRightPosition(ball : ScrollBall){
-        var bx = ball.translateX + Config.BALL_DIAMETER/2;
-        var by = ball.translateY + Config.BALL_DIAMETER/2;
-        var tx = this.translateX + Config.BALL_DIAMETER/2;
-        var ty = this.translateY + Config.BALL_DIAMETER/2;
-        var tmp = Math.sqrt(Util.square(bx-tx)+Util.square(by-ty));
-        if(tmp<Config.BALL_DIAMETER){
-            return true;
-        }
-        return false;
+    var bx = ball.translateX + Config.BALL_DIAMETER/2;
+    var by = ball.translateY + Config.BALL_DIAMETER/2;
+    var tx = this.translateX + Config.BALL_DIAMETER/2;
+    var ty = this.translateY + Config.BALL_DIAMETER/2;
+    var tmp = Math.sqrt(Util.square(bx-tx)+Util.square(by-ty));
+    if(tmp<Config.BALL_DIAMETER){
+        return true;
+    }
+    return false;
 }
 public function makeVisable(){
     this.vis = true;
@@ -197,29 +183,33 @@ public function makeUnvisable(){
     this.vis = false;
 }
 public function start(){
-setStatus(GameBall.RUNNING_STATE);
-unsetStatus(GameBall.DEAD_STATE);
-anim1.play();
-animball.start();
-//rotatetimeline.play();
+    setStatus(GameBall.RUNNING_STATE);
+    unsetStatus(GameBall.DEAD_STATE);
+    anim1.play();
+    animball.start();
+    //rotatetimeline.play();
 }
 public function restart(){
-setStatus(GameBall.RUNNING_STATE);
-unsetStatus(GameBall.DEAD_STATE);
-anim1.playFromStart();
-vis = true;
-animball.start();
-//rotatetimeline.play();
+    setStatus(GameBall.RUNNING_STATE);
+    unsetStatus(GameBall.DEAD_STATE);
+    anim1.playFromStart();
+    vis = true;
+    animball.start();
+    //rotatetimeline.play();
 }
 public function pause(){
-setStatus(GameBall.PAUSED_STATE);
-anim1.pause();
-animball.pause();
-//rotatetimeline.pause();
+    setStatus(GameBall.PAUSED_STATE);
+    anim1.pause();
+    animball.pause();
+    //rotatetimeline.pause();
 }
 public function stop(){
-setStatus(GameBall.STOPED_STATE);
-anim1.stop();
+    setStatus(GameBall.STOPED_STATE);
+    anim1.stop();
+    setStatus(GameBall.DEAD_STATE);
+    vis = false;
+    Model.recycleBall(this);
+    Model.delfromRunning(this);
 }
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");
