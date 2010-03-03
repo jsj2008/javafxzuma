@@ -17,4 +17,7 @@ override public function start(){
 override public function stop(){
 
 }
+override public function pause(){
+
+}
 }

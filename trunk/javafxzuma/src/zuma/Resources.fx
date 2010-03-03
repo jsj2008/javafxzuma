@@ -78,6 +78,15 @@ public def track = SVGPath {
 					Transform.affine(0.5764226, 0.0, 0.0, 0.6323865, 131.03493, 74.16948)
 				]
                             }
+public def effectimage = [Image { url: "{__DIR__}images/effect.000.png" }
+                               Image { url: "{__DIR__}images/effect.001.png" }
+                               Image { url: "{__DIR__}images/effect.002.png" }
+                               Image { url: "{__DIR__}images/effect.003.png" }
+                               Image { url: "{__DIR__}images/effect.004.png" }
+                               Image { url: "{__DIR__}images/effect.005.png" }
+                               Image { url: "{__DIR__}images/effect.006.png" }
+                               Image { url: "{__DIR__}images/effect.007.png" }
+                               Image { url: "{__DIR__}images/effect.008.png" }];
 public def ballclick_sound = "ball_hit.wav";
 public def ballclick_sound_2 = "ballclick1.wav";
 public def purge_sound = "chain1.wav";

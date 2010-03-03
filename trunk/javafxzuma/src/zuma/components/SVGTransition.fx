@@ -49,6 +49,9 @@ public var rate : Integer = 0 on replace{
     }
 };
 override public function update():Void{
+   if(stopped or count < 0){
+           return;
+   }
    if(count >= pathArray.size()){
            if(repeatCount == Timeline.INDEFINITE){
                  count = fromIndex;
@@ -91,8 +94,7 @@ public function pause(){
 }
 public function stop(){
     stopped = true;
-    //TODO : why throw exectiopn here? if I set rate to 0
-//    rate = 0;
+    rate = 0;
 //    timer.stop();
 }
 }
