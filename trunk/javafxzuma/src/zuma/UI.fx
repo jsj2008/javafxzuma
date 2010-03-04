@@ -15,4 +15,5 @@ public var ui = [];
 abstract public function start():Void;
 abstract public function stop():Void;
 abstract public function pause():Void;
+abstract public function resume():Void;
 }

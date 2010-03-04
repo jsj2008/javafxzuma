@@ -6,13 +6,11 @@
 
 package zuma;
 
-import java.lang.Thread;
-import java.lang.Throwable;
 
 /**
  * @author javatest
  */
 
-public class Level {
-
+abstract public class Level {
+public abstract function ready():Void;
 }

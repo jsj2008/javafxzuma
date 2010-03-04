@@ -122,7 +122,7 @@ public var anim1 = SVGTransition {
 };
 public function atTheEndOfTransition(){
         if(this.isInStatus(GameBall.RUNNING_STATE)){
-            Model.endingRunning();
+            Main.model.endingRunning();
         }
 }
 var scaleTransition = ScaleTransition {
@@ -201,7 +201,7 @@ public function pause(){
 }
 public function stop(){
     anim1.stop();
-    Model.recycleBall(this);
+    Main.model.recycleBall(this);
 }
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");

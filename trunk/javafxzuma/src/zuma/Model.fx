@@ -25,8 +25,7 @@ import java.util.ListIterator;
 
 import javafx.animation.Timeline;
 
-
-public var initial_rate = Config.INITIAL_RATE;
+public class Model {
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
 public-read var runningBalls : LinkedList = new LinkedList();
@@ -47,8 +46,8 @@ var bullets : BulletBall[]= [];
 public var currentbullet : BulletBall;
 var bullet_stop = true;
 var generedBall = 0;
-var specialeffect_counter = 0 on replace {
-    if(specialeffect_counter == 0){
+var specialeffect_counter = 0 on replace oldvalue{
+    if(oldvalue != 0 and specialeffect_counter == 0){
         //restore defauterate
         setDefaultRate(Config.RUNNING_RATE);
         println("special effect ended");
@@ -60,7 +59,7 @@ var purgesound = Sound{fileName:Resources.purge_sound};
 var rollingsound = Sound{fileName:Resources.rolling_sound};
 var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
 var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
-public-read var defaultRate = initial_rate on replace oldvalue{
+public-read var defaultRate = Config.INITIAL_RATE on replace oldvalue{
     applyToAll(function(ball : ScrollBall):Boolean{
 //        if(defaultRate == Config.SPECIAL_BACK_RATE){
 //            if(ball.isInStatus(GameBall.PAUSED_STATE)){
@@ -672,7 +671,7 @@ public function stopPause():Void{
                 pausecount--;
                 return false;
         }
-        if(not Model.hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
+        if(not hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
                 if((running as ScrollBall).overredBall(paused)){
                         println("paused ball status error !, will be stopped!");
                         (paused as ScrollBall).stop();
@@ -829,6 +828,4 @@ public function setDefaultRate(rate : Integer){
     println("default rate set to {rate}");
     defaultRate = rate;
 }
-public class Model {
-
 }

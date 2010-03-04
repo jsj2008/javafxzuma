@@ -20,4 +20,7 @@ override public function stop(){
 override public function pause(){
 
 }
+override public function resume(){
+
+}
 }

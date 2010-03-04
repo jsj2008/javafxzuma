@@ -11,7 +11,7 @@ import javafx.scene.Group;
 import zuma.BulletBall;
 import zuma.Resources;
 import zuma.ScrollBall;
-import zuma.Model;
+import zuma.Main.model;
 
 import javafx.animation.transition.FadeTransition;
 import javafx.animation.transition.ParallelTransition;
@@ -52,7 +52,7 @@ def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:30,translateY:70};
 var door = EndDoor{translateX : Config.END_DOOR_X, translateY : Config.END_DOOR_Y};
-var group: Group = Group {
+public-read var group: Group = Group {
             content: [
             emitter]};
 var backgroundview = ImageView {
@@ -62,19 +62,19 @@ var backgroundview = ImageView {
                 focusTraversable: true
                 visible: true
                 onMousePressed: function( e: MouseEvent ):Void {
-//                    Logger.log("currentbullet is {Model.getCurrentBullet()}");
-                    Model.currentbullet.dx = e.x - Config.BALL_DIAMETER/2;
-                    Model.currentbullet.dy = e.y - Config.BALL_DIAMETER/2;
+//                    Logger.log("currentbullet is {Main.model.getCurrentBullet()}");
+                    Main.model.currentbullet.dx = e.x - Config.BALL_DIAMETER/2;
+                    Main.model.currentbullet.dy = e.y - Config.BALL_DIAMETER/2;
                     emitter.dx = e.x - Config.EMITTER_DIAMETER/2;
                     emitter.dy = e.y - Config.EMITTER_DIAMETER/2;
-//                    Logger.log("before send, bullet is at {Model.getCurrentBullet().translateX} {Model.getCurrentBullet().translateY}");
-                    Model.currentbullet.translate();
-                    if(Model.runningbullets.size() >= 1){
-                            Model.runningbullets.poll();
+//                    Logger.log("before send, bullet is at {Main.model.getCurrentBullet().translateX} {Main.model.getCurrentBullet().translateY}");
+                    Main.model.currentbullet.translate();
+                    if(Main.model.runningbullets.size() >= 1){
+                            Main.model.runningbullets.poll();
                     }
-                    Model.runningbullets.add(Model.currentbullet);
+                    Main.model.runningbullets.add(Main.model.currentbullet);
                     emitter.hitmove();
-                    Model.setCurrentBullet(null);
+                    Main.model.setCurrentBullet(null);
 
                 }
                 onMouseMoved: function( e: MouseEvent ):Void {
@@ -87,13 +87,13 @@ var backgroundview = ImageView {
                     if(e.code == KeyCode.VK_ENTER){
                             println("--runningBalls--");
                             var count = 0;
-                            for(ball in Model.runningBalls){
+                            for(ball in Main.model.runningBalls){
                                     count++;
                                     println("ball {count} ---------------------");
                                     (ball as ScrollBall).debuginfo();
                             }
-                            println("default rate is {Model.defaultRate}");
-                            println("sizeof runnning {Model.sizeofRunning()}");
+                            println("default rate is {Main.model.defaultRate}");
+                            println("sizeof runnning {Main.model.sizeofRunning()}");
                             if(detector.paused){
                                     detector.play();
                             }else{
@@ -149,34 +149,34 @@ def detector = Timeline {
         ]
 }
 function detect() {
-        Model.specialEffectCount();
-        Model.generBall();
-        if(Model.sizeofRunning() == 10 and Model.defaultRate == Config.INITIAL_RATE){
-                    Model.setDefaultRate(Config.RUNNING_RATE);
-                    Model.restoreAllRunning();
-                    Model.startBulletGenor();
-                    Model.generedoffset = Config.NORMAL_OFFSET;
+        Main.model.specialEffectCount();
+        Main.model.generBall();
+        if(Main.model.sizeofRunning() == 10 and Main.model.defaultRate == Config.INITIAL_RATE){
+                    Main.model.setDefaultRate(Config.RUNNING_RATE);
+                    Main.model.restoreAllRunning();
+                    Main.model.startBulletGenor();
+                    Main.model.generedoffset = Config.NORMAL_OFFSET;
         }
-        if(Model.ending){
-//            Model.setDefaultRate(Config.END_RATE);
+        if(Main.model.ending){
+//            Main.model.setDefaultRate(Config.END_RATE);
             door.open();
         }
-        if(Model.ended()){
+        if(Main.model.ended()){
             door.close();
         }
         //TODO : performance issue
-        //Model.restoreRateWhenAllPaused();
-        Model.stopShift();
-        Model.stopBack();
-        Model.stopPause();
-        Model.dectectHitandMove();
-        if(Model.sizeofRunning() == 0){
+        //Main.model.restoreRateWhenAllPaused();
+        Main.model.stopShift();
+        Main.model.stopBack();
+        Main.model.stopPause();
+        Main.model.dectectHitandMove();
+        if(Main.model.sizeofRunning() == 0){
             Main.gamestat = 0;
         }
 }
 var initial_rate = 1;
 function generBall() : Void{
-       var ball = Model.generBall();
+       var ball = Main.model.generBall();
        if(ball == null){
                return;
        }
@@ -185,7 +185,7 @@ function generBall() : Void{
 function setEmitter() {
    var deg = Util.getDegrees(Config.EMITTER_X,Config.EMITTER_Y,curx,cury,100000000);
    degrees = deg -90;
-   var ball = Model.getMinDegreesBall(deg);
+   var ball = Main.model.getMinDegreesBall(deg);
    //set pointer
    if(ball != null){
        var cos = Math.cos(Math.toRadians(deg));
@@ -212,52 +212,35 @@ function setEmitter() {
        pointer.botm_right_x = Util.getCoordxByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.botm_right_y = Util.getCoordyByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.genPoints();
-       pointer.color = Model.currentbullet.imageIndex;
+       pointer.color = Main.model.currentbullet.imageIndex;
    }else{
        pointer.visible = false;
    }
    var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   Model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
+   Main.model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
 }
 public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
 override public function start(){
     //Thread.setDefaultUncaughtExceptionHandler(eh);//this can not be used in a applet
-    Model.setSpecialEffect(sepcialEffect);
-    Model.setScoreUpdator(popScore,addScore);
-    while (sizeof Model.getBullets() < Config.PRE_CREATE_BULLET){
-         def ball0 = BulletBall{group : group};
-         Model.addBullet(ball0);
-    }
-    while (Model.sizeofRecycled() < Config.PRE_CREATE_BALL){
-         def ball0 = ScrollBall{};
-         insert ball0 into group.content;
-         insert ball0.effectplayer into group.content;
-         ball0.setStatus(GameBall.DEAD_STATE);
-         ball0.vis = false;
-         Model.recycleBall(ball0);
-    }
-    while(Model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
-         def ball0 = SpecialScrollBall{};
-         insert ball0 into group.content;
-         ball0.setStatus(GameBall.DEAD_STATE);
-         ball0.vis = false;
-         Model.recycleSpecial(ball0);
-    }
-    for(bullet in Model.getBullets()){
-            bullet.rate = 1;
-    }
+    Main.currentlevel.ready();
+    Main.model.setSpecialEffect(sepcialEffect);
+    Main.model.setScoreUpdator(popScore,addScore);
     Main.mainscene.content = gamecontent;
-    Model.detectThread = detector;
+    Main.model.detectThread = detector;
     detector.play();
 }
 override public function stop(){
     detector.stop();
     Main.mainscene.content = [];
+    return;
 }
 override public function pause(){
     detector.pause();
+}
+override public function resume(){
+    detector.play();
 }
 }
