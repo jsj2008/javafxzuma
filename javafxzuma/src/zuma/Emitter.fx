@@ -49,7 +49,7 @@ public def moveback = TranslateTransition {
         duration: 0.1s
         repeatCount:1
         action : function(){
-            Model.setCurrentBullet();
+            Main.model.setCurrentBullet();
         }
 };
 def emitter = ImageView {

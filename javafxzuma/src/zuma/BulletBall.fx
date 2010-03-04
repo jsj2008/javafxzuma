@@ -63,8 +63,8 @@ init{
 }
 public def move = TranslateTransition {
         rate: bind rate
-        //toX: bind Model.getCoordx(tx,ty,dx,dy,Config.EMITTER_RANGE)-Config.BALL_DIAMETER/2 as Float
-        //toY: bind Model.getCoordy(tx,ty,dx,dy,Config.EMITTER_RANGE)-Config.BALL_DIAMETER/2 as Float
+        //toX: bind Main.model.getCoordx(tx,ty,dx,dy,Config.EMITTER_RANGE)-Config.BALL_DIAMETER/2 as Float
+        //toY: bind Main.model.getCoordy(tx,ty,dx,dy,Config.EMITTER_RANGE)-Config.BALL_DIAMETER/2 as Float
         toX: bind Util.getCoordx(tx,ty,dx,dy,Config.EMITTER_RANGE) as Float
         toY: bind Util.getCoordy(tx,ty,dx,dy,Config.EMITTER_RANGE) as Float
         node: this
@@ -90,7 +90,7 @@ public function translate(){
     state = RUNNING_STATE;
     this.toFront();
     move.playFromStart();
-    Model.playSendBulletSound();
+    Main.model.playSendBulletSound();
 }
 public function ready(){
     translateX = tx;
@@ -115,13 +115,13 @@ state = RUNNING_STATE;
 move.play();
 }
 public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall):Void) : ScrollBall{
-//        Logger.log("sizeof queue is {Model.sizeofRunning()}");
-        var newBall = Model.getNextBall(ball) as ScrollBall;
+//        Logger.log("sizeof queue is {Main.model.sizeofRunning()}");
+        var newBall = Main.model.getNextBall(ball) as ScrollBall;
         newBall.start();
         newBall.imageIndex = imageIndex;
         newBall.rate = (ball.currentRate());
-        Model.shiftFrom(ball);
-//        Model.addtoRunningAt(newBall, ball);
+        Main.model.shiftFrom(ball);
+//        Main.model.addtoRunningAt(newBall, ball);
         action(newBall);
         if(ball.isInStatus(GameBall.PAUSED_STATE)){
                 newBall.setStatus(GameBall.PAUSED_STATE);
@@ -146,12 +146,12 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
                 interpolator: Interpolator.EASEIN
                 duration: Config.BULLET_HIT_DURIATION;
                 action : function () {
-                    Model.stopShift();
+                    Main.model.stopShift();
                     background();
                     move.play();
                     newBall.makeVisable();
-                    Model.containsBall = newBall;
-                    Model.findToBePurged(Model.specialEffect);
+                    Main.model.containsBall = newBall;
+                    Main.model.findToBePurged(Main.model.specialEffect);
                 }
         };
         hitanim.play();

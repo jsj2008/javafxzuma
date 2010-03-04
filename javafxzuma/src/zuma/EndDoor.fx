@@ -46,7 +46,7 @@ public function open(){
     if(opened){
             return;
     }
-    Model.playDoorSwitchSound();
+    Main.model.playDoorSwitchSound();
     index = 0;
     timer.playFromStart();
     opened = true;
@@ -55,7 +55,7 @@ public function close(){
     if(not opened){
            return;
     }
-    Model.playDoorSwitchSound();
+    Main.model.playDoorSwitchSound();
     index = 0;
     opened = false;
 }

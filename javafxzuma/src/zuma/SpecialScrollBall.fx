@@ -46,13 +46,13 @@ override public function atTheEndOfTransition(){
         if(rate < 0){
                  return;
             }
-            if(Model.isInRunningQueue(this)){
-                Model.endingRunning();
+            if(Main.model.isInRunningQueue(this)){
+                Main.model.endingRunning();
             }
             setStatus(GameBall.DEAD_STATE);
             vis = false;
-            Model.recycleSpecial(this);
-            Model.delfromRunning(this);
+            Main.model.recycleSpecial(this);
+            Main.model.delfromRunning(this);
 }
 override var animball = FadeBall {
         //rotate : 90

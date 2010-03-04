@@ -27,10 +27,11 @@ import zuma.BulletBall;
 import zuma.Resources;
 
 import zuma.ScrollBall;
-import zuma.Model;
 
 
 import javafx.util.Math;
+
+import zuma.Main;
 
 /**
  * @author tzp
@@ -103,10 +104,10 @@ Stage {
     }
 
 }
-    while (Model.sizeofRecycled() < 20){
+    while (Main.model.sizeofRecycled() < 20){
          def ball0 = ScrollBall{};
 //         ball0.state = GameBall.DEAD_STATE;
          ball0.makeVisable();
-         Model.recycleBall(ball0);
+         Main.model.recycleBall(ball0);
     }
                                 
