@@ -26,7 +26,7 @@ override public function ready():Void{
          Main.model.recycleBall(ball0);
     }
     while(Main.model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
-         def ball0 = SpecialScrollBall{};
+         def ball0 = SpecialScrollBall{patharray : patharray};
          insert ball0 into Main.game.group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;

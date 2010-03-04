@@ -11,7 +11,6 @@ import javafx.scene.Group;
 import zuma.BulletBall;
 import zuma.Resources;
 import zuma.ScrollBall;
-import zuma.Main.model;
 
 import javafx.animation.transition.FadeTransition;
 import javafx.animation.transition.ParallelTransition;
@@ -22,7 +21,6 @@ import javafx.scene.input.KeyEvent;
 
 import zuma.util.Util;
 import zuma.components.AnimText;
-import zuma.components.Schedulable;
 
 import javafx.util.Math;
 
@@ -232,10 +230,9 @@ override public function start(){
     Main.model.detectThread = detector;
     detector.play();
 }
-override public function stop(){
+override public function stop():Void{
     detector.stop();
     Main.mainscene.content = [];
-    return;
 }
 override public function pause(){
     detector.pause();
