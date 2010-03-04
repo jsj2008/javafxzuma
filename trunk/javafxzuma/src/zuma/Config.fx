@@ -35,7 +35,7 @@ public def SPECILA_PERCENTAGE = 10;
 public def MAX_BALL_NUM = 40;
 
 //-------------------ball move rate config  ----------------------
-public def MOVE_FREQUENCY = 0.02s;
+public def MOVE_ROLL_FREQUENCY = 0.02s;
 public def END_RATE : Integer = 10; //0.003s
 public def BACK_RATE : Integer= -10; // 0.003s
 public def SHIFT_RATE : Integer = 5; //0.006s

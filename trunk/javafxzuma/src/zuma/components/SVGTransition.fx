@@ -32,7 +32,7 @@ public var offsetY : Float;
 public var action : function():Void;
 var stopped = false;
 var direct = 1;
-var count : Number= bind fromIndex*3;
+var count : Integer= bind fromIndex*3;
 public var rate : Integer = 0 on replace{
     tick = 0;
     if(rate == 0){
@@ -95,6 +95,9 @@ public function stop(){
 }
 public function debuginfo(){
     println("SVG status : (stoped={stopped},rate={rate},direct={direct},count={count})");
+}
+public function getCount():Integer{
+    return count;
 }
 }
 
