@@ -207,6 +207,7 @@ public function stop(){
 }
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");
+    anim1.debuginfo();
 }
 public function sameStatusWith(ball : ScrollBall):Boolean{
     for(index in [0..7]){
