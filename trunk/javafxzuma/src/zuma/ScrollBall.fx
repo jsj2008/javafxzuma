@@ -25,11 +25,14 @@ import zuma.util.Util;
 import zuma.components.ImagesPlayer;
 import zuma.Resources;
 
+import java.util.ArrayList;
+
 /**
  * @author javatest
  */
 
 public class ScrollBall extends GameBall{
+public var patharray : ArrayList;
 public-read var statusList : Boolean[] = [false,false,false,false,false,false,false];
 var MAX_CHADOWS = 10;
 var MAX_GIVEN = 5;
@@ -115,7 +118,7 @@ public var anim1 = SVGTransition {
         fromIndex : bind fromIndex
         //offsetX : bind offsetX
         //offsetY : bind offsetY
-        pathArray : Resources.patharray
+        pathArray : bind patharray
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
         maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
 //        action : atTheEndOfTransition

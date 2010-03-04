@@ -12,5 +12,6 @@ package zuma;
  */
 
 abstract public class Level {
+public var patharray;
 public abstract function ready():Void;
 }
