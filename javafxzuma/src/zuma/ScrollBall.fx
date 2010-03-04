@@ -42,6 +42,7 @@ public var animball : Ball= AnimBall {
         smooth: true
         image: bind ballImage
         cache : true
+        maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
         scaleX : bind scaleX
         scaleY : bind scaleY
        // rotate: bind rotatedegrees
@@ -116,15 +117,13 @@ public var anim1 = SVGTransition {
         //offsetY : bind offsetY
         pathArray : Resources.patharray
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
-        action : atTheEndOfTransition
+        maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
+//        action : atTheEndOfTransition
 };
 public function atTheEndOfTransition(){
-//        if(rate < 0){
-//                 return;
-//        }
-//        if(Model.isInRunningQueue(this)){
-//            Model.endingRunning();
-//        }
+        if(this.isInStatus(GameBall.RUNNING_STATE)){
+            Model.endingRunning();
+        }
 }
 var scaleTransition = ScaleTransition {
         duration: 0.5s node: this
@@ -215,5 +214,8 @@ public function sameStatusWith(ball : ScrollBall):Boolean{
          }
     }
     return true;
+}
+public function overredBall(ball : ScrollBall){
+     return anim1.getCount() > ball.anim1.getCount();
 }
 }

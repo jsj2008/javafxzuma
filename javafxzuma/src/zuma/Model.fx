@@ -19,10 +19,12 @@ import zuma.GameBall;
 import zuma.util.Util;
 import zuma.SpecialScrollBall;
 
-import zuma.components.ScheduleTimer;
 
 import zuma.components.Schedulable;
 import java.util.ListIterator;
+
+import javafx.animation.Timeline;
+
 
 public var initial_rate = Config.INITIAL_RATE;
 public var lastGenered : ScrollBall = null;
@@ -35,7 +37,7 @@ public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 public-read var popScore : function(x : Number,y : Number,score : Integer,color : Integer);
 public-read var addScore : function(score : Integer);
 public-read var ending = false;
-public def detector = ScheduleTimer {frequency : Config.DETECTOR_FREQUENCY};
+public var detectThread : Timeline;
 var backcount = 0;
 var shiftcount = 0;
 var pausecount = 0;
@@ -671,6 +673,11 @@ public function stopPause():Void{
                 return false;
         }
         if(not Model.hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
+                if((running as ScrollBall).overredBall(paused)){
+                        println("paused ball status error !, will be stopped!");
+                        (paused as ScrollBall).stop();
+                        pausecount--;
+                }
                 return true;
         }
         if(firsthitted){
@@ -715,7 +722,7 @@ public function stopBack():Void{
     }
     backcount--;
 }
-public function dectectHit(){
+public function dectectHitandMove(){
         var detect = true;
         if(runningbullets.isEmpty()){
                 detect = false;

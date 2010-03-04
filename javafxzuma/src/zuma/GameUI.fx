@@ -158,6 +158,7 @@ function detect() {
                     Model.generedoffset = Config.NORMAL_OFFSET;
         }
         if(Model.ending){
+//            Model.setDefaultRate(Config.END_RATE);
             door.open();
         }
         if(Model.ended()){
@@ -168,7 +169,7 @@ function detect() {
         Model.stopShift();
         Model.stopBack();
         Model.stopPause();
-        Model.dectectHit();
+        Model.dectectHitandMove();
         if(Model.sizeofRunning() == 0){
             Main.gamestat = 0;
         }
@@ -191,12 +192,14 @@ function setEmitter() {
        var sin = Math.sin(Math.toRadians(deg));
        var ox = ball.translateX + Config.BALL_DIAMETER/2 - Config.EMITTER_X;
        var oy = ball.translateY + Config.BALL_DIAMETER/2 - Config.EMITTER_Y;
-       //r^2 - 2(cos*ox+sin*oy)r + ox^2+oy^2-r^2 = 0
-       //take the lesser one
-       // a = 1
-       // b = -2(cos*ox+sin*oy)
-       // c = ox^2 + oy ^2 - (Config.BALL_DIAMETER/2)^2
-       // r = (-b - sqrt(b^2-4ac))/2a
+       /*
+       * r^2 - 2(cos*ox+sin*oy)r + ox^2+oy^2-r^2 = 0
+       * take the lesser one
+       * a = 1
+       * b = -2(cos*ox+sin*oy)
+       * c = ox^2 + oy ^2 - (Config.BALL_DIAMETER/2)^2
+       * r = (-b - sqrt(b^2-4ac))/2a
+       */
        var a = 1;
        var b = -2*(cos*ox+sin*oy);
        var c = ox*ox + oy*oy - Util.square((Config.BALL_DIAMETER/2));
@@ -221,14 +224,13 @@ public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
 override public function start(){
-//    Thread.setDefaultUncaughtExceptionHandler(eh);
+    //Thread.setDefaultUncaughtExceptionHandler(eh);//this can not be used in a applet
     Model.setSpecialEffect(sepcialEffect);
     Model.setScoreUpdator(popScore,addScore);
     while (sizeof Model.getBullets() < Config.PRE_CREATE_BULLET){
          def ball0 = BulletBall{group : group};
          Model.addBullet(ball0);
     }
-//    Model.setCurrentBullet();
     while (Model.sizeofRecycled() < Config.PRE_CREATE_BALL){
          def ball0 = ScrollBall{};
          insert ball0 into group.content;
@@ -248,10 +250,10 @@ override public function start(){
             bullet.rate = 1;
     }
     Main.mainscene.content = gamecontent;
+    Model.detectThread = detector;
     detector.play();
 }
 override public function stop(){
-//    Main.mainscene = null;
     detector.stop();
     Main.mainscene.content = [];
 }
@@ -259,4 +261,3 @@ override public function pause(){
     detector.pause();
 }
 }
-
