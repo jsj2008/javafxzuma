@@ -22,6 +22,7 @@ import zuma.SpecialScrollBall;
 import zuma.components.ScheduleTimer;
 
 import zuma.components.Schedulable;
+import java.util.ListIterator;
 
 public var initial_rate = Config.INITIAL_RATE;
 public var lastGenered : ScrollBall = null;
@@ -660,11 +661,13 @@ public function stopPause():Void{
         if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                 paused.rate = (Config.SHIFT_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
+                pausecount--;
                 return false;
         }
         if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
                 paused.rate = (Config.BACK_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
+                pausecount--;
                 return false;
         }
         if(not Model.hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
@@ -713,19 +716,27 @@ public function stopBack():Void{
     backcount--;
 }
 public function dectectHit(){
+        var detect = true;
         if(runningbullets.isEmpty()){
-                return;
+                detect = false;
         }
         var bullet : BulletBall = runningbullets.peek() as BulletBall;
-        for(ball in Model.runningBalls){
-          if (Model.hitted(bullet,(ball as ScrollBall))) {
-             bullet.pause();
-             playHitSound();
-             var newBall = bullet.hitmove(ball as ScrollBall,null);
-             runningbullets.poll();
-             break;
-           }
-         }
+        var it : ListIterator  = runningBalls.listIterator();
+        var ball : ScrollBall;
+        while(it.hasNext()){
+                ball = it.next() as ScrollBall;
+                (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate();
+                (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate();
+                if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
+                     bullet.pause();
+                     playHitSound();
+                     var newBall = bullet.hitmove(ball as ScrollBall,function(newBall : ScrollBall){
+                        it.add(newBall);
+                     });
+                     runningbullets.poll();
+                     detect = false;
+                 }
+        }
 }
 public function shiftFrom(ball : GameBall){
     var index = (Model.runningBalls as LinkedList).indexOf(ball);
