@@ -149,10 +149,6 @@ def detector = Timeline {
         ]
 }
 function detect() {
-        for(ball in Model.runningBalls){
-            (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate();
-            (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate();
-        }
         Model.specialEffectCount();
         Model.generBall();
         if(Model.sizeofRunning() == 10 and Model.defaultRate == Config.INITIAL_RATE){

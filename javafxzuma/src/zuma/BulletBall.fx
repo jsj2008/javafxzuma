@@ -114,14 +114,15 @@ public function start(){
 state = RUNNING_STATE;
 move.play();
 }
-public function hitmove(ball : ScrollBall,atEnd : function(newBall : ScrollBall):Void) : ScrollBall{
+public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall):Void) : ScrollBall{
 //        Logger.log("sizeof queue is {Model.sizeofRunning()}");
         var newBall = Model.getNextBall(ball) as ScrollBall;
         newBall.start();
         newBall.imageIndex = imageIndex;
         newBall.rate = (ball.currentRate());
         Model.shiftFrom(ball);
-        Model.addtoRunningAt(newBall, ball);
+//        Model.addtoRunningAt(newBall, ball);
+        action(newBall);
         if(ball.isInStatus(GameBall.PAUSED_STATE)){
                 newBall.setStatus(GameBall.PAUSED_STATE);
         }
@@ -151,7 +152,6 @@ public function hitmove(ball : ScrollBall,atEnd : function(newBall : ScrollBall)
                     newBall.makeVisable();
                     Model.containsBall = newBall;
                     Model.findToBePurged(Model.specialEffect);
-                    atEnd(newBall);
                 }
         };
         hitanim.play();
