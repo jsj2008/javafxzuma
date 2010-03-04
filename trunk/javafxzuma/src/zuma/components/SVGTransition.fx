@@ -77,14 +77,10 @@ override public function update():Void{
 public function play(){
     if(stopped){
         count =fromIndex*3;
-        return;
     }
     stopped = false;
 }
 public function playFromStart(){
-    if(stopped){
-        count = 0;
-    }
     count = 0;
     stopped = false;
 }
@@ -96,6 +92,9 @@ public function stop(){
     stopped = true;
     rate = 0;
 //    timer.stop();
+}
+public function debuginfo(){
+    println("SVG status : (stoped={stopped},rate={rate},direct={direct},count={count})");
 }
 }
 

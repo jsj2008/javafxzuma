@@ -86,10 +86,14 @@ var backgroundview = ImageView {
                 onKeyPressed: function( e: KeyEvent ):Void {
                     if(e.code == KeyCode.VK_ENTER){
                             println("--runningBalls--");
+                            var count = 0;
                             for(ball in Model.runningBalls){
+                                    count++;
+                                    println("ball {count} ---------------------");
                                     (ball as ScrollBall).debuginfo();
                             }
                             println("default rate is {Model.defaultRate}");
+                            println("sizeof runnning {Model.sizeofRunning()}");
                             if(detector.paused){
                                     detector.play();
                             }else{
