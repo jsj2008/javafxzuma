@@ -16,4 +16,4 @@ public def EMITTER_Y = 320;
 public def background : Image = Image { url: "{__DIR__}images/background_1.png" };
 public def END_DOOR_X = 430;
 public def END_DOOR_Y = 500;
-public def PATH_DATA_FILE = "/zuma/svg/cyclemap1";
+public def PATH_DATA_FILE = "/zuma/svg/map1";
