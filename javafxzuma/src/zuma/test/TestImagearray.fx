@@ -33,7 +33,7 @@ import java.util.TimerTask;
 
 import java.lang.Thread;
 import java.lang.Throwable;
-
+import zuma.Level1Config;
 /**
  * @author javatest
  */
@@ -59,7 +59,7 @@ def specialimageview = ImageView {
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Resources.background
+                        image: Level1Config.background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
                             count++;

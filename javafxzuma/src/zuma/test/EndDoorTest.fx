@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import zuma.Resources;
+import zuma.Level1Config;
 /**
  * @author javatest
  */
@@ -20,7 +21,7 @@ var door = EndDoor{translateX : 100, translateY : 100};
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Resources.background
+                        image: Level1Config.background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
                                 door.open();

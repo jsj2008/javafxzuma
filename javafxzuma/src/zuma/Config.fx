@@ -10,10 +10,6 @@ package zuma;
  * @author javatest
  */
 
-public def EMITTER_X = 320;
-public def EMITTER_Y = 320;
-public def END_DOOR_X = 430;
-public def END_DOOR_Y = 500;
 public def EMITTER_RANGE = 1500;
 public def EMITTER_DIAMETER = 100;
 public def ENDDOOR_DIAMETER = 100;
@@ -28,7 +24,6 @@ public def PRE_CREATE_BULLET = 20;
 public def PATH_WIDTH = 1;
 public def BULLET_DURIATION = 3s;
 public def BULLET_HIT_DURIATION = 0.25s;
-public def PATH_DATA_FILE = "/zuma/svg/cyclemap1";
 public def DETECTOR_FREQUENCY = 0.001s;
 public def DEBUG = false;
 public def SPECILA_PERCENTAGE = 10;

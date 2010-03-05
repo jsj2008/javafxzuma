@@ -1,62 +1,45 @@
 /*
- * GameUI.fx
+ * Level2.fx
  *
- * Created on Mar 2, 2010, 4:21:38 PM
+ * Created on Mar 5, 2010, 11:47:39 AM
  */
 
 package zuma;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.Group;
-import zuma.BulletBall;
-import zuma.Resources;
-import zuma.ScrollBall;
 
 import javafx.animation.transition.FadeTransition;
 import javafx.animation.transition.ParallelTransition;
 import javafx.animation.transition.ScaleTransition;
-
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
-import zuma.util.Util;
-import zuma.components.AnimText;
-
+import javafx.scene.input.MouseEvent;
 import javafx.util.Math;
-
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import zuma.components.AnimText;
+import zuma.util.Util;
+import zuma.Level2Config;
 /**
  * @author javatest
  */
-public class GameUI extends UI{
-var degrees : Double= 90;
+
+public class Level2 extends Level{
+var degrees : Double= 180;
 var curx : Double= 0;
 var cury : Double= 0;
-//def eh : Thread.UncaughtExceptionHandler = Thread.UncaughtExceptionHandler{
-//                        var defaultUncaughtExceptionHandler;
-//                        function init() {
-//                            defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
-//                        }
-//                        override function uncaughtException(t : Thread , e : Throwable) {
-//                             e.printStackTrace();
-//                        }
-//                        };
-def emitter = Emitter{translateX: Config.EMITTER_X - Config.EMITTER_DIAMETER/2
-                      translateY: Config.EMITTER_X - Config.EMITTER_DIAMETER/2
+def emitter = Emitter{translateX: Level2Config.EMITTER_X
+                      translateY: Level2Config.EMITTER_Y
                       degrees : bind degrees};
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:30,translateY:70};
-var door = EndDoor{translateX : Config.END_DOOR_X, translateY : Config.END_DOOR_Y};
+var door = EndDoor{translateX : Level2Config.END_DOOR_X, translateY : Level2Config.END_DOOR_Y};
 public-read var group: Group = Group {
             content: [
             emitter]};
 var backgroundview = ImageView {
                 fitHeight : Config.WINDOW_HEIGHT
                 fitWidth : Config.WINDOW_WIDTH
-                image: Resources.background
+                image: Level2Config.background
                 focusTraversable: true
                 visible: true
                 onMousePressed: function( e: MouseEvent ):Void {
@@ -137,41 +120,6 @@ function addScore(score : Integer){
         totlescoreText.addText(score);
 }
 var shiftball : ScrollBall;
-def detector = Timeline {
-        repeatCount: Timeline.INDEFINITE
-        keyFrames : [
-            KeyFrame {
-                time: bind Config.DETECTOR_FREQUENCY
-                action: detect
-            }
-        ]
-}
-function detect() {
-        Main.model.specialEffectCount();
-        Main.model.generBall();
-        if(Main.model.sizeofRunning() == 10 and Main.model.defaultRate == Config.INITIAL_RATE){
-                    Main.model.setDefaultRate(Config.RUNNING_RATE);
-                    Main.model.restoreAllRunning();
-                    Main.model.startBulletGenor();
-                    Main.model.generedoffset = Config.NORMAL_OFFSET;
-        }
-        if(Main.model.ending){
-//            Main.model.setDefaultRate(Config.END_RATE);
-            door.open();
-        }
-        if(Main.model.ended()){
-            door.close();
-        }
-        //TODO : performance issue
-        //Main.model.restoreRateWhenAllPaused();
-        Main.model.stopShift();
-        Main.model.stopBack();
-        Main.model.stopPause();
-        Main.model.dectectHitandMove();
-        if(Main.model.sizeofRunning() == 0){
-            Main.gamestat = 0;
-        }
-}
 var initial_rate = 1;
 function generBall() : Void{
        var ball = Main.model.generBall();
@@ -181,15 +129,19 @@ function generBall() : Void{
        ball.rate = (initial_rate);
 }
 function setEmitter() {
-   var deg = Util.getDegrees(Config.EMITTER_X,Config.EMITTER_Y,curx,cury,100000000);
-   degrees = deg -90;
-   var ball = Main.model.getMinDegreesBall(deg);
+   var deg = 270;
+   emitter.translateX = curx - Config.EMITTER_DIAMETER/2;
+   var eox = curx;
+   var eoy = emitter.translateY + Config.EMITTER_DIAMETER/2;
+   emitter.tx = eox;
+   emitter.ty = eoy;
+   var ball = Main.model.getMinDegreesBall(deg,curx,emitter.ty);
    //set pointer
    if(ball != null){
        var cos = Math.cos(Math.toRadians(deg));
        var sin = Math.sin(Math.toRadians(deg));
-       var ox = ball.translateX + Config.BALL_DIAMETER/2 - Config.EMITTER_X;
-       var oy = ball.translateY + Config.BALL_DIAMETER/2 - Config.EMITTER_Y;
+       var ox = ball.translateX + Config.BALL_DIAMETER/2 - eox;
+       var oy = ball.translateY + Config.BALL_DIAMETER/2 - eoy;
        /*
        * r^2 - 2(cos*ox+sin*oy)r + ox^2+oy^2-r^2 = 0
        * take the lesser one
@@ -203,31 +155,55 @@ function setEmitter() {
        var c = ox*ox + oy*oy - Util.square((Config.BALL_DIAMETER/2));
        var r = (-b - Math.sqrt(b*b - 4*a*c))/2*a;
        pointer.visible = true;
-       pointer.topx = r*cos + Config.EMITTER_X;
-       pointer.topy = r*sin + Config.EMITTER_Y;
-       pointer.botm_left_x = Util.getCoordxByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_lefx_y = Util.getCoordyByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_right_x = Util.getCoordxByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_right_y = Util.getCoordyByDegree(Config.EMITTER_X,Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.topx = r*cos + eox;
+       pointer.topy = r*sin + eoy;
+       pointer.botm_left_x = Util.getCoordxByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_lefx_y = Util.getCoordyByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_x = Util.getCoordxByDegree(eox,eoy, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_y = Util.getCoordyByDegree(eox,eoy, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.genPoints();
        pointer.color = Main.model.currentbullet.imageIndex;
    }else{
        pointer.visible = false;
    }
-   var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   Main.model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
+//   var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
+//   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
+   Main.model.currentbullet.setTXY(curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
 public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
-override public function start(){
-    //Thread.setDefaultUncaughtExceptionHandler(eh);//this can not be used in a applet
-    Main.currentlevel.ready();
+override public function ready():Void{
+    patharray =  MapLoader.getMap(Level2Config.PATH_DATA_FILE);
+    while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
+         def ball0 = BulletBall{group : group,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
+         Main.model.addBullet(ball0);
+    }
+    while (Main.model.sizeofRecycled() < Config.PRE_CREATE_BALL){
+         def ball0 = ScrollBall{patharray : patharray};
+         insert ball0 into group.content;
+         insert ball0.effectplayer into group.content;
+         ball0.setStatus(GameBall.DEAD_STATE);
+         ball0.vis = false;
+         Main.model.recycleBall(ball0);
+    }
+    while(Main.model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
+         def ball0 = SpecialScrollBall{patharray : patharray};
+         insert ball0 into group.content;
+         ball0.setStatus(GameBall.DEAD_STATE);
+         ball0.vis = false;
+         Main.model.recycleSpecial(ball0);
+    }
+    for(bullet in Main.model.getBullets()){
+            bullet.rate = 1;
+    }
     Main.model.setSpecialEffect(sepcialEffect);
     Main.model.setScoreUpdator(popScore,addScore);
     Main.mainscene.content = gamecontent;
     Main.model.detectThread = detector;
+}
+override public function start(){
+    ready();
     detector.play();
 }
 override public function stop():Void{

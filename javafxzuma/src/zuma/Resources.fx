@@ -12,7 +12,6 @@ import javafx.scene.shape.SVGPath;
 
 import javafx.scene.transform.Transform;
 
-import javafx.scene.media.Media;
 
 /**
  * @author javatest
@@ -22,7 +21,6 @@ public def endDoorImage = [Image { url: "{__DIR__}images/bagua_1.png" }
                                  Image { url: "{__DIR__}images/bagua_2.png" }
                                  Image { url: "{__DIR__}images/bagua_3.png" }
                                  Image { url: "{__DIR__}images/bagua_4.png" }];
-public def background = Image { url: "{__DIR__}images/background.png" };
 public def ballarray = [Image { url: "{__DIR__}images/baBallBlue.gif" },
                         Image { url: "{__DIR__}images/baBallGreen.gif" },
                         Image { url: "{__DIR__}images/baBallPurple.gif" },
@@ -53,6 +51,12 @@ public def slowImage = [Image { url: "{__DIR__}images/baSlowBlue.png" }
                                Image { url: "{__DIR__}images/baSlowRed.png" }
                                Image { url: "{__DIR__}images/baSlowWhite.png" }
                                Image { url: "{__DIR__}images/baSlowYellow.png" }];
+public def arrowImage = [Image { url: "{__DIR__}images/arrow_blue_up.png" }
+                               Image { url: "{__DIR__}images/arrow_green_up.png" }
+                               Image { url: "{__DIR__}images/arrow_violet_up.png" }
+                               Image { url: "{__DIR__}images/arrow_red_up.png" }
+                               Image { url: "{__DIR__}images/arrow_grey_up.png" }
+                               Image { url: "{__DIR__}images/arrow_yellow_up.png" }];
 public def specialEffectImage = [Image { url: "{__DIR__}images/BomEffect.png" }
                                  Image { url: "{__DIR__}images/BackwardsEffect.png" }
                                  Image { url: "{__DIR__}images/AccuracyEffect.png" }
@@ -68,7 +72,7 @@ public def purgeffectImage = [Image { url: "{__DIR__}images/effect.000.png" }
                                  Image { url: "{__DIR__}images/effect.008.png" }];
 public def scrollBallBlue = Image{url : "{__DIR__}images/baBallBlue.gif"};
 public def scrollBallGreen = Image{url : "{__DIR__}images/baBallGreen.gif"};
-public def patharray = MapLoader.getMap(Config.PATH_DATA_FILE);
+public def patharray = MapLoader.getMap(Level1Config.PATH_DATA_FILE);
 public def track = SVGPath {
                             stroke: Color.BLACK
                             strokeWidth: 1
@@ -87,6 +91,9 @@ public def effectimage = [Image { url: "{__DIR__}images/effect.000.png" }
                                Image { url: "{__DIR__}images/effect.006.png" }
                                Image { url: "{__DIR__}images/effect.007.png" }
                                Image { url: "{__DIR__}images/effect.008.png" }];
+
+public def fireIcon = [Image { url: "{__DIR__}images/fireball_cursor.jpg" }
+                       Image { url: "{__DIR__}images/fireball_cursor_a.jpg" }];
 public def ballclick_sound = "ball_hit.wav";
 public def ballclick_sound_2 = "ballclick1.wav";
 public def purge_sound = "chain1.wav";

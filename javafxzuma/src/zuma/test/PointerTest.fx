@@ -16,12 +16,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import zuma.Resources;
-
+import zuma.Level1Config;
 var p = Pointer{};
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Resources.background
+                        image: Level1Config.background
                         focusTraversable: true
                         onMouseMoved: function( e: MouseEvent ):Void {
                             p.topx = e.x;

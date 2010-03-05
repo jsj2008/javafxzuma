@@ -9,16 +9,16 @@ package zuma;
 import javafx.stage.Stage;
 
 import javafx.scene.Scene;
+import zuma.SplashUI;
 
 
 
 /**
  * @author javatest
  */
-public-read var game : GameUI;
-public-read var splash : SplashUI;
+public-read var ui : UI;
 public-read var model : Model;
-public-read var currentlevel : Level;
+public-read var levels : Level[] = [Level1{},Level2{}];
 /*
 * 0 : game ended
 * 1 : game started
@@ -27,19 +27,21 @@ public-read var currentlevel : Level;
 */
 public var gamestat = -1 on replace{
     if(gamestat == 0){
-            game.stop();
+            ui.stop();
+            ui = SplashUI{};
+            ui.start();
     }
     if(gamestat == 1){
-            game = GameUI{};
+            ui.stop();
+            ui = levels[0];
             model = Model{};
-            currentlevel = Level1{};
-            game.start();
+            ui.start();
     }
     if(gamestat == 2){
-            game.pause();
+            ui.pause();
     }
     if(gamestat == 3){
-            game.resume();
+            ui.resume();
     }
 }
 public var mainscene : Scene;

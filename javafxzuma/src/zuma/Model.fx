@@ -215,7 +215,7 @@ function getNextIndex(ball : ScrollBall){
      var x = (ball.translateX as Float);
      var y = (ball.translateY as Float);
      var n = 0;
-     var it: Iterator = Resources.patharray.iterator();
+     var it: Iterator = (Main.ui as Level).patharray.iterator();
      //Logger.log(Resources.patharray.indexOf(x));
      var fromindex = -1;
      var newindex = 0;
@@ -290,8 +290,8 @@ public function generBall() : ScrollBall{
        if(generedBall > Config.MAX_BALL_NUM){
                return null;
        }
-       var ox = Resources.patharray.get(0) as Float;
-       var oy = Resources.patharray.get(1) as Float;
+       var ox = (Main.ui as Level).patharray.get(0) as Float;
+       var oy = (Main.ui as Level).patharray.get(1) as Float;
        var x = (lastGenered.translateX as Float);
        var y = (lastGenered.translateY as Float);
        if(x < 0 and y < 0){
@@ -337,7 +337,7 @@ public function getNextBall(ball : ScrollBall){
      var x = (ball.translateX as Float);
      var y = (ball.translateY as Float);
      var n = 0;
-     var it: Iterator = Resources.patharray.iterator();
+     var it: Iterator = (Main.ui as Level).patharray.iterator();
      //Logger.log(Resources.patharray.indexOf(x));
      var fromindex = -1;
      var newindex = 0;
@@ -365,11 +365,12 @@ public function getNextBall(ball : ScrollBall){
      newball.translateY = tmpy;
      return newball;
 }
-public function getMinDegreesBall(degreens : Number):ScrollBall{
+public function getMinDegreesBall(degreens : Number, ox : Number, oy : Number):ScrollBall{
     var rtn : ScrollBall;
     var mindeg : Number = 360;
+    var mindist : Number = 10000;
     applyToAll(function(ball : ScrollBall):Boolean{
-        var deg = Util.getDegrees(Config.EMITTER_X,Config.EMITTER_Y, ball.translateX+Config.BALL_DIAMETER/2, ball.translateY+Config.BALL_DIAMETER/2, 100000);
+        var deg = Util.getDegrees(ox,oy, ball.translateX+Config.BALL_DIAMETER/2, ball.translateY+Config.BALL_DIAMETER/2, 100000);
         if(Math.abs(deg - degreens) < mindeg){
             mindeg = Math.abs(deg - degreens);
             rtn = ball;
@@ -607,7 +608,7 @@ public function stopShift():Void{
      if(shifthead == null){
           return;
      }
-     var reached = Resources.patharray.indexOf(shifthead.translateX)/3;
+     var reached = (Main.ui as Level).patharray.indexOf(shifthead.translateX)/3;
      var indexOfShift = runningBalls.indexOf(shifthead);
      //when all balls are shifting,stop.
      if(indexOfShift <=0){
