@@ -48,8 +48,8 @@ public var vis = false on replace{
          opacity = 0.0;
    }
 };
-public var tx = (Config.EMITTER_X - Config.BALL_DIAMETER/2);
-public var ty = (Config.EMITTER_Y - Config.BALL_DIAMETER/2);
+public var tx : Number = 0;
+public var ty : Number = 0;
 //public var tx = (Config.EMITTER_X);
 //public var ty = (Config.EMITTER_Y);
 override public var translateX = -100;

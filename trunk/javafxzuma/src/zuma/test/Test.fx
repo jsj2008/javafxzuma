@@ -32,6 +32,7 @@ import zuma.ScrollBall;
 import javafx.util.Math;
 
 import zuma.Main;
+import zuma.Level1Config;
 
 /**
  * @author tzp
@@ -39,7 +40,7 @@ import zuma.Main;
  var S = 1.0;
 def arrayofarray = [[1,2],[2,3]];
 def ballImage = Resources.bomImage[0];
-def background = Resources.background;
+def background = Level1Config.background;
 def image = ImageView {
         smooth: true
         image: bind ballImage
@@ -74,7 +75,7 @@ def image = ImageView {
         elements: path
     };
 var backgroundview = ImageView {
-                        image: background
+                        image: Level1Config.background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
                                 shiftball.rate = (-2);

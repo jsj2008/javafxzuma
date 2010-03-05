@@ -12,9 +12,8 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import zuma.Resources;
 import zuma.components.AnimText;
-
+import zuma.Level1Config;
 /**
  * @author javatest
  */
@@ -23,7 +22,7 @@ var counter = 1;
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Resources.background
+                        image: Level1Config.background
                         focusTraversable: true
     onKeyPressed: function( e: KeyEvent ):Void {
                 if(e.code == KeyCode.VK_ENTER){

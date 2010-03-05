@@ -24,8 +24,8 @@ public class Emitter extends CustomNode{
 public var degrees : Double= 90;
 public var dx : Float = 0;
 public var dy : Float = 0;
-public var tx = (Config.EMITTER_X - Config.EMITTER_DIAMETER/2);
-public var ty = (Config.EMITTER_Y - Config.EMITTER_DIAMETER/2);
+public var tx : Number = 0;
+public var ty : Number  = 0;
 public def move = TranslateTransition {
         rate: 1
         autoReverse : true;
