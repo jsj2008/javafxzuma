@@ -33,7 +33,7 @@ public var gamestat = -1 on replace{
     }
     if(gamestat == 1){
             ui.stop();
-            ui = levels[0];
+            ui = levels[1];
             model = Model{};
             ui.start();
     }
