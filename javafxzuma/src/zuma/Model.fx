@@ -39,7 +39,7 @@ public-read var ending = false;
 public var detectThread : Timeline;
 var backcount = 0;
 var shiftcount = 0;
-var pausecount = 0;
+public var pausecount = 0;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
@@ -183,7 +183,7 @@ function pauseRunningBall(fromBall : ScrollBall){
         if(counter >= index){
 //             Logger.log("back change rate : {counter} of runningballs sizeof {balls.size()}");
              tmpball.rate = (Config.PAUSED_STOPPED_RATE);
-             pausecount++;
+//             pausecount++;
         }
         counter ++;
     }
@@ -363,6 +363,10 @@ public function getNextBall(ball : ScrollBall){
      newball.fromIndex = newindex;
      newball.translateX = tmpx;
      newball.translateY = tmpy;
+//     newball.rate = (ball.currentRate());
+//     if(ball.isInStatus(GameBall.PAUSED_STATE)){
+//         pausecount++;
+//     }
      return newball;
 }
 public function getMinDegreesBall(degreens : Number, ox : Number, oy : Number):ScrollBall{
@@ -645,9 +649,9 @@ public function stopShift():Void{
      }
 }
 public function stopPause():Void{
-    if(pausecount == 0){
-        return;
-    }
+//    if(pausecount == 0){
+//        return;
+//    }
     var running;
     for(ball in runningBalls){
         if((ball as ScrollBall).isInStatus(GameBall.PAUSED_STATE)){
@@ -663,20 +667,20 @@ public function stopPause():Void{
         if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                 paused.rate = (Config.SHIFT_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
-                pausecount--;
+//                pausecount--;
                 return false;
         }
         if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
                 paused.rate = (Config.BACK_RATE);
                 paused.unsetStatus(GameBall.PAUSED_STATE);
-                pausecount--;
+//                pausecount--;
                 return false;
         }
         if(not hitted(running as ScrollBall,paused,Config.PAUSE_OFFSET)){
                 if((running as ScrollBall).overredBall(paused)){
                         println("paused ball status error !, will be stopped!");
                         (paused as ScrollBall).stop();
-                        pausecount--;
+//                        pausecount--;
                 }
                 return true;
         }
