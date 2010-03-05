@@ -123,15 +123,15 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
         Main.model.shiftFrom(ball);
 //        Main.model.addtoRunningAt(newBall, ball);
         action(newBall);
-        if(ball.isInStatus(GameBall.PAUSED_STATE)){
-                newBall.setStatus(GameBall.PAUSED_STATE);
-        }
-        if(ball.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                newBall.setStatus(GameBall.BACK_RUNNING_STATE);
-        }
-        if(ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                newBall.setStatus(GameBall.SHIFT_RUNNING_STATE);
-        }
+//        if(ball.isInStatus(GameBall.PAUSED_STATE)){
+//                Main.model.pausecount++;
+//        }
+//        if(ball.isInStatus(GameBall.BACK_RUNNING_STATE)){
+//                newBall.setStatus(GameBall.BACK_RUNNING_STATE);
+//        }
+//        if(ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+//                newBall.setStatus(GameBall.SHIFT_RUNNING_STATE);
+//        }
         def hitpath = [
                 MoveTo { x: translateX+16  y: translateY+16 },
                 LineTo {x: newBall.translateX+16  y: newBall.translateY+16}
