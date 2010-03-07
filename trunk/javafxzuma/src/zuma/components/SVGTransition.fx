@@ -29,7 +29,7 @@ public var rotate : Float= 0;
 public var fromIndex : Integer = 0;
 public var offsetX : Float;
 public var offsetY : Float;
-public var action : function():Void;
+public var action : function(object : Object):Void;
 var stopped = false;
 var direct = 1;
 var count : Integer= bind fromIndex*3;
@@ -48,8 +48,14 @@ public var rate : Integer = 0 on replace{
             direct = -1;
     }
 };
-override public function update():Void{
-   if(stopped or count < 0){
+override public function update(object : Object):Void{
+   if(stopped){
+           return;
+   }
+   if(count < 0){
+           count = -1;
+           stopped = true;
+           action(object);
            return;
    }
    if(count >= pathArray.size()){
@@ -60,7 +66,7 @@ override public function update():Void{
            if(repeatCount0 == 0){
                  count = -1;
                  stopped = true;
-                 action();
+                 action(object);
                  return;
            }
            repeatCount --;

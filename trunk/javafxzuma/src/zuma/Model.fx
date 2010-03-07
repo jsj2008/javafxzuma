@@ -44,6 +44,8 @@ var shiftinghead : ScrollBall;
 var pauseing : Boolean = false;
 var pauseinghead : ScrollBall;
 var pauseingheadlast : ScrollBall;
+var pauseingsecondhead : ScrollBall;
+var pauseingsecondheadlast : ScrollBall;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
@@ -82,7 +84,7 @@ public var generedoffset = Config.INITIAL_OFFSET;
 /*
 *  private functions ---------------------------------------------------------------------------------------------
 */
-function rebuild(ball : ScrollBall){
+function rebuild(ball : ScrollBall,it : Object){
     ball.imageIndex = Util.random(6);
     ball.fromIndex = 0;
     ball.translateX = -100;
@@ -92,7 +94,11 @@ function rebuild(ball : ScrollBall){
     ball.scaleY = 1;
     ball.stopped = false;
     ball.clearStatus();
-    delfromRunning(ball);
+    if(it != null){
+        delfromRunning(it as Iterator);
+    }else{
+        delfromRunning(ball);
+    }
     return ball;
 }
 function effectAction(effect : Integer):Void{
@@ -456,6 +462,9 @@ public function addtoRunningAt(ball : ScrollBall,fromball : GameBall){
 public function delfromRunning(ball : ScrollBall){
     runningBalls.remove(ball);
 }
+public function delfromRunning(iterator : Iterator){
+        iterator.remove();
+}
 public function getRunningBallAt(index : Number){
     return (runningBalls as LinkedList).get(index) as ScrollBall;
 }
@@ -488,11 +497,11 @@ public function sizeofRecycledSpecial(){
 public function sizeofRunning(){
     return runningBalls.size();
 }
-public function recycleBall(ball : ScrollBall){
-    recycled.push(rebuild((ball as ScrollBall)));
+public function recycleBall(ball : ScrollBall,object : Object){
+    recycled.push(rebuild((ball as ScrollBall),object));
 }
-public function recycleSpecial(ball : ScrollBall){
-    recycledSpecial.push(rebuild((ball as ScrollBall)));
+public function recycleSpecial(ball : ScrollBall,object : Object){
+    recycledSpecial.push(rebuild((ball as ScrollBall),object));
 }
 public function isRecycledEmpty(){
     return recycled.isEmpty() and recycledSpecial.isEmpty();
@@ -681,6 +690,36 @@ public function stopPause():Void{
         paused.rate = pauseingheadlast.rate;
         return false;
     });
+    //stop pause when shifting hit
+    applyToPausedBall(function(paused : ScrollBall):Boolean{
+        if(pauseingsecondheadlast == null){
+                return true;
+        }
+        if(not hitted(pauseingsecondheadlast,paused)){
+                if(pauseingheadlast.overredBall(paused)){
+                        println("paused ball status error !, will be stopped!");
+                        (paused as ScrollBall).stop();
+                }
+                return true;
+        }
+        if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+                paused.rate = (Config.SHIFT_RATE);
+                paused.unsetStatus(GameBall.PAUSED_STATE);
+                return false;
+        }
+        if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
+                paused.rate = (Config.BACK_RATE);
+                paused.unsetStatus(GameBall.PAUSED_STATE);
+                return false;
+        }
+        if(firsthitted){
+            playHitSound2();
+            firsthitted = false;
+        }
+//        paused.unsetStatus(GameBall.PAUSED_STATE);
+        paused.rate = pauseingsecondheadlast.rate;
+        return false;
+    });
 }
 public function stopBack():Void{
     if(not backHitted()){
@@ -715,6 +754,9 @@ public function dectectHitandMove(){
         shifting = false;
         backing = false;
         pauseinghead = null;
+        pauseingheadlast = null;
+        pauseingsecondhead = null;
+        pauseingsecondheadlast = null;
         shiftinghead = null;
         backinghead = null;
         var detect = true;
@@ -732,6 +774,15 @@ public function dectectHitandMove(){
                         pauseinghead = ball;
                         pauseingheadlast = lastball;
                 };
+                //if there is a shifting on the paused ball
+                if(pauseinghead != null and
+                   pauseingsecondhead == null and
+                   ball.isInStatus(GameBall.PAUSED_STATE) and
+                   not ball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
+                   lastball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+                        pauseingsecondhead = ball;
+                        pauseingsecondheadlast = lastball;
+                }
                 if(shiftinghead == null and ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                         shifting = true;
                         shiftinghead = ball;
@@ -740,8 +791,8 @@ public function dectectHitandMove(){
                         backing = true;
                         backinghead = ball;
                 };
-                (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate();
-                (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate();
+                (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate(it);
+                (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate(it);
                 if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
                      bullet.pause();
                      playHitSound();
@@ -785,24 +836,6 @@ public function shiftFrom(ball : GameBall){
     }
     shifting = false;
 }
-//public function restoreRateWhenAllPaused(){
-//      var count = 0;
-//      applyToPausedBall(function(ball : ScrollBall):Boolean{
-//              count++;
-//              return false;
-//      });
-//      //TODO : what if there is a break between two paused sequeus
-//      if((runningBalls.size()) == count){
-//           applyToAll(function(ball : ScrollBall):Boolean{
-//                ball.setRate(defaultRate);
-//                ball.unsetStatus(GameBall.PAUSED_STATE);
-//                ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
-//                ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
-//                return false;
-//           });
-//      }
-//
-//}
 public function backRunningBall(fromBall : ScrollBall){
     var index = runningBalls.indexOf(fromBall);
     if(index < 0 or index == runningBalls.size()){

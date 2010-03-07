@@ -121,12 +121,13 @@ public var anim1 = SVGTransition {
         pathArray : bind patharray
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
         maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
-//        action : atTheEndOfTransition
+        action : atTheEndOfTransition
 };
-public function atTheEndOfTransition(){
-        if(this.isInStatus(GameBall.RUNNING_STATE)){
-            Main.model.endingRunning();
-        }
+public function atTheEndOfTransition(object : Object):Void{
+//        if(this.isInStatus(GameBall.RUNNING_STATE)){
+//            Main.model.endingRunning();
+//        }
+        Main.model.recycleBall(this,object);
 }
 var scaleTransition = ScaleTransition {
         duration: 0.5s node: this
@@ -204,7 +205,7 @@ public function pause(){
 }
 public function stop(){
     anim1.stop();
-    Main.model.recycleBall(this);
+    Main.model.recycleBall(this,null);
 }
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");

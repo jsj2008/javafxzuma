@@ -86,7 +86,7 @@ var anim = SVGTransition {
         node:animball
         pathArray : Resources.patharray
         orientation: OrientationType.ORTHOGONAL_TO_TANGENT
-        action : function () {
+        action : function (object : Object) {
         }
 };
  def track = SVGPath {

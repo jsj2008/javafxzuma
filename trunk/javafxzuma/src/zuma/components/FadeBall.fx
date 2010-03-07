@@ -57,5 +57,5 @@ override public function resume(){
             fadeTransition.play();
         }
 }
-override public function update():Void{}
+override public function update(object : Object):Void{}
 }
