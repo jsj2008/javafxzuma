@@ -33,7 +33,7 @@ public var gamestat = -1 on replace{
     }
     if(gamestat == 1){
             ui.stop();
-            ui = levels[0];
+            ui = levels[1];
             model = Model{};
             ui.start();
     }
@@ -49,8 +49,8 @@ function run(__ARGS__ : String[]) {
     def stage = Stage {
         title: "JavaFX Zuma"
         resizable: false
-        width: Config.WINDOW_WIDTH+15
-        height: Config.WINDOW_HEIGHT+35
+        width: Config.WINDOW_WIDTH
+        height: Config.WINDOW_HEIGHT
         scene: Scene{};
     }
     mainscene = stage.scene;

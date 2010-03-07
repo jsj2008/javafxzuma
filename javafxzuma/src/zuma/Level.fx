@@ -45,10 +45,10 @@ function detect() {
         }
         //TODO : performance issue
         //Main.model.restoreRateWhenAllPaused();
+        Main.model.dectectHitandMove();
         Main.model.stopShift();
         Main.model.stopBack();
         Main.model.stopPause();
-        Main.model.dectectHitandMove();
         if(Main.model.sizeofRunning() == 0){
             Main.gamestat = 0;
         }

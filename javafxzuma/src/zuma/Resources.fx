@@ -27,6 +27,12 @@ public def ballarray = [Image { url: "{__DIR__}images/baBallBlue.gif" },
                         Image { url: "{__DIR__}images/baBallRed.gif" },
                         Image { url: "{__DIR__}images/baBallWhite.gif" },
                         Image { url: "{__DIR__}images/baBallYellow.gif" }];
+//public def ballarray = [Image { url: "{__DIR__}images/level2/blueball.png" },
+//                        Image { url: "{__DIR__}images/level2/greenball.png" },
+//                        Image { url: "{__DIR__}images/level2/purpleball.png" },
+//                        Image { url: "{__DIR__}images/level2/redball.png" },
+//                        Image { url: "{__DIR__}images/level2/whiteball.png" },
+//                        Image { url: "{__DIR__}images/level2/yellowball.png" }];
 public def bomImage = [Image { url: "{__DIR__}images/BomBlue.png" }
                        Image { url: "{__DIR__}images/BomGreen.png" }
                        Image { url: "{__DIR__}images/BomPurple.png" }

@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import zuma.Resources;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -25,6 +24,10 @@ import javafx.scene.Group;
 
 import zuma.components.SVGTransition;
 import zuma.Level1Config;
+
+import javafx.animation.KeyFrame;
+
+import zuma.Config;
 /**
  * @author tzp
  */
@@ -58,7 +61,7 @@ var backgroundview = ImageView {
                 }
      }
 };
-var in = new FileInputStream("./src/zuma/svg/tmp");
+var in = new FileInputStream("./src/zuma/svg/map3");
 var s = new ObjectInputStream(in);
 var patharray = (s.readObject() as ArrayList);
 var rate = 1;
@@ -67,7 +70,6 @@ var group: Group = Group {
             content: [
             ]};
 var ball = ScrollBall{fromIndex : 1514};
-println(patharray.size());
 var anim = SVGTransition{
     fromIndex : bind fromIndex
     rate : bind rate;
@@ -78,6 +80,18 @@ var anim = SVGTransition{
         println("complete ");
     }
 };
+function update():Void{
+//   anim.update();
+}
+def detector = Timeline {
+        repeatCount: Timeline.INDEFINITE
+        keyFrames : [
+            KeyFrame {
+                time: 40ms
+                action: update
+            }
+        ]
+}
 Stage {
     title: "Application title"
     width: 900
@@ -87,3 +101,4 @@ Stage {
         ]
     }
 }
+detector.play();

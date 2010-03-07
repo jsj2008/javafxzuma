@@ -10,19 +10,19 @@ package zuma;
  * @author javatest
  */
 
-public def EMITTER_RANGE = 1500;
-public def EMITTER_DIAMETER = 100;
+public def EMITTER_RANGE = 500;
+public def EMITTER_DIAMETER = 50;
 public def ENDDOOR_DIAMETER = 100;
-public def WINDOW_HEIGHT = 600;
-public def WINDOW_WIDTH = 600;
+public def WINDOW_HEIGHT = 280;
+public def WINDOW_WIDTH = 480;
 public def SCROLL_START_X = 342.85715;
 public def SCROLL_START_Y = 463.79074;
-public def BALL_DIAMETER = 30;
-public def PRE_CREATE_BALL = 70;
+public def BALL_DIAMETER = 20;
+public def PRE_CREATE_BALL = 40;
 public def PRE_CREATE_BALL_SPECIAL = 20;
 public def PRE_CREATE_BULLET = 20;
 public def PATH_WIDTH = 1;
-public def BULLET_DURIATION = 2s;
+public def BULLET_DURIATION = 1s;
 public def BULLET_HIT_DURIATION = 0.25s;
 public def DETECTOR_FREQUENCY = 0.001s;
 public def DEBUG = false;
