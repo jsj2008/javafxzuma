@@ -183,14 +183,14 @@ override public function ready():Void{
          insert ball0.effectplayer into group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
-         Main.model.recycleBall(ball0);
+         Main.model.recycleBall(ball0,null);
     }
     while(Main.model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
          def ball0 = SpecialScrollBall{patharray : patharray};
 //         insert ball0 into group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
-         Main.model.recycleSpecial(ball0);
+         Main.model.recycleSpecial(ball0,null);
     }
     for(bullet in Main.model.getBullets()){
             bullet.rate = 1;

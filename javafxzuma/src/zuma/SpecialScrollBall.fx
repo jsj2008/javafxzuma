@@ -42,7 +42,7 @@ override public var imageIndex = Util.random(6) on replace{
             SPECIAL_TYPE = SPECIAL_SLOW;
         }
 };
-override public function atTheEndOfTransition(){
+override public function atTheEndOfTransition(object : Object){
         if(rate < 0){
                  return;
             }
@@ -51,7 +51,7 @@ override public function atTheEndOfTransition(){
             }
             setStatus(GameBall.DEAD_STATE);
             vis = false;
-            Main.model.recycleSpecial(this);
+            Main.model.recycleSpecial(this,object);
             Main.model.delfromRunning(this);
 }
 override var animball = FadeBall {

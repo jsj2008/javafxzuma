@@ -109,6 +109,6 @@ Stage {
          def ball0 = ScrollBall{};
 //         ball0.state = GameBall.DEAD_STATE;
          ball0.makeVisable();
-         Main.model.recycleBall(ball0);
+         Main.model.recycleBall(ball0,null);
     }
                                 

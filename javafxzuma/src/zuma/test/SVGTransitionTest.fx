@@ -76,7 +76,7 @@ var anim = SVGTransition{
     node : ball
     repeatCount : Timeline.INDEFINITE
     pathArray : patharray
-    action : function(){
+    action : function(object : Object){
         println("complete ");
     }
 };

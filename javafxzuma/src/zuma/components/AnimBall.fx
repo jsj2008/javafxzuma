@@ -54,16 +54,16 @@ def imageview = ImageView {
 };
 var imy : Number = 0;
 var cyy : Number = 0;
-var timer = Timeline {
-        repeatCount: Timeline.INDEFINITE
-        keyFrames : [
-            KeyFrame {
-                time: bind 0.05s
-                action: update
-            }
-        ]
-};
-override public function update():Void{
+//var timer = Timeline {
+//        repeatCount: Timeline.INDEFINITE
+//        keyFrames : [
+//            KeyFrame {
+//                time: bind 0.05s
+//                action: update
+//            }
+//        ]
+//};
+override public function update(object : Object):Void{
     if(rate == 0){
             return;
     }
