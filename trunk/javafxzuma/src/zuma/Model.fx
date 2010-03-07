@@ -623,15 +623,15 @@ public function stopShift():Void{
      }
      var reached = (Main.ui as Level).patharray.indexOf(shiftinghead.translateX)/3;
      var indexOfShift = runningBalls.indexOf(shiftinghead);
-     //when all balls are shifting,stop.
+     //when all balls are shifting
      if(indexOfShift <=0){
-        applyToAll(function(ball : ScrollBall):Boolean{
-            ball.rate = (Config.RUNNING_RATE);
-            ball.unsetStatus(GameBall.PAUSED_STATE);
-            ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
-            ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
-            return false;
-        });
+//        applyToAll(function(ball : ScrollBall):Boolean{
+//            ball.rate = (Config.RUNNING_RATE);
+//            ball.unsetStatus(GameBall.PAUSED_STATE);
+//            ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
+//            ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
+//            return false;
+//        });
         return;
      }
      var newBall = runningBalls.get(indexOfShift-1);
@@ -661,65 +661,39 @@ public function stopPause():Void{
         return;
     }
     var firsthitted = true;
-    applyToPausedBall(function(paused : ScrollBall):Boolean{
-        if(pauseingheadlast == null){
-                return true;
-        }
-        if(not hitted(pauseingheadlast,paused,Config.PAUSE_OFFSET)){
-                if(pauseingheadlast.overredBall(paused)){
-                        println("paused ball status error !, will be stopped!");
-                        (paused as ScrollBall).stop();
-                }
-                return true;
-        }
-        if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                paused.rate = (Config.SHIFT_RATE);
-                paused.unsetStatus(GameBall.PAUSED_STATE);
-                return false;
-        }
-        if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                paused.rate = (Config.BACK_RATE);
-                paused.unsetStatus(GameBall.PAUSED_STATE);
-                return false;
-        }
-        if(firsthitted){
-            playHitSound2();
-            firsthitted = false;
-        }
-        paused.unsetStatus(GameBall.PAUSED_STATE);
-        paused.rate = pauseingheadlast.rate;
-        return false;
-    });
     //stop pause when shifting hit
-    applyToPausedBall(function(paused : ScrollBall):Boolean{
-        if(pauseingsecondheadlast == null){
-                return true;
+    if(pauseingsecondheadlast != null and
+        pauseingsecondhead != null and
+        hitted(pauseingsecondheadlast,pauseingsecondhead,Config.PAUSE_OFFSET)){
+        println("paused to shift");
+        if(pauseingsecondhead.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+                pauseingsecondhead.rate = (Config.SHIFT_RATE);
+                pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
         }
-        if(not hitted(pauseingsecondheadlast,paused)){
-                if(pauseingheadlast.overredBall(paused)){
-                        println("paused ball status error !, will be stopped!");
-                        (paused as ScrollBall).stop();
-                }
-                return true;
+        if(pauseingsecondhead.isInStatus(GameBall.BACK_RUNNING_STATE)){
+                pauseingsecondhead.rate = (Config.BACK_RATE);
+                pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
         }
-        if(paused.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                paused.rate = (Config.SHIFT_RATE);
-                paused.unsetStatus(GameBall.PAUSED_STATE);
-                return false;
+        playHitSound2();
+//        pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
+        pauseingsecondhead.rate = pauseingheadlast.rate;
+    }
+    //pauseing stop
+    if(pauseingheadlast != null and
+        pauseinghead != null and
+        hitted(pauseingheadlast,pauseinghead,Config.PAUSE_OFFSET)){
+        if(pauseinghead.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+                pauseinghead.rate = (Config.SHIFT_RATE);
+                pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
         }
-        if(paused.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                paused.rate = (Config.BACK_RATE);
-                paused.unsetStatus(GameBall.PAUSED_STATE);
-                return false;
+        if(pauseinghead.isInStatus(GameBall.BACK_RUNNING_STATE)){
+                pauseinghead.rate = (Config.BACK_RATE);
+                pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
         }
-        if(firsthitted){
-            playHitSound2();
-            firsthitted = false;
-        }
-//        paused.unsetStatus(GameBall.PAUSED_STATE);
-        paused.rate = pauseingsecondheadlast.rate;
-        return false;
-    });
+        playHitSound2();
+        pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
+        pauseinghead.rate = pauseingheadlast.rate;
+    }
 }
 public function stopBack():Void{
     if(not backHitted()){
@@ -769,19 +743,15 @@ public function dectectHitandMove(){
         var ball : ScrollBall;
         while(it.hasNext()){
                 ball = it.next() as ScrollBall;
-                if(pauseinghead == null and ball.isInStatus(GameBall.PAUSED_STATE)){
-                        pauseing = true;
-                        pauseinghead = ball;
-                        pauseingheadlast = lastball;
-                };
-                //if there is a shifting on the paused ball
-                if(pauseinghead != null and
-                   pauseingsecondhead == null and
-                   ball.isInStatus(GameBall.PAUSED_STATE) and
-                   not ball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
-                   lastball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                        pauseingsecondhead = ball;
-                        pauseingsecondheadlast = lastball;
+                //stop paused ball
+                if(lastball != null and
+                    ball.isInStatus(GameBall.PAUSED_STATE) and
+                    not ball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
+                    hitted(lastball,ball)){
+                        if(not lastball.isInStatus(GameBall.PAUSED_STATE)){
+                              ball.unsetStatus(GameBall.PAUSED_STATE);  
+                        }
+                        ball.rate = lastball.rate;
                 }
                 if(shiftinghead == null and ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                         shifting = true;
@@ -793,6 +763,9 @@ public function dectectHitandMove(){
                 };
                 (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate(it);
                 (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate(it);
+//                 if(lastball != null and hitted(lastball,ball)){
+//                        ball.rate = lastball.rate;
+//                 }
                 if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
                      bullet.pause();
                      playHitSound();
@@ -819,9 +792,9 @@ public function shiftFrom(ball : GameBall){
     while(iter.hasNext()){
         tmpball = iter.next() as ScrollBall;
         if(counter > index){
-             //if there is a break between two stopped balls
-             if(lastball != null and tmpball.isInStatus(GameBall.PAUSED_STATE) and not hitted(tmpball,lastball,5)){
-                     pauseinghead = tmpball;
+//             //if there is a break between two stopped balls
+             if(lastball != null and tmpball.isInStatus(GameBall.PAUSED_STATE) and not hitted(tmpball,lastball)){
+//                     pauseinghead = tmpball;
                      break;
              }
              if(shift or tmpball.sameStatusWith(ball as ScrollBall)){

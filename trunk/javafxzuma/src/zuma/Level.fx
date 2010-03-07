@@ -48,7 +48,7 @@ function detect() {
         Main.model.dectectHitandMove();
         Main.model.stopShift();
         Main.model.stopBack();
-        Main.model.stopPause();
+//        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
             Main.gamestat = 0;
         }
