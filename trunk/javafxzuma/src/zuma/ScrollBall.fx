@@ -101,24 +101,15 @@ override public function create(): Node {
         animball;
 }
 public function setStatus(status : Integer){
-    if(status == GameBall.PAUSED_STATE){
-            Main.model.pausecount++;
-    }
     statusList[status] = true;
 }
 public function unsetStatus(status : Integer){
-    if(status == GameBall.PAUSED_STATE){
-            Main.model.pausecount--;
-    }
     statusList[status] = false;
 }
 public function isInStatus(status : Integer){
     return statusList[status];
 }
 public function clearStatus(){
-    if(isInStatus(GameBall.PAUSED_STATE)){
-            Main.model.pausecount--;
-    }
     statusList =  [false,false,false,false,false,false,false];
 }
 public var anim1 = SVGTransition {

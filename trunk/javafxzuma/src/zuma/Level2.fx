@@ -170,7 +170,7 @@ function setEmitter() {
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
-public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
+public var gamecontent = [backgroundview,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
 override public function ready():Void{

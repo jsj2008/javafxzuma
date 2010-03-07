@@ -179,7 +179,7 @@ override public function ready():Void{
     }
     while (Main.model.sizeofRecycled() < Config.PRE_CREATE_BALL){
          def ball0 = ScrollBall{patharray : patharray};
-         insert ball0 into group.content;
+//         insert ball0 into group.content;
          insert ball0.effectplayer into group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
@@ -187,7 +187,7 @@ override public function ready():Void{
     }
     while(Main.model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
          def ball0 = SpecialScrollBall{patharray : patharray};
-         insert ball0 into group.content;
+//         insert ball0 into group.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
          Main.model.recycleSpecial(ball0);

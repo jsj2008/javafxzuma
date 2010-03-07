@@ -12,8 +12,8 @@ import javafx.scene.image.Image;
  * @author javatest
  */
 public def EMITTER_X = 50;
-public def EMITTER_Y = 500;
-public def background : Image = Image { url: "{__DIR__}images/background_2.png" };
+public def EMITTER_Y = 200;
+public def background : Image = Image { url: "{__DIR__}images/background2.jpg" };
 public def END_DOOR_X = 430;
 public def END_DOOR_Y = 500;
-public def PATH_DATA_FILE = "/zuma/svg/map2";
+public def PATH_DATA_FILE = "/zuma/svg/map3";
