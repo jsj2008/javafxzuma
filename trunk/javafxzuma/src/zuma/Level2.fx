@@ -31,14 +31,17 @@ def emitter = Emitter{translateX: Level2Config.EMITTER_X
                       degrees : bind degrees};
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
-def totlescoreText = AnimText{translateX:30,translateY:70};
+def totlescoreText = AnimText{translateX:10,translateY:20};
 var door = EndDoor{translateX : Level2Config.END_DOOR_X, translateY : Level2Config.END_DOOR_Y};
 public-read var group: Group = Group {
             content: [
             emitter]};
+var backgroundbuttom = ImageView {
+                translateY : 280
+                image: Resources.background
+                focusTraversable: true
+                visible: true};
 var backgroundview = ImageView {
-                fitHeight : Config.WINDOW_HEIGHT
-                fitWidth : Config.WINDOW_WIDTH
                 image: Level2Config.background
                 focusTraversable: true
                 visible: true
@@ -170,7 +173,7 @@ function setEmitter() {
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
-public var gamecontent = [backgroundview,door,specialimageview,
+public var gamecontent = [backgroundview,backgroundbuttom,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
 override public function ready():Void{

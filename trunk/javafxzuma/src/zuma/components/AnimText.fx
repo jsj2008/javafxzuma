@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 
 public class AnimText  extends CustomNode {
 var color_index = 0;
-public var font : Font = Font { size: 50 };
+public var font : Font = Font { size: 20 };
 var colors : Color[] = [Color.BLUE,
                         Color.GREEN,
                         Color.PURPLE,

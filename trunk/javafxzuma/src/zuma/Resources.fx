@@ -100,6 +100,7 @@ public def effectimage = [Image { url: "{__DIR__}images/effect.000.png" }
 
 public def fireIcon = [Image { url: "{__DIR__}images/fireball_cursor.jpg" }
                        Image { url: "{__DIR__}images/fireball_cursor_a.jpg" }];
+public def background : Image = Image { url: "{__DIR__}images/background.png" };
 public def ballclick_sound = "ball_hit.wav";
 public def ballclick_sound_2 = "ballclick1.wav";
 public def purge_sound = "chain1.wav";
