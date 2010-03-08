@@ -34,7 +34,6 @@ def emitter = Emitter{translateX: Main.currentData.EMITTER_X
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:10,translateY:20};
-var door = EndDoor{translateX : Main.currentData.END_DOOR_X, translateY : Main.currentData.END_DOOR_Y};
 var backgroundbuttom = ImageView {
                 translateY : 280+21
                 image: Resources.background_bottom
@@ -175,7 +174,7 @@ function setEmitter() {
 }
 public var gamecontent = Group {
         translateY : 21
-        content : [backgroundview,door,specialimageview,emitter,scoreText,pointer]
+        content : [backgroundview,specialimageview,emitter,scoreText,pointer]
         };
 public var totlecontent = [backgroundbuttom,progress,gamecontent,totlescoreText];
 override public function ready():Void{

@@ -37,7 +37,7 @@ public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 //score changed listener
 public-read var popScore : function(x : Number,y : Number,score : Integer,color : Integer);
 public-read var addScore : function(score : Integer);
-public-read var ending = false;
+public var ending = false;
 public var detectThread : Timeline;
 var backing : Boolean = false;
 var backinghead : ScrollBall;
@@ -299,6 +299,9 @@ public function reGenerBall(){
         generedBall = 0;
         lastGenered = null;
 }
+public function stopGenerBall(){
+        generedBall = 100000;
+}
 public function generBall() : ScrollBall{
        if(generedBall == 0){
                playRollingSound();
@@ -333,19 +336,11 @@ public function generBall() : ScrollBall{
        return  lastGenered;
 }
 public function endingRunning(){
-//    if(ending){
-//        return;
-//    }
-    ending = true;
-//    for(ball in runningBalls){
-//        (ball as ScrollBall).rate = (Config.END_RATE);
-//    }
+    for(ball in runningBalls){
+        (ball as ScrollBall).rate = (Config.END_RATE);
+    }
 }
 public function ended(){
-    if(sizeofRunning() == 0){
-            ending = false;
-            return true;
-    }
     return false;
 }
 public function getNextBall(ball : ScrollBall){
