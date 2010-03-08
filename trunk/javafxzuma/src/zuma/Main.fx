@@ -57,7 +57,6 @@ public var gamestat = -1 on replace {
             FX.deferAction(function():Void{
                 ui = SplashUI{};
             });
-            
     }
     if(gamestat == 1){
             ui.stop();

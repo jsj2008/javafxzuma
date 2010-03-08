@@ -43,8 +43,10 @@ function detect() {
                     Main.model.startBulletGenor();
                     Main.model.generedoffset = Config.NORMAL_OFFSET;
         }
+        Main.model.dectectHitandMove();
         if(Main.model.ending){
-//            Main.model.setDefaultRate(Config.END_RATE);
+            Main.model.stopGenerBall();
+            Main.model.endingRunning();
 //            door.open();
         }
         if(Main.model.ended()){
@@ -52,13 +54,14 @@ function detect() {
         }
         //TODO : performance issue
         //Main.model.restoreRateWhenAllPaused();
-        Main.model.dectectHitandMove();
         Main.model.stopShift();
         Main.model.stopBack();
 //        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
             if(progress.isCompleted()){
                 Main.gamestat = 4;
+            }else if(Main.model.ending){
+                 Main.gamestat = 0;
             }else{
                 Main.model.reGenerBall();
             }
