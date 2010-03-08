@@ -25,6 +25,8 @@ import java.util.ListIterator;
 
 import javafx.animation.Timeline;
 
+import zuma.GameBall;
+
 public class Model {
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
@@ -51,12 +53,11 @@ var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
 public var currentbullet : BulletBall;
 var bullet_stop = true;
-var generedBall = 0;
+public var generedBall = 0;
 var specialeffect_counter = 0 on replace oldvalue{
     if(oldvalue != 0 and specialeffect_counter == 0){
         //restore defauterate
         setDefaultRate(Config.RUNNING_RATE);
-        println("special effect ended");
     }
 };
 var hitsound = Sound{fileName:Resources.ballclick_sound};
@@ -65,7 +66,7 @@ var purgesound = Sound{fileName:Resources.purge_sound};
 var rollingsound = Sound{fileName:Resources.rolling_sound};
 var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
 var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
-public-read var defaultRate = Config.INITIAL_RATE on replace oldvalue{
+public-read var defaultRate = Main.currentData.INITIAL_RATE on replace oldvalue{
     applyToAll(function(ball : ScrollBall):Boolean{
 //        if(defaultRate == Config.SPECIAL_BACK_RATE){
 //            if(ball.isInStatus(GameBall.PAUSED_STATE)){
@@ -225,7 +226,7 @@ function getNextIndex(ball : ScrollBall){
      var x = (ball.translateX as Float);
      var y = (ball.translateY as Float);
      var n = 0;
-     var it: Iterator = (Main.ui as Level).patharray.iterator();
+     var it: Iterator = (Main.ui as Game).patharray.iterator();
      //Logger.log(Resources.patharray.indexOf(x));
      var fromindex = -1;
      var newindex = 0;
@@ -293,15 +294,20 @@ public function setScoreUpdator(pc : function(x : Number,y : Number,score : Inte
         popScore = pc;
         addScore = ac;
 }
+public function reGenerBall(){
+        defaultRate = Main.currentData.INITIAL_RATE;
+        generedBall = 0;
+        lastGenered = null;
+}
 public function generBall() : ScrollBall{
        if(generedBall == 0){
                playRollingSound();
        }
-       if(generedBall > Config.MAX_BALL_NUM){
+       if(generedBall > Main.currentData.max_ball){
                return null;
        }
-       var ox = (Main.ui as Level).patharray.get(0) as Float;
-       var oy = (Main.ui as Level).patharray.get(1) as Float;
+       var ox = (Main.ui as Game).patharray.get(0) as Float;
+       var oy = (Main.ui as Game).patharray.get(1) as Float;
        var x = (lastGenered.translateX as Float);
        var y = (lastGenered.translateY as Float);
        if(x < 0 and y < 0){
@@ -347,7 +353,7 @@ public function getNextBall(ball : ScrollBall){
      var x = (ball.translateX as Float);
      var y = (ball.translateY as Float);
      var n = 0;
-     var it: Iterator = (Main.ui as Level).patharray.iterator();
+     var it: Iterator = (Main.ui as Game).patharray.iterator();
      //Logger.log(Resources.patharray.indexOf(x));
      var fromindex = -1;
      var newindex = 0;
@@ -621,17 +627,17 @@ public function stopShift():Void{
      if(not shifting){
              return;
      }
-     var reached = (Main.ui as Level).patharray.indexOf(shiftinghead.translateX)/3;
+     var reached = (Main.ui as Game).patharray.indexOf(shiftinghead.translateX)/3;
      var indexOfShift = runningBalls.indexOf(shiftinghead);
      //when all balls are shifting
      if(indexOfShift <=0){
-//        applyToAll(function(ball : ScrollBall):Boolean{
-//            ball.rate = (Config.RUNNING_RATE);
-//            ball.unsetStatus(GameBall.PAUSED_STATE);
-//            ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
-//            ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
-//            return false;
-//        });
+        applyToShiftBall(function(ball : ScrollBall):Boolean{
+            ball.rate = (Config.RUNNING_RATE);
+            ball.unsetStatus(GameBall.PAUSED_STATE);
+            ball.unsetStatus(GameBall.SHIFT_RUNNING_STATE);
+            ball.unsetStatus(GameBall.BACK_RUNNING_STATE);
+            return false;
+        });
         return;
      }
      var newBall = runningBalls.get(indexOfShift-1);

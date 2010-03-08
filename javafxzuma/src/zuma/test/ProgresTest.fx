@@ -1,24 +1,31 @@
 /*
- * AnimTextTest.fx
+ * ProgresTest.fx
  *
- * Created on Feb 24, 2010, 12:14:23 PM
+ * Created on Mar 8, 2010, 2:51:39 PM
  */
 
 package zuma.test;
 
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import zuma.components.AnimText;
-
+import javafx.stage.Stage;
 import zuma.Main;
+
+import zuma.components.Progress;
+
+import zuma.Resources;
+
 /**
  * @author javatest
  */
-var text = AnimText{translateX:200,translateY:200};
+
+var progress = Progress{
+            progressImage:Resources.background_upper;
+            fillImage:Resources.progress_fill
+            max : 50
+        };
 var counter = 1;
 var backgroundview = ImageView {
                         fitHeight : 700
@@ -26,8 +33,11 @@ var backgroundview = ImageView {
                         image: Main.currentData.background
                         focusTraversable: true
     onKeyPressed: function( e: KeyEvent ):Void {
-                if(e.code == KeyCode.VK_ENTER){
-                       text.addText(10);
+                if(e.code == KeyCode.VK_UP){
+                        progress.current++;
+                };
+                if(e.code == KeyCode.VK_DOWN){
+                        progress.current--;
                 }
      }
 };
@@ -37,7 +47,7 @@ Stage {
     height: 600
     scene: Scene {
         content: [
-                backgroundview,text
+                backgroundview,progress
         ]
     }
 }

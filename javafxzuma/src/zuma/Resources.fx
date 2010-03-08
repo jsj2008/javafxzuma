@@ -21,64 +21,64 @@ public def endDoorImage = [Image { url: "{__DIR__}images/bagua_1.png" }
                                  Image { url: "{__DIR__}images/bagua_2.png" }
                                  Image { url: "{__DIR__}images/bagua_3.png" }
                                  Image { url: "{__DIR__}images/bagua_4.png" }];
-public def ballarray = [Image { url: "{__DIR__}images/baBallBlue.gif" },
-                        Image { url: "{__DIR__}images/baBallGreen.gif" },
-                        Image { url: "{__DIR__}images/baBallPurple.gif" },
-                        Image { url: "{__DIR__}images/baBallRed.gif" },
-                        Image { url: "{__DIR__}images/baBallWhite.gif" },
-                        Image { url: "{__DIR__}images/baBallYellow.gif" }];
+public def ballarray = [Image { url: "{__DIR__}images/ball/baBallBlue.gif" },
+                        Image { url: "{__DIR__}images/ball/baBallGreen.gif" },
+                        Image { url: "{__DIR__}images/ball/baBallPurple.gif" },
+                        Image { url: "{__DIR__}images/ball/baBallRed.gif" },
+                        Image { url: "{__DIR__}images/ball/baBallWhite.gif" },
+                        Image { url: "{__DIR__}images/ball/baBallYellow.gif" }];
 //public def ballarray = [Image { url: "{__DIR__}images/level2/blueball.png" },
 //                        Image { url: "{__DIR__}images/level2/greenball.png" },
 //                        Image { url: "{__DIR__}images/level2/purpleball.png" },
 //                        Image { url: "{__DIR__}images/level2/redball.png" },
 //                        Image { url: "{__DIR__}images/level2/whiteball.png" },
 //                        Image { url: "{__DIR__}images/level2/yellowball.png" }];
-public def bomImage = [Image { url: "{__DIR__}images/BomBlue.png" }
-                       Image { url: "{__DIR__}images/BomGreen.png" }
-                       Image { url: "{__DIR__}images/BomPurple.png" }
-                       Image { url: "{__DIR__}images/BomRed.png" }
-                       Image { url: "{__DIR__}images/BomWhite.png" }
-                       Image { url: "{__DIR__}images/BomYellow.png" }];
-public def backwardsImage = [Image { url: "{__DIR__}images/baBackwardsBlue.png" }
-                               Image { url: "{__DIR__}images/baBackwardsGreen.png" }
-                               Image { url: "{__DIR__}images/baBackwardsPurple.png" }
-                               Image { url: "{__DIR__}images/baBackwardsRed.png" }
-                               Image { url: "{__DIR__}images/baBackwardsWhite.png" }
-                               Image { url: "{__DIR__}images/baBackwardsYellow.png" }];
-public def accuracyImage = [Image { url: "{__DIR__}images/baAccuracyBlue.png" }
-                               Image { url: "{__DIR__}images/baAccuracyGreen.png" }
-                               Image { url: "{__DIR__}images/baAccuracyPurple.png" }
-                               Image { url: "{__DIR__}images/baAccuracyRed.png" }
-                               Image { url: "{__DIR__}images/baAccuracyWhite.png" }
-                               Image { url: "{__DIR__}images/baAccuracyYellow.png" }];
-public def slowImage = [Image { url: "{__DIR__}images/baSlowBlue.png" }
-                               Image { url: "{__DIR__}images/baSlowGreen.png" }
-                               Image { url: "{__DIR__}images/baSlowPurple.png" }
-                               Image { url: "{__DIR__}images/baSlowRed.png" }
-                               Image { url: "{__DIR__}images/baSlowWhite.png" }
-                               Image { url: "{__DIR__}images/baSlowYellow.png" }];
-public def arrowImage = [Image { url: "{__DIR__}images/arrow_blue_up.png" }
-                               Image { url: "{__DIR__}images/arrow_green_up.png" }
-                               Image { url: "{__DIR__}images/arrow_violet_up.png" }
-                               Image { url: "{__DIR__}images/arrow_red_up.png" }
-                               Image { url: "{__DIR__}images/arrow_grey_up.png" }
-                               Image { url: "{__DIR__}images/arrow_yellow_up.png" }];
+public def bomImage = [Image { url: "{__DIR__}images/ball/BomBlue.png" }
+                       Image { url: "{__DIR__}images/ball/BomGreen.png" }
+                       Image { url: "{__DIR__}images/ball/BomPurple.png" }
+                       Image { url: "{__DIR__}images/ball/BomRed.png" }
+                       Image { url: "{__DIR__}images/ball/BomWhite.png" }
+                       Image { url: "{__DIR__}images/ball/BomYellow.png" }];
+public def backwardsImage = [Image { url: "{__DIR__}images/ball/baBackwardsBlue.png" }
+                               Image { url: "{__DIR__}images/ball/baBackwardsGreen.png" }
+                               Image { url: "{__DIR__}images/ball/baBackwardsPurple.png" }
+                               Image { url: "{__DIR__}images/ball/baBackwardsRed.png" }
+                               Image { url: "{__DIR__}images/ball/baBackwardsWhite.png" }
+                               Image { url: "{__DIR__}images/ball/baBackwardsYellow.png" }];
+public def accuracyImage = [Image { url: "{__DIR__}images/ball/baAccuracyBlue.png" }
+                               Image { url: "{__DIR__}images/ball/baAccuracyGreen.png" }
+                               Image { url: "{__DIR__}images/ball/baAccuracyPurple.png" }
+                               Image { url: "{__DIR__}images/ball/baAccuracyRed.png" }
+                               Image { url: "{__DIR__}images/ball/baAccuracyWhite.png" }
+                               Image { url: "{__DIR__}images/ball/baAccuracyYellow.png" }];
+public def slowImage = [Image { url: "{__DIR__}images/ball/baSlowBlue.png" }
+                               Image { url: "{__DIR__}images/ball/baSlowGreen.png" }
+                               Image { url: "{__DIR__}images/ball/baSlowPurple.png" }
+                               Image { url: "{__DIR__}images/ball/baSlowRed.png" }
+                               Image { url: "{__DIR__}images/ball/baSlowWhite.png" }
+                               Image { url: "{__DIR__}images/ball/baSlowYellow.png" }];
+public def arrowImage = [Image { url: "{__DIR__}images/ball/arrow_blue_up.png" }
+                               Image { url: "{__DIR__}images/ball/arrow_green_up.png" }
+                               Image { url: "{__DIR__}images/ball/arrow_violet_up.png" }
+                               Image { url: "{__DIR__}images/ball/arrow_red_up.png" }
+                               Image { url: "{__DIR__}images/ball/arrow_grey_up.png" }
+                               Image { url: "{__DIR__}images/ball/arrow_yellow_up.png" }];
 public def specialEffectImage = [Image { url: "{__DIR__}images/BomEffect.png" }
                                  Image { url: "{__DIR__}images/BackwardsEffect.png" }
                                  Image { url: "{__DIR__}images/AccuracyEffect.png" }
                                  Image { url: "{__DIR__}images/SlowEffect.png" }];
-public def purgeffectImage = [Image { url: "{__DIR__}images/effect.000.png" }
-                                 Image { url: "{__DIR__}images/effect.001.png" }
-                                 Image { url: "{__DIR__}images/effect.002.png" }
-                                 Image { url: "{__DIR__}images/effect.003.png" }
-                                 Image { url: "{__DIR__}images/effect.004.png" }
-                                 Image { url: "{__DIR__}images/effect.005.png" }
-                                 Image { url: "{__DIR__}images/effect.006.png" }
-                                 Image { url: "{__DIR__}images/effect.007.png" }
-                                 Image { url: "{__DIR__}images/effect.008.png" }];
+public def purgeffectImage = [Image { url: "{__DIR__}images/effect/effect.000.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.001.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.002.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.003.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.004.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.005.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.006.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.007.png" }
+                                 Image { url: "{__DIR__}images/effect/effect.008.png" }];
 public def scrollBallBlue = Image{url : "{__DIR__}images/baBallBlue.gif"};
 public def scrollBallGreen = Image{url : "{__DIR__}images/baBallGreen.gif"};
-public def patharray = MapLoader.getMap(Level1Config.PATH_DATA_FILE);
+public def patharray = MapLoader.getMap("/zuma/svg/map1");
 public def track = SVGPath {
                             stroke: Color.BLACK
                             strokeWidth: 1
@@ -97,10 +97,12 @@ public def effectimage = [Image { url: "{__DIR__}images/effect.000.png" }
                                Image { url: "{__DIR__}images/effect.006.png" }
                                Image { url: "{__DIR__}images/effect.007.png" }
                                Image { url: "{__DIR__}images/effect.008.png" }];
-
+public def loading_txt_image = Image { url: "{__DIR__}images/text/txt_loading.jpg" };
 public def fireIcon = [Image { url: "{__DIR__}images/fireball_cursor.jpg" }
                        Image { url: "{__DIR__}images/fireball_cursor_a.jpg" }];
-public def background : Image = Image { url: "{__DIR__}images/background.png" };
+public def background_bottom : Image = Image { url: "{__DIR__}images/background/background_bottom.png" };
+public def background_upper : Image = Image { url: "{__DIR__}images/background/background_upper.png" };
+public def progress_fill : Image = Image { url: "{__DIR__}images/background/progress_fill.jpg" };
 public def ballclick_sound = "ball_hit.wav";
 public def ballclick_sound_2 = "ballclick1.wav";
 public def purge_sound = "chain1.wav";

@@ -1,5 +1,5 @@
 /*
- * Level2.fx
+ * Game2.fx
  *
  * Created on Mar 5, 2010, 11:47:39 AM
  */
@@ -17,32 +17,31 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
-import zuma.Level2Config;
+
+import zuma.components.Progress;
+
 /**
  * @author javatest
  */
 
-public class Level2 extends Level{
+public class Game2 extends Game{
 var degrees : Double= 180;
 var curx : Double= 0;
 var cury : Double= 0;
-def emitter = Emitter{translateX: Level2Config.EMITTER_X
-                      translateY: Level2Config.EMITTER_Y
+def emitter = Emitter{translateX: Main.currentData.EMITTER_X
+                      translateY: Main.currentData.EMITTER_Y
                       degrees : bind degrees};
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:10,translateY:20};
-var door = EndDoor{translateX : Level2Config.END_DOOR_X, translateY : Level2Config.END_DOOR_Y};
-public-read var group: Group = Group {
-            content: [
-            emitter]};
+var door = EndDoor{translateX : Main.currentData.END_DOOR_X, translateY : Main.currentData.END_DOOR_Y};
 var backgroundbuttom = ImageView {
-                translateY : 280
-                image: Resources.background
+                translateY : 280+21
+                image: Resources.background_bottom
                 focusTraversable: true
                 visible: true};
 var backgroundview = ImageView {
-                image: Level2Config.background
+                image: Main.currentData.background
                 focusTraversable: true
                 visible: true
                 onMousePressed: function( e: MouseEvent ):Void {
@@ -119,8 +118,9 @@ function popScore(x : Number,y : Number,score : Integer,color : Integer){
         scoreText.translateY = y;
         scoreText.setUpText("+{score}", color);
 }
-function addScore(score : Integer){
+function addScore(score : Integer):Void{
         totlescoreText.addText(score);
+        progress.current = progress.current + score/10;
 }
 var shiftball : ScrollBall;
 var initial_rate = 1;
@@ -173,26 +173,28 @@ function setEmitter() {
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
-public var gamecontent = [backgroundview,backgroundbuttom,door,specialimageview,
-                group,scoreText,totlescoreText,pointer
-        ];
+public var gamecontent = Group {
+        translateY : 21
+        content : [backgroundview,door,specialimageview,emitter,scoreText,pointer]
+        };
+public var totlecontent = [backgroundbuttom,progress,gamecontent,totlescoreText];
 override public function ready():Void{
-    patharray =  MapLoader.getMap(Level2Config.PATH_DATA_FILE);
+    patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
     while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
-         def ball0 = BulletBall{group : group,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
+         def ball0 = BulletBall{group : gamecontent,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
          Main.model.addBullet(ball0);
     }
     while (Main.model.sizeofRecycled() < Config.PRE_CREATE_BALL){
          def ball0 = ScrollBall{patharray : patharray};
-         insert ball0 into group.content;
-         insert ball0.effectplayer into group.content;
+         insert ball0 into gamecontent.content;
+         insert ball0.effectplayer into gamecontent.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
          Main.model.recycleBall(ball0,null);
     }
     while(Main.model.sizeofRecycledSpecial() < Config.PRE_CREATE_BALL_SPECIAL){
          def ball0 = SpecialScrollBall{patharray : patharray};
-         insert ball0 into group.content;
+         insert ball0 into gamecontent.content;
          ball0.setStatus(GameBall.DEAD_STATE);
          ball0.vis = false;
          Main.model.recycleSpecial(ball0,null);
@@ -202,12 +204,12 @@ override public function ready():Void{
     }
     Main.model.setSpecialEffect(sepcialEffect);
     Main.model.setScoreUpdator(popScore,addScore);
-    Main.mainscene.content = gamecontent;
     Main.model.detectThread = detector;
+    Main.mainscene.content = totlecontent;
 }
 override public function start(){
-    ready();
     detector.play();
+    ready();
 }
 override public function stop():Void{
     detector.stop();

@@ -20,7 +20,8 @@ import javafx.scene.input.MouseEvent;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import zuma.Level1Config;
+
+import zuma.Main;
 
 /**
  * @author javatest
@@ -57,7 +58,7 @@ function sepcialEffect(x : Number,y : Number){
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Level1Config.background
+                        image: Main.currentData.background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
                             sepcialEffect(e.x,e.y);

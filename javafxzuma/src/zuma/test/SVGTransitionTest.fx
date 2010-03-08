@@ -23,11 +23,11 @@ import zuma.ScrollBall;
 import javafx.scene.Group;
 
 import zuma.components.SVGTransition;
-import zuma.Level1Config;
 
 import javafx.animation.KeyFrame;
 
-import zuma.Config;
+
+import zuma.Main;
 /**
  * @author tzp
  */
@@ -44,7 +44,7 @@ def track = SVGPath {
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Level1Config.background
+                        image: Main.currentData.background
                         focusTraversable: true
                         onMousePressed: function( e: MouseEvent ):Void {
                             rate=rate+1;

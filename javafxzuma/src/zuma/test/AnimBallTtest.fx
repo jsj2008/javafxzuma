@@ -38,7 +38,8 @@ import javafx.animation.Timeline;
 
 import zuma.components.AnimBall;
 import zuma.components.SVGTransition;
-import zuma.Level1Config;
+
+import zuma.Main;
 
 /**
  * @author javatest
@@ -98,7 +99,7 @@ var anim = SVGTransition {
 var backgroundview = ImageView {
                         fitHeight : 700
                         fitWidth : 700
-                        image: Level1Config.background
+                        image: Main.currentData.background
                         focusTraversable: true
     onKeyPressed: function( e: KeyEvent ):Void {
                 if(e.code == KeyCode.VK_UP){

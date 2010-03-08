@@ -6,12 +6,13 @@
 
 package zuma;
 
+import javafx.scene.image.ImageView;
+
 /**
  * @author javatest
  */
 
 public abstract class UI {
-public var ui = [];
 abstract public function start():Void;
 abstract public function stop():Void;
 abstract public function pause():Void;
