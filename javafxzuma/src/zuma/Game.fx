@@ -58,7 +58,7 @@ function detect() {
         Main.model.stopBack();
 //        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
-            if(progress.isCompleted()){
+            if(progress.isCompleted() and not Main.model.ending){
                 Main.gamestat = 4;
             }else if(Main.model.ending){
                  Main.gamestat = 0;
