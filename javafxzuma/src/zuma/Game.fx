@@ -35,10 +35,13 @@ public def detector = Timeline {
 }
 public abstract function ready():Void;
 function detect() {
+        if(progress.isCompleted()){
+                Main.model.sucess = true;
+        }
         Main.model.specialEffectCount();
         Main.model.generBall();
-        if(Main.model.sizeofRunning() == 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
-                    Main.model.setDefaultRate(Config.RUNNING_RATE);
+        if(Main.model.sizeofRunning() >= 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
+                    Main.model.defaultRate = Config.RUNNING_RATE;
                     Main.model.restoreAllRunning();
                     Main.model.startBulletGenor();
                     Main.model.generedoffset = Config.NORMAL_OFFSET;
@@ -59,6 +62,8 @@ function detect() {
 //        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
             if(progress.isCompleted() and not Main.model.ending){
+                println("progress.isCompleted() {progress.isCompleted()}");
+                println("Main.model.ending {Main.model.ending}");
                 Main.gamestat = 4;
             }else if(Main.model.ending){
                  Main.gamestat = 0;

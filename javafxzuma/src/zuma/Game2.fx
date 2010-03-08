@@ -38,7 +38,8 @@ var backgroundbuttom = ImageView {
                 translateY : 280+21
                 image: Resources.background_bottom
                 focusTraversable: true
-                visible: true};
+                visible: true
+                };
 var backgroundview = ImageView {
                 image: Main.currentData.background
                 focusTraversable: true
@@ -57,16 +58,7 @@ var backgroundview = ImageView {
                     Main.model.runningbullets.add(Main.model.currentbullet);
                     emitter.hitmove();
                     Main.model.setCurrentBullet(null);
-
-                }
-                onMouseMoved: function( e: MouseEvent ):Void {
-                    curx = e.x;
-                    cury = e.y;
-                    setEmitter();
-                }
-                //debug
-                onKeyPressed: function( e: KeyEvent ):Void {
-                    if(e.code == KeyCode.VK_ENTER){
+                    if(e.middleButtonDown){
                             println("--runningBalls--");
                             var count = 0;
                             for(ball in Main.model.runningBalls){
@@ -82,6 +74,11 @@ var backgroundview = ImageView {
                                     detector.pause();
                             }
                     }
+                }
+                onMouseMoved: function( e: MouseEvent ):Void {
+                    curx = e.x;
+                    cury = e.y;
+                    setEmitter();
                 }
 }
 def specialimageview = ImageView {
@@ -176,7 +173,7 @@ public var gamecontent = Group {
         translateY : 21
         content : [backgroundview,specialimageview,emitter,scoreText,pointer]
         };
-public var totlecontent = [backgroundbuttom,progress,gamecontent,totlescoreText];
+public var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];
 override public function ready():Void{
     patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
     while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){

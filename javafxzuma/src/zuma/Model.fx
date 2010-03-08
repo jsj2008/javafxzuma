@@ -38,6 +38,7 @@ public-read var specialEffect : function(x : Number,y : Number,type : Integer);
 public-read var popScore : function(x : Number,y : Number,score : Integer,color : Integer);
 public-read var addScore : function(score : Integer);
 public var ending = false;
+public var sucess = false;
 public var detectThread : Timeline;
 var backing : Boolean = false;
 var backinghead : ScrollBall;
@@ -55,10 +56,6 @@ public var currentbullet : BulletBall;
 var bullet_stop = true;
 public var generedBall = 0;
 var specialeffect_counter = 0 on replace oldvalue{
-    if(oldvalue != 0 and specialeffect_counter == 0){
-        //restore defauterate
-        setDefaultRate(Config.RUNNING_RATE);
-    }
 };
 var hitsound = Sound{fileName:Resources.ballclick_sound};
 var hitsound2 = Sound{fileName:Resources.ballclick_sound_2};
@@ -66,18 +63,9 @@ var purgesound = Sound{fileName:Resources.purge_sound};
 var rollingsound = Sound{fileName:Resources.rolling_sound};
 var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
 var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
-public-read var defaultRate = Main.currentData.INITIAL_RATE on replace oldvalue{
+public var defaultRate = Main.currentData.INITIAL_RATE on replace oldvalue{
     applyToAll(function(ball : ScrollBall):Boolean{
-//        if(defaultRate == Config.SPECIAL_BACK_RATE){
-//            if(ball.isInStatus(GameBall.PAUSED_STATE)){
-//                    ball.setRate(defaultRate);
-//                    ball.setStatus(GameBall.BACK_RUNNING_STATE);
-//            }
-//            return false;
-//        }
-        if(ball.rate == oldvalue){
-            ball.rate = (defaultRate);
-        }
+        ball.rate = (defaultRate);
         return false;
     });
 };
@@ -104,19 +92,15 @@ function rebuild(ball : ScrollBall,it : Object){
 }
 function effectAction(effect : Integer):Void{
     if(effect == SpecialScrollBall.SPECIAL_ACCURACY){
-            setDefaultRate(Config.SPECIAL_ACC_RATE);
             return;
     }
     if(effect == SpecialScrollBall.SPECIAL_SLOW){
-            setDefaultRate(Config.SPECIAL_SLOW_RATE);
             return;
     }
         if(effect == SpecialScrollBall.SPECIAL_BACK){
-            setDefaultRate(Config.SPECIAL_ACC_RATE);
             return;
     }
     if(effect == SpecialScrollBall.SPECIAL_BOM){
-            setDefaultRate(Config.SPECIAL_SLOW_RATE);
             return;
     }
 }
@@ -306,7 +290,7 @@ public function generBall() : ScrollBall{
        if(generedBall == 0){
                playRollingSound();
        }
-       if(generedBall > Main.currentData.max_ball){
+       if(generedBall > Main.currentData.max_ball or sucess or ending){
                return null;
        }
        var ox = (Main.ui as Game).patharray.get(0) as Float;
@@ -847,9 +831,5 @@ public function restoreAllRunning():Void{
         (ball as ScrollBall).rate = (defaultRate);
         return false;
     });
-}
-public function setDefaultRate(rate : Integer){
-    println("default rate set to {rate}");
-    defaultRate = rate;
 }
 }
