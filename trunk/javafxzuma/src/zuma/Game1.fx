@@ -1,5 +1,5 @@
 /*
- * Level1.fx
+ * Game1.fx
  *
  * Created on Mar 4, 2010, 3:06:17 PM
  */
@@ -22,26 +22,26 @@ import zuma.util.Util;
  * @author javatest
  */
 
-public class Level1 extends Level{
+public class Game1 extends Game{
 var degrees : Double= 90;
 var curx : Double= 0;
 var cury : Double= 0;
-def emitter = Emitter{translateX: Level1Config.EMITTER_X - Config.EMITTER_DIAMETER/2
-                      translateY: Level1Config.EMITTER_X - Config.EMITTER_DIAMETER/2
-                      tx : Level1Config.EMITTER_X
-                      ty : Level1Config.EMITTER_X
+def emitter = Emitter{translateX: Main.currentData.EMITTER_X - Config.EMITTER_DIAMETER/2
+                      translateY: Main.currentData.EMITTER_X - Config.EMITTER_DIAMETER/2
+                      tx : Main.currentData.EMITTER_X
+                      ty : Main.currentData.EMITTER_X
                       degrees : bind degrees};
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:30,translateY:70};
-var door = EndDoor{translateX : Level1Config.END_DOOR_X, translateY : Level1Config.END_DOOR_Y};
+var door = EndDoor{translateX : Main.currentData.END_DOOR_X, translateY : Main.currentData.END_DOOR_Y};
 public-read var group: Group = Group {
             content: [
             emitter]};
 var backgroundview = ImageView {
                 fitHeight : Config.WINDOW_HEIGHT
                 fitWidth : Config.WINDOW_WIDTH
-                image: Level1Config.background
+                image: bind Main.currentData.background
                 focusTraversable: true
                 visible: true
                 onMousePressed: function( e: MouseEvent ):Void {
@@ -131,15 +131,15 @@ function generBall() : Void{
        ball.rate = (initial_rate);
 }
 function setEmitter() {
-   var deg = Util.getDegrees(Level1Config.EMITTER_X,Level1Config.EMITTER_Y,curx,cury,100000000);
+   var deg = Util.getDegrees(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y,curx,cury,100000000);
    degrees = deg -90;
-   var ball = Main.model.getMinDegreesBall(deg,Level1Config.EMITTER_X,Level1Config.EMITTER_Y);
+   var ball = Main.model.getMinDegreesBall(deg,Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y);
    //set pointer
    if(ball != null){
        var cos = Math.cos(Math.toRadians(deg));
        var sin = Math.sin(Math.toRadians(deg));
-       var ox = ball.translateX + Config.BALL_DIAMETER/2 - Level1Config.EMITTER_X;
-       var oy = ball.translateY + Config.BALL_DIAMETER/2 - Level1Config.EMITTER_Y;
+       var ox = ball.translateX + Config.BALL_DIAMETER/2 - Main.currentData.EMITTER_X;
+       var oy = ball.translateY + Config.BALL_DIAMETER/2 - Main.currentData.EMITTER_Y;
        /*
        * r^2 - 2(cos*ox+sin*oy)r + ox^2+oy^2-r^2 = 0
        * take the lesser one
@@ -153,28 +153,28 @@ function setEmitter() {
        var c = ox*ox + oy*oy - Util.square((Config.BALL_DIAMETER/2));
        var r = (-b - Math.sqrt(b*b - 4*a*c))/2*a;
        pointer.visible = true;
-       pointer.topx = r*cos + Level1Config.EMITTER_X;
-       pointer.topy = r*sin + Level1Config.EMITTER_Y;
-       pointer.botm_left_x = Util.getCoordxByDegree(Level1Config.EMITTER_X,Level1Config.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_lefx_y = Util.getCoordyByDegree(Level1Config.EMITTER_X,Level1Config.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_right_x = Util.getCoordxByDegree(Level1Config.EMITTER_X,Level1Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
-       pointer.botm_right_y = Util.getCoordyByDegree(Level1Config.EMITTER_X,Level1Config.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.topx = r*cos + Main.currentData.EMITTER_X;
+       pointer.topy = r*sin + Main.currentData.EMITTER_Y;
+       pointer.botm_left_x = Util.getCoordxByDegree(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_lefx_y = Util.getCoordyByDegree(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_x = Util.getCoordxByDegree(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_y = Util.getCoordyByDegree(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y, deg-10, Config.EMITTER_DIAMETER/2);
        pointer.genPoints();
        pointer.color = Main.model.currentbullet.imageIndex;
    }else{
        pointer.visible = false;
    }
-   var bx : Float = Util.getCoordx(Level1Config.EMITTER_X,Level1Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   var by : Float = Util.getCoordy(Level1Config.EMITTER_X,Level1Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
+   var bx : Float = Util.getCoordx(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
+   var by : Float = Util.getCoordy(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
 }
 public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
         ];
 override public function ready():Void{
-    patharray =  MapLoader.getMap(Level1Config.PATH_DATA_FILE);
+    patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
     while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
-         def ball0 = BulletBall{group : group, tx : Level1Config.EMITTER_X - Config.BALL_DIAMETER/2, ty : Level1Config.EMITTER_Y - Config.BALL_DIAMETER/2};
+         def ball0 = BulletBall{group : group, tx : Main.currentData.EMITTER_X - Config.BALL_DIAMETER/2, ty : Main.currentData.EMITTER_Y - Config.BALL_DIAMETER/2};
          Main.model.addBullet(ball0);
     }
     while (Main.model.sizeofRecycled() < Config.PRE_CREATE_BALL){

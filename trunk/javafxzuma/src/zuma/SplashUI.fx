@@ -6,13 +6,15 @@
 
 package zuma;
 
+
+import javafx.scene.Node;
+
 /**
  * @author javatest
  */
 
 public class SplashUI extends UI{
 override public function start(){
-
 }
 override public function stop(){
 

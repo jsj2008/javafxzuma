@@ -13,7 +13,7 @@ package zuma;
 public def EMITTER_RANGE = 500;
 public def EMITTER_DIAMETER = 50;
 public def ENDDOOR_DIAMETER = 100;
-public def WINDOW_HEIGHT = 340;
+public def WINDOW_HEIGHT = 361;
 public def WINDOW_WIDTH = 480;
 public def SCROLL_START_X = 342.85715;
 public def SCROLL_START_Y = 463.79074;
@@ -27,7 +27,6 @@ public def BULLET_HIT_DURIATION = 0.25s;
 public def DETECTOR_FREQUENCY = 0.001s;
 public def DEBUG = false;
 public def SPECILA_PERCENTAGE = 10;
-public def MAX_BALL_NUM = 40;
 
 //-------------------ball move rate config  ----------------------
 public def MOVE_ROLL_FREQUENCY = 0.02s;
@@ -35,7 +34,6 @@ public def END_RATE : Integer = 10; //0.003s
 public def BACK_RATE : Integer= -10; // 0.003s
 public def SHIFT_RATE : Integer = 5; //0.006s
 public def RUNNING_RATE = 1;
-public def INITIAL_RATE = 10;
 public def PAUSED_STOPPED_RATE = 0;
 //-----------------------------------------------------------------
 

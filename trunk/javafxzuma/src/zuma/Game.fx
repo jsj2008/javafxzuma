@@ -1,5 +1,5 @@
 /*
- * Level.fx
+ * Game.fx
  *
  * Created on Jan 13, 2010, 2:20:50 PM
  */
@@ -11,12 +11,19 @@ import javafx.animation.Timeline;
 
 import java.util.ArrayList;
 
+import zuma.components.Progress;
+
 /**
  * @author javatest
  */
 
-abstract public class Level extends UI{
+abstract public class Game extends UI{
 public var patharray : ArrayList;
+public def progress = Progress{
+            progressImage:Resources.background_upper;
+            fillImage:Resources.progress_fill
+            max : Main.currentData.target
+        };
 public def detector = Timeline {
         repeatCount: Timeline.INDEFINITE
         keyFrames : [
@@ -30,7 +37,7 @@ public abstract function ready():Void;
 function detect() {
         Main.model.specialEffectCount();
         Main.model.generBall();
-        if(Main.model.sizeofRunning() == 10 and Main.model.defaultRate == Config.INITIAL_RATE){
+        if(Main.model.sizeofRunning() == 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
                     Main.model.setDefaultRate(Config.RUNNING_RATE);
                     Main.model.restoreAllRunning();
                     Main.model.startBulletGenor();
@@ -50,7 +57,11 @@ function detect() {
         Main.model.stopBack();
 //        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
-            Main.gamestat = 0;
+            if(progress.isCompleted()){
+                Main.gamestat = 4;
+            }else{
+                Main.model.reGenerBall();
+            }
         }
 }
 }
