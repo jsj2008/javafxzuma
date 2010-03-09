@@ -31,11 +31,13 @@ import zuma.Resources;
 
 import zuma.Config;
 
-import javafx.scene.transform.Transform;
+
+import java.io.FileWriter;
 
 /**
  * @author tzp
  */
+var content;
 def track = SVGPath {
         stroke: Color.BLACK
         strokeWidth: 1
@@ -59,10 +61,13 @@ var anim = PathTransition {
         action : function () {
             timer.stop();
             print(count);
-            var  f = new FileOutputStream("./src/zuma/svg/map4");
+            var  f = new FileOutputStream("./src/zuma/svg/null");
             var  s = new ObjectOutputStream(f);
             s.writeObject(arraylist);
             s.flush();
+            var fw = new FileWriter("./src/zuma/svg/mapdata.txt");
+            fw.write(content);
+            fw.flush();
         }
 };
 var line = 50;
@@ -77,6 +82,7 @@ var timer = Timeline {
                 arraylist.add(animball.translateY);
                 arraylist.add(animball.rotate);
                   // print("{cy.translateX},{cy.translateY},");
+                  content = "{content},{animball.translateX},{animball.translateY},{animball.rotate}";
                    count ++;
                 }
             }
