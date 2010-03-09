@@ -56,12 +56,12 @@ var bullet_stop = true;
 public var generedBall = 0;
 var specialeffect_counter = 0 on replace oldvalue{
 };
-var hitsound = Sound{fileName:Resources.ballclick_sound};
-var hitsound2 = Sound{fileName:Resources.ballclick_sound_2};
-var purgesound = Sound{fileName:Resources.purge_sound};
-var rollingsound = Sound{fileName:Resources.rolling_sound};
-var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
-var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
+//var hitsound = Sound{fileName:Resources.ballclick_sound};
+//var hitsound2 = Sound{fileName:Resources.ballclick_sound_2};
+//var purgesound = Sound{fileName:Resources.purge_sound};
+//var rollingsound = Sound{fileName:Resources.rolling_sound};
+//var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
+//var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
 public var defaultRate = Main.currentData.INITIAL_RATE on replace oldvalue{
     applyToAll(function(ball : ScrollBall):Boolean{
         ball.rate = (defaultRate);
@@ -237,25 +237,25 @@ function getNextIndex(ball : ScrollBall){
 * play sound functions ---------------------------------------------------------------
 */
 public function playHitSound(){
-    hitsound.play();
+//    hitsound.play();
 }
 public function playHitSound2(){
-    hitsound2.play();
+//    hitsound2.play();
 }
 public function playPurgeSound(){
-    purgesound.play();
+//    purgesound.play();
 }
 public function playRollingSound(){
-    rollingsound.play();
+//    rollingsound.play();
 }
 public function stopRollingSound(){
-    rollingsound.stop();
+//    rollingsound.stop();
 }
 public function playSendBulletSound(){
-    sendbulletsound.play();
+//    sendbulletsound.play();
 }
 public function playDoorSwitchSound(){
-    doorswitchsound.play();
+//    doorswitchsound.play();
 }
 /*
 *   useful public functions

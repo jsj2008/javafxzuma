@@ -5,7 +5,7 @@
 package zuma;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -14,10 +14,27 @@ import java.util.ArrayList;
  */
 public class MapLoader {
 
-    public static ArrayList getMap(String path) throws IOException, ClassNotFoundException {
-        ObjectInputStream s = new ObjectInputStream(MapLoader.class.getResourceAsStream(path));
-        ArrayList patharray = (ArrayList) s.readObject();
-        s.close();
-        return patharray;
+    public  static ArrayList getMap(String path) throws IOException, ClassNotFoundException {
+        System.out.println("loading map ...");
+        ArrayList list = new ArrayList();
+        StringBuffer b = new StringBuffer();
+        System.out.println(path);
+        InputStream inputstream = MapLoader.class.getResourceAsStream(path);
+        System.out.println(inputstream);
+        int tmp;
+        Double d;
+        while((tmp = inputstream.read()) > 0){
+            if(tmp == 44){//','
+                d = Double.parseDouble(b.toString());
+                list.add(d);
+                b = new StringBuffer();
+//                System.out.println(d);
+                continue;
+            }
+            b.append((char)tmp);
+        }
+//        System.out.println((int)',');
+//        System.out.println(b.toString());
+        return list;
     }
 }

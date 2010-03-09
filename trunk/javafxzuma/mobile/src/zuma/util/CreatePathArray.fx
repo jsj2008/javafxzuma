@@ -24,14 +24,12 @@ import zuma.components.AnimBall;
 import java.util.ArrayList;
 
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
 import zuma.Resources;
 
 import zuma.Config;
 
-import javafx.scene.transform.Transform;
+import javax.microedition.io.file.FileConnection;
+
 
 /**
  * @author tzp
@@ -59,10 +57,10 @@ var anim = PathTransition {
         action : function () {
             timer.stop();
             print(count);
-            var  f = new FileOutputStream("./src/zuma/svg/map4");
-            var  s = new ObjectOutputStream(f);
-            s.writeObject(arraylist);
-            s.flush();
+//            var  f = new FileConnection("./src/zuma/svg/map4");
+//            var  s = new ObjectOutputStream(f);
+//            s.writeObject(arraylist);
+//            s.flush();
         }
 };
 var line = 50;

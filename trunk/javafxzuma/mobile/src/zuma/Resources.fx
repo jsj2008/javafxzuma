@@ -78,7 +78,6 @@ public def purgeffectImage = [Image { url: "{__DIR__}images/effect/effect.000.pn
                                  Image { url: "{__DIR__}images/effect/effect.008.png" }];
 public def scrollBallBlue = Image{url : "{__DIR__}images/baBallBlue.gif"};
 public def scrollBallGreen = Image{url : "{__DIR__}images/baBallGreen.gif"};
-public def patharray = MapLoader.getMap("/zuma/svg/map1");
 public def track = SVGPath {
                             stroke: Color.BLACK
                             strokeWidth: 1
