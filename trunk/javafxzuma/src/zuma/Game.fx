@@ -33,6 +33,7 @@ public def detector = Timeline {
             }
         ]
 }
+public abstract function setEmitter();
 public abstract function ready():Void;
 function detect() {
         if(progress.isCompleted()){
@@ -47,6 +48,7 @@ function detect() {
                     Main.model.generedoffset = Config.NORMAL_OFFSET;
         }
         Main.model.dectectHitandMove();
+        setEmitter();
         if(Main.model.ending){
             Main.model.stopGenerBall();
             Main.model.endingRunning();
@@ -55,15 +57,10 @@ function detect() {
         if(Main.model.ended()){
 //            door.close();
         }
-        //TODO : performance issue
-        //Main.model.restoreRateWhenAllPaused();
         Main.model.stopShift();
         Main.model.stopBack();
-//        Main.model.stopPause();
         if(Main.model.sizeofRunning() == 0){
             if(progress.isCompleted() and not Main.model.ending){
-                println("progress.isCompleted() {progress.isCompleted()}");
-                println("Main.model.ending {Main.model.ending}");
                 Main.gamestat = 4;
             }else if(Main.model.ending){
                  Main.gamestat = 0;

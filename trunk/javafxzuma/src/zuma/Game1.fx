@@ -130,7 +130,7 @@ function generBall() : Void{
        }
        ball.rate = (initial_rate);
 }
-function setEmitter() {
+override function setEmitter() {
    var deg = Util.getDegrees(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y,curx,cury,100000000);
    degrees = deg -90;
    var ball = Main.model.getMinDegreesBall(deg,Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y);
