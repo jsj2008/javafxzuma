@@ -11,14 +11,11 @@ import javafx.animation.transition.ParallelTransition;
 import javafx.animation.transition.ScaleTransition;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
 
-import zuma.components.Progress;
 
 /**
  * @author javatest
@@ -26,8 +23,6 @@ import zuma.components.Progress;
 
 public class Game2 extends Game{
 var degrees : Double= 180;
-var curx : Double= 0;
-var cury : Double= 0;
 def emitter = Emitter{translateX: Main.currentData.EMITTER_X
                       translateY: Main.currentData.EMITTER_Y
                       degrees : bind degrees};
@@ -76,9 +71,9 @@ var backgroundview = ImageView {
                     }
                 }
                 onMouseMoved: function( e: MouseEvent ):Void {
-                    curx = e.x;
-                    cury = e.y;
-                    setEmitter();
+                    Main.model.curx = e.x;
+                    Main.model.cury = e.y;
+//                    setEmitter();
                 }
 }
 def specialimageview = ImageView {
@@ -127,35 +122,21 @@ function generBall() : Void{
        }
        ball.rate = (initial_rate);
 }
-function setEmitter() {
+override function setEmitter() {
    var deg = 270;
-   emitter.translateX = curx - Config.EMITTER_DIAMETER/2;
-   var eox = curx;
+   emitter.translateX = Main.model.curx - Config.EMITTER_DIAMETER/2;
+   var eox = Main.model.curx;
    var eoy = emitter.translateY + Config.EMITTER_DIAMETER/2;
    emitter.tx = eox;
    emitter.ty = eoy;
-   var ball = Main.model.getMinDegreesBall(deg,curx,emitter.ty);
+   var ball = Main.model.pointedball;
    //set pointer
    if(ball != null){
-       var cos = Math.cos(Math.toRadians(deg));
-       var sin = Math.sin(Math.toRadians(deg));
-       var ox = ball.translateX + Config.BALL_DIAMETER/2 - eox;
-       var oy = ball.translateY + Config.BALL_DIAMETER/2 - eoy;
-       /*
-       * r^2 - 2(cos*ox+sin*oy)r + ox^2+oy^2-r^2 = 0
-       * take the lesser one
-       * a = 1
-       * b = -2(cos*ox+sin*oy)
-       * c = ox^2 + oy ^2 - (Config.BALL_DIAMETER/2)^2
-       * r = (-b - sqrt(b^2-4ac))/2a
-       */
-       var a = 1;
-       var b = -2*(cos*ox+sin*oy);
-       var c = ox*ox + oy*oy - Util.square((Config.BALL_DIAMETER/2));
-       var r = (-b - Math.sqrt(b*b - 4*a*c))/2*a;
+       var ox = ball.translateX + Config.BALL_DIAMETER/2;
+       var oy = ball.translateY + Config.BALL_DIAMETER/2;
        pointer.visible = true;
-       pointer.topx = r*cos + eox;
-       pointer.topy = r*sin + eoy;
+       pointer.topx = Main.model.curx;
+       pointer.topy = Math.sqrt(Util.square(Config.BALL_DIAMETER/2)-Util.square(Main.model.curx - ox)) + oy;
        pointer.botm_left_x = Util.getCoordxByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
        pointer.botm_lefx_y = Util.getCoordyByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
        pointer.botm_right_x = Util.getCoordxByDegree(eox,eoy, deg-10, Config.EMITTER_DIAMETER/2);
@@ -167,7 +148,7 @@ function setEmitter() {
    }
 //   var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   Main.model.currentbullet.setTXY(curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
+   Main.model.currentbullet.setTXY(Main.model.curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
 public var gamecontent = Group {
         translateY : 21

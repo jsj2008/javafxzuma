@@ -14,7 +14,6 @@ import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Iterator;
 
-import zuma.GameBall;
 
 import zuma.util.Util;
 import zuma.SpecialScrollBall;
@@ -40,15 +39,15 @@ public-read var addScore : function(score : Integer);
 public var ending = false;
 public var sucess = false;
 public var detectThread : Timeline;
+//x and y of cursor
+public var curx : Double= 0;
+public var cury : Double= 0;
+//the ball the pointer currently pointed
+public var pointedball : ScrollBall;
 var backing : Boolean = false;
 var backinghead : ScrollBall;
 var shifting : Boolean = false;
 var shiftinghead : ScrollBall;
-var pauseing : Boolean = false;
-var pauseinghead : ScrollBall;
-var pauseingheadlast : ScrollBall;
-var pauseingsecondhead : ScrollBall;
-var pauseingsecondheadlast : ScrollBall;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var bullets : BulletBall[]= [];
@@ -641,45 +640,6 @@ public function stopShift():Void{
             }
      }
 }
-public function stopPause():Void{
-    if(not pauseing){
-        return;
-    }
-    var firsthitted = true;
-    //stop pause when shifting hit
-    if(pauseingsecondheadlast != null and
-        pauseingsecondhead != null and
-        hitted(pauseingsecondheadlast,pauseingsecondhead,Config.PAUSE_OFFSET)){
-        println("paused to shift");
-        if(pauseingsecondhead.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                pauseingsecondhead.rate = (Config.SHIFT_RATE);
-                pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
-        }
-        if(pauseingsecondhead.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                pauseingsecondhead.rate = (Config.BACK_RATE);
-                pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
-        }
-        playHitSound2();
-//        pauseingsecondhead.unsetStatus(GameBall.PAUSED_STATE);
-        pauseingsecondhead.rate = pauseingheadlast.rate;
-    }
-    //pauseing stop
-    if(pauseingheadlast != null and
-        pauseinghead != null and
-        hitted(pauseingheadlast,pauseinghead,Config.PAUSE_OFFSET)){
-        if(pauseinghead.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
-                pauseinghead.rate = (Config.SHIFT_RATE);
-                pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
-        }
-        if(pauseinghead.isInStatus(GameBall.BACK_RUNNING_STATE)){
-                pauseinghead.rate = (Config.BACK_RATE);
-                pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
-        }
-        playHitSound2();
-        pauseinghead.unsetStatus(GameBall.PAUSED_STATE);
-        pauseinghead.rate = pauseingheadlast.rate;
-    }
-}
 public function stopBack():Void{
     if(not backHitted()){
            return;
@@ -709,15 +669,12 @@ public function stopBack():Void{
     }
 }
 public function dectectHitandMove(){
-        pauseing = false;
+        //clear variables to be set
         shifting = false;
         backing = false;
-        pauseinghead = null;
-        pauseingheadlast = null;
-        pauseingsecondhead = null;
-        pauseingsecondheadlast = null;
         shiftinghead = null;
         backinghead = null;
+        pointedball = null;
         var detect = true;
         if(runningbullets.isEmpty()){
                 detect = false;
@@ -726,8 +683,16 @@ public function dectectHitandMove(){
         var it : ListIterator  = runningBalls.listIterator();
         var lastball : ScrollBall;
         var ball : ScrollBall;
+        var shorter : Double = 10000;
         while(it.hasNext()){
                 ball = it.next() as ScrollBall;
+                //find the currently pointed ball
+                if(curx > ball.translateX and curx < ball.translateX + Config.BALL_DIAMETER){
+                    if((cury - ball.translateY) < shorter){
+                        shorter = cury - ball.translateY;
+                        pointedball = ball;
+                    }
+                }
                 //stop paused ball
                 if(lastball != null and
                     ball.isInStatus(GameBall.PAUSED_STATE) and
@@ -738,19 +703,20 @@ public function dectectHitandMove(){
                         }
                         ball.rate = lastball.rate;
                 }
+                //get head of shift balls
                 if(shiftinghead == null and ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                         shifting = true;
                         shiftinghead = ball;
                 };
+                //get head of backing balls
                 if(backinghead == null and ball.isInStatus(GameBall.BACK_RUNNING_STATE)){
                         backing = true;
                         backinghead = ball;
                 };
+                //move running balls
                 (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate(it);
                 (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate(it);
-//                 if(lastball != null and hitted(lastball,ball)){
-//                        ball.rate = lastball.rate;
-//                 }
+                //detect if bullet hitted
                 if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
                      bullet.pause();
                      playHitSound();
