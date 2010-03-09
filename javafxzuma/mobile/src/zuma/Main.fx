@@ -25,7 +25,7 @@ var data : LevelData[] = [LevelData{
                             background : Image { url: "{__DIR__}images/background/background1.jpg" }
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
-                            PATH_DATA_FILE : "/zuma/svg/map3";
+                            PATH_DATA_FILE : "/zuma/svg/map3_mobile";
                             max_ball : 10
                             target : 30
                           }

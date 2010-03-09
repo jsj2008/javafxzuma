@@ -75,6 +75,11 @@ var backgroundview = ImageView {
                     Main.model.cury = e.y;
 //                    setEmitter();
                 }
+                onMouseDragged: function( e: MouseEvent ):Void {
+                        // Support touch-only devices like some mobile phones
+                    Main.model.curx = e.x;
+                    Main.model.cury = e.y;
+                }
 }
 def specialimageview = ImageView {
         fitWidth : Config.BALL_DIAMETER
