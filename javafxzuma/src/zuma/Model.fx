@@ -30,6 +30,7 @@ public class Model {
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
 public-read var runningBalls : LinkedList = new LinkedList();
+public-read var runningBonus : LinkedList = new LinkedList();
 public var runningbullets : LinkedList =  new LinkedList();
 //purge special ball listener
 public-read var specialEffect : function(x : Number,y : Number,type : Integer);
@@ -50,6 +51,7 @@ var shifting : Boolean = false;
 var shiftinghead : ScrollBall;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
+var recycledBonus : Stack = new Stack();
 var bullets : BulletBall[]= [];
 public var currentbullet : BulletBall;
 var bullet_stop = true;
@@ -438,6 +440,9 @@ public function addtoRunningTail(ball : ScrollBall){
     (runningBalls as LinkedList).addFirst(ball);
 //    Logger.log("add {ball} to quque : at {(balls as LinkedList).indexOf(ball)}");
 }
+public function addtoRunningBonus(bonus : Bonus){
+     runningBonus.add(bonus);
+}
 public function addtoRunningAt(ball : ScrollBall,fromball : GameBall){
     var index = (Model.runningBalls as LinkedList).indexOf(fromball)+1;
     (runningBalls as LinkedList).add(index,ball);
@@ -462,6 +467,10 @@ public function getSpecialBallRromRecycled(){
 //    Logger.log("get {ball} from recycledSpecial");
     return ball;
 }
+public function getBonusFromRecycled(){
+    var bonus = recycledBonus.pop() as Bonus;
+    return bonus;
+}
 public function getBallOrSpecialFromRecycled(){
     var tmp = Util.random(100);
      var newball;
@@ -478,6 +487,9 @@ public function sizeofRecycled(){
 public function sizeofRecycledSpecial(){
     return recycledSpecial.size();
 }
+public function sizeofRecycledBonus(){
+    return recycledBonus.size();
+}
 public function sizeofRunning(){
     return runningBalls.size();
 }
@@ -486,6 +498,10 @@ public function recycleBall(ball : ScrollBall,object : Object){
 }
 public function recycleSpecial(ball : ScrollBall,object : Object){
     recycledSpecial.push(rebuild((ball as ScrollBall),object));
+}
+public function recycleBonus(bonus : Bonus){
+    bonus.stop();
+    recycledBonus.push(bonus);
 }
 public function isRecycledEmpty(){
     return recycled.isEmpty() and recycledSpecial.isEmpty();
@@ -797,5 +813,29 @@ public function restoreAllRunning():Void{
         (ball as ScrollBall).rate = (defaultRate);
         return false;
     });
+}
+public function detectAndRemoveBonus(ex : Number, ey : Number){
+    var it : ListIterator  = runningBonus.listIterator();
+    var bonus;
+    var bx;
+    var by;
+    while(it.hasNext()){
+        bonus = it.next() as Bonus;
+        bx = bonus.translateX + Config.BONUS_DIAMETER/2;
+        by = bonus.translateY + Config.BONUS_DIAMETER/2;
+//        if(bonus.translateX + Config.BONUS_DIAMETER > ex - Config.EMITTER_DIAMETER/2 and
+//                                    bonus.translateX < ex + Config.EMITTER_DIAMETER/2 and
+//                                    bonus.translateY + Config.BONUS_DIAMETER > ey - Config.EMITTER_DIAMETER/2 and
+//                                    bonus.translateY < ey + Config.EMITTER_DIAMETER/2){
+//        }
+        if(Math.sqrt(Util.square(ex-bx)+Util.square(ex-by))<Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2){
+             it.remove();
+             bonus.eatted();
+        }
+        else if(bonus.hasOutOfWindow()){
+                it.remove();
+                recycleBonus(bonus);
+        }
+    }
 }
 }

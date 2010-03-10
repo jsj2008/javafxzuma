@@ -17,7 +17,8 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
-import zuma.Main;
+
+import zuma.components.ParabolaTransition;
 
 /**
  * @author javatest
@@ -41,13 +42,18 @@ var timer = Timeline {
                     cy.translateX = borderx + vx*tx;
                     if(cy.translateX >= 200-40){
                         tx = 0;
-                        vx = -vx;
+                        vx = -vx/2;
                         borderx = 160;
                     }
+                    if(cy.translateX <= -380){
+                        tx = 0;
+                        vx = -vx/2;
+                        borderx = -380;
+                    }
                     cy.translateY = bordery + (1*ty*ty - vy*ty);
-                    if(cy.translateY >= 300-80){
+                    if(cy.translateY >= 300-40){
                         ty = 0;
-                        vy = -vy;
+                        vy = -vy/2;
                         bordery = 240;
                     }
                 }
@@ -55,14 +61,16 @@ var timer = Timeline {
         ]
 };
 var cy  = Circle {
-                centerX: 400  centerY: 300
+//                translateX:160
+//                translateY:260
+                centerX: 400  centerY:300
                 radius: 20
 }
 var backgroundview = ImageView {
 //                        image: Main.currentData.background
                         focusTraversable: true
     onKeyPressed: function( e: KeyEvent ):Void {
-            timer.stop();
+            transtion.stop();
             cy.translateX = 0;
             cy.translateY = 0;
             ty = 0;
@@ -71,17 +79,24 @@ var backgroundview = ImageView {
             vy = 20;
             borderx = 0;
             bordery = 0;
-            timer.playFromStart();
+            transtion.start();
      }
 };
+var transtion = ParabolaTransition{
+            node : cy
+            maxx : 160
+            maxy : 260
+            p : 0.75
+            minx : - 380
+}
 Stage {
     title: "Application title"
     width: 600
-    height: 600
+    height: 620
     scene: Scene {
         content: [
                 backgroundview,cy
         ]
     }
 }
-timer.playFromStart();
+//timer.playFromStart();
