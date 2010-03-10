@@ -96,7 +96,7 @@ public function pause(){
 }
 public function stop(){
     stopped = true;
-    rate = 0;
+//    rate = 0;
 //    timer.stop();
 }
 public function debuginfo(){

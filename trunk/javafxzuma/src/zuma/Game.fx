@@ -47,8 +47,9 @@ function detect() {
                     Main.model.startBulletGenor();
                     Main.model.generedoffset = Config.NORMAL_OFFSET;
         }
-        Main.model.dectectHitandMove();
         setEmitter();
+        Main.model.detectAndRemoveBonus(Main.model.curx,Main.currentData.EMITTER_X + Config.EMITTER_DIAMETER/2);
+        Main.model.dectectHitandMove();
         if(Main.model.ending){
             Main.model.stopGenerBall();
             Main.model.endingRunning();

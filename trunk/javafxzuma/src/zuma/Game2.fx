@@ -6,15 +6,13 @@
 
 package zuma;
 
-import javafx.animation.transition.FadeTransition;
-import javafx.animation.transition.ParallelTransition;
-import javafx.animation.transition.ScaleTransition;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
+
 
 
 /**
@@ -76,33 +74,16 @@ var backgroundview = ImageView {
 //                    setEmitter();
                 }
 }
-def specialimageview = ImageView {
-        fitWidth : Config.BALL_DIAMETER
-        fitHeight : Config.BALL_DIAMETER
-        translateX :  -100
-        translateY :  -100
-        image: Resources.specialEffectImage[0];
-        cache : false
-        opacity : 0
-};
-var specialparTransition = ParallelTransition {
-        node: specialimageview
-        content: [
-            FadeTransition { duration: 0.8s fromValue:0.0  toValue: 1.0
-                },
-            ScaleTransition { duration: 1s fromX : 1 fromY : 1 byX: 4.5 byY: 4.5
-                },
-        ]
-        action : function(){
-            specialimageview.opacity = 0;
-        }
-}
-function sepcialEffect(x : Number,y : Number,type : Integer){
-        specialimageview.translateX = x;
-        specialimageview.translateY = y;
-        specialimageview.image = Resources.specialEffectImage[type];
-        specialimageview.toFront();
-        specialparTransition.playFromStart();
+function sepcialEffect(x : Number,y : Number,type : Integer):Void{
+        var bonus = Main.model.getBonusFromRecycled();
+        bonus.image = Resources.specialEffectImage[type];
+        bonus.startx = x;
+        bonus.starty = y;
+        bonus.translateX = 0;
+        bonus.translateY = 0;
+        bonus.start();
+        println("bonus {bonus.translateX} {bonus.translateY}");
+        Main.model.addtoRunningBonus(bonus);
 }
 function popScore(x : Number,y : Number,score : Integer,color : Integer){
         scoreText.translateX = x;
@@ -152,7 +133,7 @@ override function setEmitter() {
 }
 public var gamecontent = Group {
         translateY : 21
-        content : [backgroundview,specialimageview,emitter,scoreText,pointer]
+        content : [backgroundview,emitter,scoreText,pointer]
         };
 public var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];
 override public function ready():Void{
@@ -160,6 +141,10 @@ override public function ready():Void{
     while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
          def ball0 = BulletBall{group : gamecontent,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
          Main.model.addBullet(ball0);
+    }
+    while (Main.model.sizeofRecycledBonus() < Config.PRE_CREATE_BONUS){
+         def bonus = Bonus{group : gamecontent};
+         Main.model.recycleBonus(bonus);
     }
     while (Main.model.sizeofRecycled() < Config.PRE_CREATE_BALL){
          def ball0 = ScrollBall{patharray : patharray};
