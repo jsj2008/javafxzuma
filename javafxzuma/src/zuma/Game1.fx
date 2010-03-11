@@ -23,10 +23,9 @@ import zuma.util.Util;
  */
 
 public class Game1 extends Game{
-var degrees : Double= 90;
 var curx : Double= 0;
 var cury : Double= 0;
-def emitter = Emitter{translateX: Main.currentData.EMITTER_X - Config.EMITTER_DIAMETER/2
+override public def emitter = Emitter{translateX: Main.currentData.EMITTER_X - Config.EMITTER_DIAMETER/2
                       translateY: Main.currentData.EMITTER_X - Config.EMITTER_DIAMETER/2
                       tx : Main.currentData.EMITTER_X
                       ty : Main.currentData.EMITTER_X
@@ -39,8 +38,6 @@ public-read var group: Group = Group {
             content: [
             emitter]};
 var backgroundview = ImageView {
-                fitHeight : Config.WINDOW_HEIGHT
-                fitWidth : Config.WINDOW_WIDTH
                 image: bind Main.currentData.background
                 focusTraversable: true
                 visible: true
@@ -86,8 +83,6 @@ var backgroundview = ImageView {
                 }
 }
 def specialimageview = ImageView {
-        fitWidth : Config.BALL_DIAMETER
-        fitHeight : Config.BALL_DIAMETER
         translateX :  -100
         translateY :  -100
         image: Resources.specialEffectImage[0];

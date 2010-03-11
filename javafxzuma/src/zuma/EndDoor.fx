@@ -22,8 +22,6 @@ public class EndDoor extends CustomNode{
 public-read var opened = false;
 var index : Integer = 0;
 def imageview = ImageView {
-        fitWidth : Config.ENDDOOR_DIAMETER;
-        fitHeight : Config.ENDDOOR_DIAMETER;
         image: bind Resources.endDoorImage[index];
         cache : false
         opacity : bind opacity

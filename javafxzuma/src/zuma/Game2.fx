@@ -20,10 +20,6 @@ import zuma.util.Util;
  */
 
 public class Game2 extends Game{
-var degrees : Double= 180;
-def emitter = Emitter{translateX: Main.currentData.EMITTER_X
-                      translateY: Main.currentData.EMITTER_Y
-                      degrees : bind degrees};
 def scoreText = AnimText{visible:false};
 var pointer = Pointer{opacity:0.5};
 def totlescoreText = AnimText{translateX:10,translateY:20};
@@ -52,6 +48,7 @@ var backgroundview = ImageView {
                     emitter.hitmove();
                     Main.model.setCurrentBullet(null);
                     if(e.middleButtonDown){
+                            println("emmiter at {Main.model.curx} {Main.currentData.EMITTER_Y + Config.EMITTER_DIAMETER/2}");
                             println("--runningBalls--");
                             var count = 0;
                             for(ball in Main.model.runningBalls){
@@ -82,6 +79,9 @@ function sepcialEffect(x : Number,y : Number,type : Integer):Void{
         bonus.translateX = 0;
         bonus.translateY = 0;
         bonus.start();
+//        bonus.opacity = 1;
+//        bonus.translateX = 200;
+//        bonus.translateY = 305;
         println("bonus {bonus.translateX} {bonus.translateY}");
         Main.model.addtoRunningBonus(bonus);
 }

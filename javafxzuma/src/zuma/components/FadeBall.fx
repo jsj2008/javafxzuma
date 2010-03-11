@@ -21,8 +21,6 @@ public-read var paused = false;
 public var fade = true;
 def imageview = ImageView {
         smooth : bind smooth
-        fitWidth : ball_deameter
-        fitHeight : ball_deameter
         translateX : 0
         translateY : 0
         image: bind image

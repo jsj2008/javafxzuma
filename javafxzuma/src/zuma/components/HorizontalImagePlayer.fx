@@ -40,8 +40,6 @@ def ratio = bind image.width / image.height;
 var framesN = cy_h*ratio/cy_w;
 def imageview = ImageView {
         smooth : bind smooth
-        fitWidth : bind cy_h*ratio
-        fitHeight : bind cy_h
         translateX : 0
         translateY : 0
         image: bind image
