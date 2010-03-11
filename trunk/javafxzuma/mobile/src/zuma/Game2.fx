@@ -82,8 +82,6 @@ var backgroundview = ImageView {
                 }
 }
 def specialimageview = ImageView {
-        fitWidth : Config.BALL_DIAMETER
-        fitHeight : Config.BALL_DIAMETER
         translateX :  -100
         translateY :  -100
         image: Resources.specialEffectImage[0];

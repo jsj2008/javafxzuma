@@ -43,8 +43,6 @@ var cy  = Circle {
 def ratio = bind image.width / image.height;
 def imageview = ImageView {
         smooth : bind smooth
-        fitWidth : ball_deameter
-        fitHeight : bind ball_deameter/ratio
         translateX : 0
         translateY : 0
         image: bind image

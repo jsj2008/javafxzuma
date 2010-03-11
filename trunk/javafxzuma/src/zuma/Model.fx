@@ -814,7 +814,7 @@ public function restoreAllRunning():Void{
         return false;
     });
 }
-public function detectAndRemoveBonus(ex : Number, ey : Number){
+public function detectAndRemoveBonus(ex : Number, ey : Number):Void{
     var it : ListIterator  = runningBonus.listIterator();
     var bonus;
     var bx;
@@ -828,14 +828,18 @@ public function detectAndRemoveBonus(ex : Number, ey : Number){
 //                                    bonus.translateY + Config.BONUS_DIAMETER > ey - Config.EMITTER_DIAMETER/2 and
 //                                    bonus.translateY < ey + Config.EMITTER_DIAMETER/2){
 //        }
-        if(Math.sqrt(Util.square(ex-bx)+Util.square(ex-by))<Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2){
+        if(Math.sqrt(Util.square(ex-bx)+Util.square(ey-by))<(Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2)){
+             println("{Math.sqrt(Util.square(ex-bx)+Util.square(ey-by))}<{(Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2)}");
              it.remove();
              bonus.eatted();
+             return;
         }
         else if(bonus.hasOutOfWindow()){
                 it.remove();
                 recycleBonus(bonus);
-        }
+                return;
+        };
+        (bonus.transiton as Schedulable).scheduledUpdate(null);
     }
 }
 }

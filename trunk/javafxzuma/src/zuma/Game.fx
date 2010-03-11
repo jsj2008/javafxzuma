@@ -18,6 +18,10 @@ import zuma.components.Progress;
  */
 
 abstract public class Game extends UI{
+public var degrees : Double= 180;
+public var emitter = Emitter{translateX: Main.currentData.EMITTER_X
+                      translateY: Main.currentData.EMITTER_Y
+                      degrees : bind degrees};
 public var patharray : ArrayList;
 public def progress = Progress{
             progressImage:Resources.background_upper;
@@ -48,7 +52,7 @@ function detect() {
                     Main.model.generedoffset = Config.NORMAL_OFFSET;
         }
         setEmitter();
-        Main.model.detectAndRemoveBonus(Main.model.curx,Main.currentData.EMITTER_X + Config.EMITTER_DIAMETER/2);
+        Main.model.detectAndRemoveBonus(Main.model.curx,emitter.translateY + Config.EMITTER_DIAMETER/2);
         Main.model.dectectHitandMove();
         if(Main.model.ending){
             Main.model.stopGenerBall();

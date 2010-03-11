@@ -35,13 +35,11 @@ init{
     insert this into group.content;
 }
 def specialimageview = ImageView {
-        fitWidth : Config.BONUS_DIAMETER
-        fitHeight : Config.BONUS_DIAMETER
         image: bind image
         cache : true
         opacity : bind opacity
 };
-var transiton = ParabolaTransition{
+public-read var transiton = ParabolaTransition{
             node : this
             vy : 10
             maxx : Config.WINDOW_WIDTH - Config.BONUS_DIAMETER;
@@ -77,7 +75,7 @@ public function stop(){
     transiton.stop();
 }
 public function eatted(){
-    println("bonus eatted!");
+    println("bonus eatted at {translateX} {translateY}");
     stop();
 //    opacity = 1.0;
     Main.model.recycleBonus(this);

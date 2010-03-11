@@ -54,8 +54,6 @@ public def moveback = TranslateTransition {
 };
 def emitter = ImageView {
         smooth: true
-        fitHeight : Config.EMITTER_DIAMETER
-        fitWidth : Config.EMITTER_DIAMETER
         image: Resources.emitterImage
         rotate: bind degrees
         visible : true;

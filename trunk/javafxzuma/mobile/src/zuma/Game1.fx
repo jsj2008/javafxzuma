@@ -39,8 +39,6 @@ public-read var group: Group = Group {
             content: [
             emitter]};
 var backgroundview = ImageView {
-                fitHeight : Config.WINDOW_HEIGHT
-                fitWidth : Config.WINDOW_WIDTH
                 image: bind Main.currentData.background
                 focusTraversable: true
                 visible: true
@@ -86,8 +84,6 @@ var backgroundview = ImageView {
                 }
 }
 def specialimageview = ImageView {
-        fitWidth : Config.BALL_DIAMETER
-        fitHeight : Config.BALL_DIAMETER
         translateX :  -100
         translateY :  -100
         image: Resources.specialEffectImage[0];

@@ -35,8 +35,6 @@ var max = bind sizeof(images);
 public var repeatCount = Timeline.INDEFINITE;
 public var rate = 0;
 def imageview = ImageView {
-        fitWidth : bind width
-        fitHeight : bind height
         translateX : 0
         translateY : 0
         image: bind images[index]
