@@ -22,7 +22,7 @@ public var patharray : ArrayList;
 public def progress = Progress{
             progressImage:Resources.background_upper;
             fillImage:Resources.progress_fill
-            max : Main.currentData.target
+            max : bind Main.currentData.target
         };
 public def detector = Timeline {
         repeatCount: Timeline.INDEFINITE
@@ -41,7 +41,7 @@ function detect() {
         }
         Main.model.specialEffectCount();
         Main.model.generBall();
-        if(Main.model.sizeofRunning() >= 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
+        if(Main.model.sizeofRunning() >= Main.currentData.init_ball and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
                     Main.model.defaultRate = Config.RUNNING_RATE;
                     Main.model.restoreAllRunning();
                     Main.model.startBulletGenor();

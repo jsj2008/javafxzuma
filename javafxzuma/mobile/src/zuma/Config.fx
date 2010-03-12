@@ -11,28 +11,26 @@ package zuma;
  */
 
 public def EMITTER_RANGE = 500;
-public def EMITTER_DIAMETER = 50;
-public def ENDDOOR_DIAMETER = 100;
-public def WINDOW_HEIGHT = 361;
-public def WINDOW_WIDTH = 480;
-public def SCROLL_START_X = 342.85715;
-public def SCROLL_START_Y = 463.79074;
-public def BALL_DIAMETER = 20;
-public def PRE_CREATE_BALL = 80;
+public def EMITTER_DIAMETER = 40;
+public def WINDOW_HEIGHT = 240;
+public def WINDOW_WIDTH = 320;
+public def BALL_DIAMETER = 16;
+public def PURGE_BALL_DIAMETER = 24;
+public def PRE_CREATE_BALL = 60;
 public def PRE_CREATE_BALL_SPECIAL = 20;
 public def PRE_CREATE_BULLET = 20;
 public def PATH_WIDTH = 1;
 public def BULLET_DURIATION = 1s;
 public def BULLET_HIT_DURIATION = 0.25s;
-public def DETECTOR_FREQUENCY = 0.001s;
+public def DETECTOR_FREQUENCY = 0.01s;
 public def DEBUG = false;
 public def SPECILA_PERCENTAGE = 10;
 
 //-------------------ball move rate config  ----------------------
-public def MOVE_ROLL_FREQUENCY = 0.02s;
-public def END_RATE : Integer = 10; //0.003s
-public def BACK_RATE : Integer= -10; // 0.003s
-public def SHIFT_RATE : Integer = 5; //0.006s
+public def MOVE_ROLL_FREQUENCY = 0.04s;
+public def END_RATE : Integer = 10;
+public def BACK_RATE : Integer= -10;
+public def SHIFT_RATE : Integer = 5;
 public def RUNNING_RATE = 1;
 public def PAUSED_STOPPED_RATE = 0;
 //-----------------------------------------------------------------

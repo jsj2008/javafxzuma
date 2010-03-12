@@ -38,7 +38,7 @@ public var rate : Integer = 0 on replace {
 };
 var cy  = Circle {
                 centerX: ball_deameter/2 centerY: ball_deameter/2
-                radius: Config.BALL_DIAMETER/2
+                radius: ball_deameter/2
 }
 def ratio = bind image.width / image.height;
 def imageview = ImageView {
@@ -52,15 +52,18 @@ def imageview = ImageView {
 };
 var imy : Number = 0;
 var cyy : Number = 0;
-//var timer = Timeline {
-//        repeatCount: Timeline.INDEFINITE
-//        keyFrames : [
-//            KeyFrame {
-//                time: bind 0.05s
-//                action: update
-//            }
-//        ]
-//};
+var timer = Timeline {
+        repeatCount: Timeline.INDEFINITE
+        keyFrames : [
+            KeyFrame {
+                time: bind 0.05s
+                action: update
+            }
+        ]
+};
+function update(){
+    update(null);
+}
 override public function update(object : Object):Void{
     if(rate == 0){
             return;

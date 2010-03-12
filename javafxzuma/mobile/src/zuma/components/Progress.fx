@@ -48,7 +48,7 @@ def fill = ImageView {
         translateX : progressImage.width/2 - fillImage.width/2
         translateY : (progressImage.height/2 - fillImage.height/2)+2
         image: bind fillImage
-        clip : cy
+        clip : bind cy
         cache : false
         opacity : bind opacity
 };
