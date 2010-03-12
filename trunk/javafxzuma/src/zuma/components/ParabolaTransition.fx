@@ -34,15 +34,15 @@ var ivy : Number = bind vy;
 var iborderx : Number = bind borderx;
 var ibordery : Number = bind bordery;
 override public var ontick = 30;
-//var timer = Timeline {
-//        repeatCount: Timeline.INDEFINITE;
-//        keyFrames : [
-//            KeyFrame {
-//                time: 0.03s
-//                action: update
-//            }
-//        ]
-//};
+var timer = Timeline {
+        repeatCount: Timeline.INDEFINITE;
+        keyFrames : [
+            KeyFrame {
+                time: 0.03s
+                action: update
+            }
+        ]
+};
 override public function update(object : Object){
     ty++;
     tx++;
@@ -69,6 +69,9 @@ override public function update(object : Object){
         ibordery = miny;
     }
 }
+function update(){
+    update(null);
+}
 public function start(){
     tx = 0;
     ty = 0;
@@ -79,9 +82,18 @@ public function start(){
 //    timer.playFromStart();
 }
 public function pause(){
-//    timer.pause();
+    timer.pause();
 }
 public function stop(){
-//    timer.stop();
+    timer.stop();
+}
+public function selfStart(){
+    tx = 0;
+    ty = 0;
+    ivx = vx;
+    ivy = vy;
+    iborderx = borderx;
+    ibordery = bordery;
+      timer.playFromStart();
 }
 }

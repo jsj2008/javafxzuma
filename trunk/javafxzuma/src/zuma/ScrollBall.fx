@@ -155,10 +155,12 @@ var parTransition = ParallelTransition {
 public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 1,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
 public function ScalingAndUnvisable(){
     makeUnvisable();
+//    var exploded = ExplodedBall{group : (Main.ui as Game2).gamecontent,x : translateX + Config.BALL_DIAMETER/2, y : translateY + Config.BALL_DIAMETER/2};
     effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER/2*Config.BALL_PURGE_RATIO;
     effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER/2*Config.BALL_PURGE_RATIO;
     effectplayer.opacity = 1.0;
     effectplayer.play();
+//    exploded.start();
 }
 public function show(){
     vis = true;
