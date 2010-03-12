@@ -91,7 +91,7 @@ public function playFromStart(){
     stopped = false;
 }
 public function pause(){
-    rate = 0;
+//    rate = 0;
 //    timer.pause();
 }
 public function stop(){

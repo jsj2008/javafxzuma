@@ -16,6 +16,8 @@ import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
 
+import javafx.scene.text.Font;
+
 
 /**
  * @author javatest
@@ -26,11 +28,11 @@ var degrees : Double= 180;
 def emitter = Emitter{translateX: Main.currentData.EMITTER_X
                       translateY: Main.currentData.EMITTER_Y
                       degrees : bind degrees};
-def scoreText = AnimText{visible:false};
+def scoreText = AnimText{font : Font { size: 10 } visible:false};
 var pointer = Pointer{opacity:0.5};
-def totlescoreText = AnimText{translateX:10,translateY:20};
+def totlescoreText = AnimText{font : Font { size: 15 },translateX:10,translateY:12};
 var backgroundbuttom = ImageView {
-                translateY : 280+21
+                translateY : 187+14
                 image: Resources.background_bottom
                 focusTraversable: true
                 visible: true
@@ -39,46 +41,13 @@ var backgroundview = ImageView {
                 image: Main.currentData.background
                 focusTraversable: true
                 visible: true
-                onMousePressed: function( e: MouseEvent ):Void {
-//                    Logger.log("currentbullet is {Main.model.getCurrentBullet()}");
-                    Main.model.currentbullet.dx = e.x - Config.BALL_DIAMETER/2;
-                    Main.model.currentbullet.dy = e.y - Config.BALL_DIAMETER/2;
-                    emitter.dx = e.x - Config.EMITTER_DIAMETER/2;
-                    emitter.dy = e.y - Config.EMITTER_DIAMETER/2;
-//                    Logger.log("before send, bullet is at {Main.model.getCurrentBullet().translateX} {Main.model.getCurrentBullet().translateY}");
-                    Main.model.currentbullet.translate();
-                    if(Main.model.runningbullets.size() >= 1){
-                            Main.model.runningbullets.poll();
-                    }
-                    Main.model.runningbullets.add(Main.model.currentbullet);
-                    emitter.hitmove();
-                    Main.model.setCurrentBullet(null);
-                    if(e.middleButtonDown){
-                            println("--runningBalls--");
-                            var count = 0;
-                            for(ball in Main.model.runningBalls){
-                                    count++;
-                                    println("ball {count} ---------------------");
-                                    (ball as ScrollBall).debuginfo();
-                            }
-                            println("default rate is {Main.model.defaultRate}");
-                            println("sizeof runnning {Main.model.sizeofRunning()}");
-                            if(detector.paused){
-                                    detector.play();
-                            }else{
-                                    detector.pause();
-                            }
-                    }
+                onMouseReleased: function( e: MouseEvent ):Void {
+                    sendBullet(e);
                 }
-                onMouseMoved: function( e: MouseEvent ):Void {
+                onMousePressed:function( e: MouseEvent ):Void {
                     Main.model.curx = e.x;
                     Main.model.cury = e.y;
 //                    setEmitter();
-                }
-                onMouseDragged: function( e: MouseEvent ):Void {
-                        // Support touch-only devices like some mobile phones
-                    Main.model.curx = e.x;
-                    Main.model.cury = e.y;
                 }
 }
 def specialimageview = ImageView {
@@ -98,6 +67,35 @@ var specialparTransition = ParallelTransition {
         ]
         action : function(){
             specialimageview.opacity = 0;
+        }
+}
+function sendBullet(e: MouseEvent){
+        Main.model.currentbullet.dx = e.x - Config.BALL_DIAMETER/2;
+        Main.model.currentbullet.dy = e.y - Config.BALL_DIAMETER/2;
+        emitter.dx = e.x - Config.EMITTER_DIAMETER/2;
+        emitter.dy = e.y - Config.EMITTER_DIAMETER/2;
+        Main.model.currentbullet.translate();
+        if(Main.model.runningbullets.size() >= 1){
+                Main.model.runningbullets.poll();
+        }
+        Main.model.runningbullets.add(Main.model.currentbullet);
+        emitter.hitmove();
+        Main.model.setCurrentBullet(null);
+        if(e.middleButtonDown){
+                println("--runningBalls--");
+                var count = 0;
+                for(ball in Main.model.runningBalls){
+                        count++;
+                        println("ball {count} ---------------------");
+                        (ball as ScrollBall).debuginfo();
+                }
+                println("default rate is {Main.model.defaultRate}");
+                println("sizeof runnning {Main.model.sizeofRunning()}");
+                if(detector.paused){
+                        detector.play();
+                }else{
+                        detector.pause();
+                }
         }
 }
 function sepcialEffect(x : Number,y : Number,type : Integer){
@@ -154,7 +152,7 @@ override function setEmitter() {
    Main.model.currentbullet.setTXY(Main.model.curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
 }
 public var gamecontent = Group {
-        translateY : 21
+        translateY : 14
         content : [backgroundview,specialimageview,emitter,scoreText,pointer]
         };
 public var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];

@@ -26,8 +26,6 @@ import javafx.util.Math;
 
 public class ImagesPlayer extends CustomNode{
 public var images : Image[];
-public var width : Number = 30;
-public var height : Number = 30;
 public-read var paused = false;
 var ajust = false;
 var index = 0;

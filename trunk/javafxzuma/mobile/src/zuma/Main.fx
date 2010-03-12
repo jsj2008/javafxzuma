@@ -21,21 +21,24 @@ import javafx.scene.paint.Color;
 */
 var data : LevelData[] = [LevelData{
                             EMITTER_X : 50
-                            EMITTER_Y : 280
-                            background : Image { url: "{__DIR__}images/background/background1.jpg" }
+                            EMITTER_Y : 187
+                            background : Image {
+                            url: "{__DIR__}images/background/background1.jpg" }
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
-                            PATH_DATA_FILE : "/zuma/svg/map3_mobile";
-                            max_ball : 10
-                            target : 30
+                            PATH_DATA_FILE : "/zuma/svg/map1_mobile";
+                            max_ball : 5
+                            init_ball :5
+                            target : 15
                           }
                           LevelData{
                             EMITTER_X : 50
-                            EMITTER_Y : 280
-                            background : Image { url: "{__DIR__}images/background/background2.jpg" }
+                            EMITTER_Y : 201
+                            background : Image {
+                            url: "{__DIR__}images/background/background2.jpg" }
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
-                            PATH_DATA_FILE : "/zuma/svg/map4";
+                            PATH_DATA_FILE : "/zuma/svg/map2_mobile";
                             INITIAL_RATE: 6
                             max_ball : 60
                           }];

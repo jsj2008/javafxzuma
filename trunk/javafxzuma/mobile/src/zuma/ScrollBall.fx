@@ -15,7 +15,6 @@ import javafx.animation.transition.ParallelTransition;
 
 
 import javafx.scene.image.Image;
-import zuma.components.AnimBall;
 
 import zuma.components.Ball;
 import zuma.components.SVGTransition;
@@ -26,6 +25,8 @@ import zuma.components.ImagesPlayer;
 import zuma.Resources;
 
 import java.util.ArrayList;
+
+import zuma.components.FadeBall;
 
 /**
  * @author javatest
@@ -38,16 +39,13 @@ var MAX_CHADOWS = 10;
 var MAX_GIVEN = 5;
 public var fromIndex = 0;
 public var stopped = false;
-public var animball : Ball= AnimBall {
-        rate : bind rate with inverse
-        rotate : -90
+public var animball : Ball= FadeBall {
+        //rotate : 90
         ball_deameter : Config.BALL_DIAMETER
         smooth: true
+        fade : false
         image: bind ballImage
         cache : true
-        maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
-        scaleX : bind scaleX
-        scaleY : bind scaleY
        // rotate: bind rotatedegrees
         opacity : bind opac
 };
@@ -69,6 +67,7 @@ public var rate : Integer = 1 on replace{
         }
         if(rate == Config.PAUSED_STOPPED_RATE){
                 if(stopped){
+                    println("stopped!");
                     setStatus(DEAD_STATE);
                 }else{
                     stopped = false;
@@ -104,6 +103,9 @@ public function setStatus(status : Integer){
     statusList[status] = true;
 }
 public function unsetStatus(status : Integer){
+    if(rate == Config.PAUSED_STOPPED_RATE and status == GameBall.PAUSED_STATE){
+        println("want stop?");
+    }
     statusList[status] = false;
 }
 public function isInStatus(status : Integer){
@@ -152,11 +154,11 @@ var parTransition = ParallelTransition {
             this.scaleY = 1;
         }
 }
-public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 1,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
+public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 1,opacity:0};
 public function ScalingAndUnvisable(){
     makeUnvisable();
-    effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
-    effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.BALL_DIAMETER*3/2;
+    effectplayer.translateX = translateX + Config.BALL_DIAMETER/2 - Config.PURGE_BALL_DIAMETER/2;
+    effectplayer.translateY = translateY + Config.BALL_DIAMETER/2 - Config.PURGE_BALL_DIAMETER/2;
     effectplayer.opacity = 1.0;
     effectplayer.play();
 }

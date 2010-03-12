@@ -28,7 +28,6 @@ import zuma.Resources;
 
 import zuma.Config;
 
-import javax.microedition.io.file.FileConnection;
 
 
 /**
