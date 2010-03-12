@@ -124,7 +124,7 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
         action(newBall);
         def hitpath = [
                 MoveTo { x: translateX+Config.BALL_DIAMETER/2  y: translateY+Config.BALL_DIAMETER/2 },
-                LineTo {x: newBall.translateX+Config.BALL_DIAMETER/2  y: newBall.translateY+Config.BALL_DIAMETER/2}
+                LineTo { x: newBall.translateX+Config.BALL_DIAMETER/2  y: newBall.translateY+Config.BALL_DIAMETER/2}
         ];
         def hittrack = Path {
                 elements: hitpath
