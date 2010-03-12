@@ -26,7 +26,7 @@ public def PRE_CREATE_BULLET = 20;
 public def PRE_CREATE_BONUS = 10;
 public def PATH_WIDTH = 1;
 public def BULLET_DURIATION = 1s;
-public def BULLET_HIT_DURIATION = 0.25s;
+public def BULLET_HIT_DURIATION = 0.1s;
 public def DETECTOR_FREQUENCY = 0.001s;
 public def DEBUG = false;
 public def SPECILA_PERCENTAGE = 20;
@@ -35,7 +35,7 @@ public def SPECILA_PERCENTAGE = 20;
 public def MOVE_ROLL_FREQUENCY = 0.02s;
 public def END_RATE : Integer = 10; //0.003s
 public def BACK_RATE : Integer= -10; // 0.003s
-public def SHIFT_RATE : Integer = 5; //0.006s
+public def SHIFT_RATE : Integer = 20; //0.006s
 public def RUNNING_RATE = 1;
 public def PAUSED_STOPPED_RATE = 0;
 //-----------------------------------------------------------------
