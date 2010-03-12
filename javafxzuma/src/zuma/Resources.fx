@@ -151,28 +151,16 @@ public def slowImage = [Image {
                             height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/baSlowYellow.png" }];
 public def arrowImage = [Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_blue_up.png" }
                          Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_green_up.png" }
                          Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_violet_up.png" }
                          Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_red_up.png" }
                          Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_grey_up.png" }
                          Image {
-                            width : Config.BALL_DIAMETER
-                            height: Config.BALL_DIAMETER
                             url: "{__DIR__}images/ball/arrow_yellow_up.png" }];
 public def specialEffectImage = [Image {
                                     width : Config.BONUS_DIAMETER
@@ -236,42 +224,10 @@ public def track = SVGPath {
 					Transform.affine(0.5764226, 0.0, 0.0, 0.6323865, 131.03493, 74.16948)
 				]
                             }
-public def effectimage = [Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.000.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.001.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.002.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.003.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.004.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.005.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.006.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.007.png" }
-                          Image {
-                                width : Config.BALL_DIAMETER
-                                height: Config.BALL_DIAMETER
-                                url: "{__DIR__}images/effect.008.png" }];
+public def balls_particles = Image {
+                                width : 117/2
+                                height: 32/2
+                                url: "{__DIR__}images/effect/balls_particles.png" };
 public def scrollBallBlue = Image{url : "{__DIR__}images/baBallBlue.gif"};
 public def scrollBallGreen = Image{url : "{__DIR__}images/baBallGreen.gif"};
 public def loading_txt_image = Image { url: "{__DIR__}images/text/txt_loading.jpg" };
@@ -286,3 +242,7 @@ public def purge_sound = "chain1.wav";
 public def rolling_sound = "initialfill.wav";
 public def send_bullet_sound = "pop.wav";
 public def switch_door_sound = "doorswitch.wav";
+
+
+
+public def fortest = Image { url: "{__DIR__}images/background/background2.jpg" };

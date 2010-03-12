@@ -15,9 +15,11 @@ import javafx.stage.Stage;
  * @author javatest
  */
 var player : HorizontalImagePlayer = HorizontalImagePlayer{
+        startFrom: 5
         image : Resources.arrowImage[0];
-        cy_w: 30
-        cy_h: 30
+        cy_w: 32
+        cy_h: 32
+        dur : 5s
         };
 Stage {
     title: "Application title"

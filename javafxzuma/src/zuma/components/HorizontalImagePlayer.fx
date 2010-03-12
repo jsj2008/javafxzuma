@@ -28,16 +28,16 @@ public var cy_w : Number;
 public var cy_h : Number;
 public var image : Image;
 public var rate : Integer = 1;
+public var dur : Duration = 0.03s;
+var imx : Number = 0;
+var cyx : Number = 0;
 var ajust = false;
 var cy  = Rectangle {
     x : 0
     y : 0
-    width: bind cy_w  height: cy_h
+    width: bind cy_w  height: bind cy_h
 }
-var imx : Number = 0;
-var cyx : Number = 0;
 def ratio = bind image.width / image.height;
-var framesN = cy_h*ratio/cy_w;
 def imageview = ImageView {
         smooth : bind smooth
         translateX : 0
@@ -46,6 +46,11 @@ def imageview = ImageView {
         clip : cy
         cache : false
         opacity : bind opacity
+};
+public var startFrom : Number = 0 on replace{
+    println("star from {startFrom}");
+    imageview.translateX = imageview.translateX-cy_w*startFrom;
+    cy.x = cy.x+cy_w*startFrom;
 };
 override public function create(): Node {
        imageview
@@ -79,12 +84,15 @@ var timer = Timeline {
         repeatCount: Timeline.INDEFINITE;
         keyFrames : [
             KeyFrame {
-                time: 0.03s
+                time: dur
                 action: update
                 }
         ]
 };
 public function start(){
-    timer.play();
+    timer.playFromStart();
+}
+public function stop(){
+    timer.stop();
 }
 }

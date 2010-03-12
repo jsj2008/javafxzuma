@@ -53,7 +53,7 @@ def specialimageview = ImageView {
         fitHeight : Config.BALL_DIAMETER
         translateX :  100
         translateY :  100
-        image: bind Resources.effectimage[count];
+        image: bind Resources.purgeffectImage[count];
         cache : false
         opacity : 1
 };
