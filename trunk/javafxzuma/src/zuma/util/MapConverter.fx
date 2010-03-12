@@ -14,8 +14,8 @@ import java.io.FileWriter;
  * @author javatest
  */
 
-var list = MapLoader.getMap("/zuma/svg/map3");
-var fw = new FileWriter("./src/zuma/svg/map3_mobile");
+var list = MapLoader.getMap("/zuma/svg/mobile/map2");
+var fw = new FileWriter("./src/zuma/svg/mobile/map2_mobile");
 for(data in list){
         fw.append(data.toString());
         fw.append(",");
