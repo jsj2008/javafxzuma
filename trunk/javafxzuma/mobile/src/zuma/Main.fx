@@ -27,6 +27,7 @@ var data : LevelData[] = [LevelData{
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
                             PATH_DATA_FILE : "/zuma/svg/map1_mobile";
+                            INITIAL_RATE: 8
                             max_ball : 5
                             init_ball :5
                             target : 15

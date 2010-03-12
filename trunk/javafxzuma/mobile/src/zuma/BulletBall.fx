@@ -123,8 +123,8 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
         Main.model.shiftFrom(ball);
         action(newBall);
         def hitpath = [
-                MoveTo { x: translateX+16  y: translateY+16 },
-                LineTo {x: newBall.translateX+16  y: newBall.translateY+16}
+                MoveTo { x: translateX+Config.BALL_DIAMETER/2  y: translateY+Config.BALL_DIAMETER/2 },
+                LineTo {x: newBall.translateX+Config.BALL_DIAMETER/2  y: newBall.translateY+Config.BALL_DIAMETER/2}
         ];
         def hittrack = Path {
                 elements: hitpath
@@ -136,7 +136,6 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
                 interpolator: Interpolator.EASEIN
                 duration: Config.BULLET_HIT_DURIATION;
                 action : function () {
-                    Main.model.stopShift();
                     background();
                     move.play();
                     newBall.makeVisable();
