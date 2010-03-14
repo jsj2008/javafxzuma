@@ -64,6 +64,7 @@ function detect() {
         }
         Main.model.stopShift();
         Main.model.stopBack();
+        Main.model.stopHitMove();
         if(Main.model.sizeofRunning() == 0){
             if(progress.isCompleted() and not Main.model.ending){
                 Main.gamestat = 4;

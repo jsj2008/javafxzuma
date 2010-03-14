@@ -20,6 +20,7 @@ public def BACKGROUND_STATE = 3;
 public def DEAD_STATE = 4;
 public def BACK_RUNNING_STATE = 5;
 public def SHIFT_RUNNING_STATE = 6;
+public def HIT_MOVING_STATE = 7;
 public abstract class GameBall extends CustomNode{
 //protected public-read var state = STOPED_STATE;
 }

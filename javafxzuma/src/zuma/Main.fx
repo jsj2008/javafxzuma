@@ -56,7 +56,9 @@ public var gamestat = -1 on replace {
             ui.stop();
             loading.start();
             FX.deferAction(function():Void{
-                ui = SplashUI{};
+                ui = Game2{};
+                model = Model{};
+                ui.start();
             });
     }
     if(gamestat == 1){
@@ -78,7 +80,7 @@ public var gamestat = -1 on replace {
             ui.stop();
             loading.start();
             FX.deferAction(function():Void{
-                level++;
+                level;
                 ui = Game2{};
                 model = Model{};
                 ui.start();
