@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class ScrollBall extends GameBall{
 public var patharray : ArrayList;
-public-read var statusList : Boolean[] = [false,false,false,false,false,false,false];
+public-read var statusList : Boolean[] = [false,false,false,false,false,false,false,false];
 var MAX_CHADOWS = 10;
 var MAX_GIVEN = 5;
 public var fromIndex = 0;
@@ -57,8 +57,10 @@ public var rate : Integer = 1 on replace{
                 setStatus(GameBall.RUNNING_STATE);
         }
         if(rate == Config.BACK_RATE){
-                stopped = false;
-                setStatus(GameBall.BACK_RUNNING_STATE);
+                if(not isInStatus(GameBall.HIT_MOVING_STATE)){
+                    stopped = false;
+                    setStatus(GameBall.BACK_RUNNING_STATE);
+                }
         }
         if(rate == Config.SHIFT_RATE){
                 stopped = false;
@@ -68,11 +70,13 @@ public var rate : Integer = 1 on replace{
                 stopped = true;
         }
         if(rate == Config.PAUSED_STOPPED_RATE){
-                if(stopped){
-                    setStatus(DEAD_STATE);
-                }else{
-                    stopped = false;
-                    setStatus(GameBall.PAUSED_STATE);
+                if(not isInStatus(GameBall.HIT_MOVING_STATE)){
+                    if(stopped){
+                        setStatus(DEAD_STATE);
+                    }else{
+                        stopped = false;
+                        setStatus(GameBall.PAUSED_STATE);
+                    }
                 }
         }
 };
