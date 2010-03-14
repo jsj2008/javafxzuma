@@ -140,7 +140,7 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
                     move.play();
                     newBall.makeVisable();
                     Main.model.containsBall = newBall;
-                    Main.model.findToBePurged(Main.model.specialEffect);
+                    Main.model.findToBePurged(false,Main.model.specialEffect);
                 }
         };
         hitanim.play();

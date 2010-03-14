@@ -26,6 +26,8 @@ import javafx.animation.Timeline;
 
 import zuma.GameBall;
 
+import java.util.Collections;
+
 public class Model {
 public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
@@ -424,7 +426,7 @@ public function startBulletGenor(){
 }
 public function purgeManaully(){
     println("purge manaully and contains is {containsBall}");
-    findToBePurged(specialEffect);
+    findToBePurged(false,specialEffect);
 }
 public function setCurrentBullet(bullet : BulletBall){
     currentbullet = bullet;
@@ -541,10 +543,10 @@ public function getDistance(x0 : Number,y0 : Number,x1: Number,y1: Number){
 /*
 *   main status management functions ----------------------------------------------------------------------------------
 */
-public function findToBePurged(sepcialEffect : function(x : Number,y : Number,type : Integer):Void):Boolean{
+public function findToBePurged(hitmove : Boolean ,sepcialEffect : function(x : Number,y : Number,type : Integer):Void):GameBall{
     if(containsBall == null){
             Logger.log("contains is {containsBall}");
-            return true
+            return null
     }
     var counter = 0;
     var sum = 1;
@@ -573,10 +575,10 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
         counter++;
     }
     if(sum < 3){
-        return true;
+        return null;
     }
     if(not containsHitted){
-        return true;
+        return null;
     }
     Logger.log("found {sum} balls to be purged");
 
@@ -611,18 +613,20 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
         pball.stop();
     }
     if(hittedBall == null or backfromBall == null){
-            return true;
+            return null;
     }
     if((hittedBall).imageIndex == (backfromBall).imageIndex){
         Model.backRunningBall(backfromBall);
     }else{
         if((not (getHeadOfPaused() == null)) or (not(backfromBall == null) and not backfromBall.isInStatus(GameBall.PAUSED_STATE))){
             Model.pauseRunningBall(backfromBall);
-            return false;
+            if(hitmove){
+                hitMovingBall(hittedBall as ScrollBall);
+            }
         }
     }
     containsBall = null;
-    return true
+    return hittedBall;
 }
 public function stopShift():Void{
      if(not shifting){
@@ -681,13 +685,14 @@ public function stopBack():Void{
          }
     }
     containsBall = backinghead as ScrollBall;
-    if(Model.findToBePurged(specialEffect)){
-        hitMovingBall(null);
+    var hittedBall = Model.findToBePurged(true,specialEffect);
+    if(hittedBall != null){
+//        hitMovingBall(hittedBall as ScrollBall);
 //        setDefaultRate(Config.PAUSED_STOPPED_RATE);
 //        specialeffect_counter = 50;
 //        specialEffectBegin();
     }else{
-        hitMovingBall(containsBall);
+        hitMovingBall(null);
 //        setDefaultRate(Config.PAUSED_STOPPED_RATE);
 //        specialeffect_counter = 25;
 //        specialEffectBegin();
@@ -704,7 +709,18 @@ public function stopHitMove():Void{
     }
     hitmovecheckcount = Config.HIT_MOVE_CHECK_COUNT;
     dohitmove = true;
+    Collections.reverse(runningBalls);
+    var lastball : ScrollBall;
     for(ball in runningBalls){
+         //join to hitmove
+         if(not (ball as ScrollBall).isInStatus(GameBall.HIT_MOVING_STATE) and
+                    lastball != null and
+                    lastball.isInStatus(GameBall.HIT_MOVING_STATE) and
+                    hitted(lastball as ScrollBall,ball as ScrollBall)){
+                    (ball as ScrollBall).setStatus(GameBall.HIT_MOVING_STATE);
+                    (ball as ScrollBall).rate = lastball.rate;
+                    break;
+         }
          if((ball as ScrollBall).isInStatus(GameBall.HIT_MOVING_STATE)){
             if(hitmoveneedstop){
                 (ball as ScrollBall).unsetStatus(GameBall.HIT_MOVING_STATE);
@@ -717,7 +733,9 @@ public function stopHitMove():Void{
             };
             (ball as ScrollBall).rate = Config.HIT_MOVE_RATE + Config.HIT_MOVE_G*currentHitMovingT;
          }
+         lastball = ball as ScrollBall;
     }
+    Collections.reverse(runningBalls);
     currentHitMovingT++;
 }
 public function dectectHitandMove(){
@@ -823,29 +841,37 @@ public function shiftFrom(ball : GameBall){
 }
 public function hitMovingBall(fromBall : ScrollBall){
     var index;
+    Collections.reverse(runningBalls);
     if(fromBall == null){
-        index = runningBalls.size()-1;
+        index = 0;
     }else{
-        index = runningBalls.indexOf(fromBall)-1;
+        index = runningBalls.indexOf(fromBall);
     }
     if(index <0 or index == runningBalls.size()){
+         println("fromball not found");
          return;
     }
     var iter : Iterator = runningBalls.iterator();
     var counter = 0;
     var tmpball : ScrollBall;
     var tmparray = [];
+    var lastball : ScrollBall;
     while(iter.hasNext()){
         tmpball = iter.next() as ScrollBall;
-        if(counter <= index){
+        if(counter >= index){
+            if(lastball != null and not hitted(tmpball, lastball,5)){
+                    break;
+            };
 //             Logger.log("back change rate : {counter} of runningballs sizeof {balls.size()}");
              tmpball.setStatus(GameBall.HIT_MOVING_STATE);
              tmpball.rate = Config.HIT_MOVE_RATE;
              currentHitMovingRate = Config.HIT_MOVE_RATE;
              currentHitMovingT = 0;
+             lastball = tmpball;
         }
         counter ++;
     }
+    Collections.reverse(runningBalls);
 }
 public function backRunningBall(fromBall : ScrollBall){
     var index = runningBalls.indexOf(fromBall);
