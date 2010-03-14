@@ -47,7 +47,7 @@ public var curx : Double= 0;
 public var cury : Double= 0;
 //the ball the pointer currently pointed
 public var pointedball : ScrollBall;
-var hitmoving : Boolean = false;
+public-read var hitmoving : Boolean = false;
 var hitmoveneedstop : Boolean = false;
 var hitmovecheckcount : Integer = Config.HIT_MOVE_CHECK_COUNT;
 var dohitmove : Boolean = false;
