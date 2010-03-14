@@ -131,7 +131,9 @@ public function atTheEndOfTransition(object : Object):Void{
 //        if(this.isInStatus(GameBall.RUNNING_STATE)){
 //            Main.model.endingRunning();
 //        }
-        Main.model.ending = true;
+        if(not Main.model.hitmoving){
+            Main.model.ending = true;
+        }
         Main.model.recycleBall(this,object);
 }
 var scaleTransition = ScaleTransition {

@@ -59,6 +59,7 @@ public var gamestat = -1 on replace {
                 ui = Game2{};
                 model = Model{};
                 ui.start();
+                gamestat = -1;
             });
     }
     if(gamestat == 1){
@@ -68,6 +69,7 @@ public var gamestat = -1 on replace {
                 ui = Game2{};
                 model = Model{};
                 ui.start();
+                gamestat = -1;
             });
     }
     if(gamestat == 2){
@@ -75,16 +77,22 @@ public var gamestat = -1 on replace {
     }
     if(gamestat == 3){
             ui.resume();
+
     }
     if(gamestat == 4){
             ui.stop();
             loading.start();
-            FX.deferAction(function():Void{
-                level;
-                ui = Game2{};
-                model = Model{};
-                ui.start();
-            });
+            if(level == (sizeof data)-1){
+                //congratulations   
+            }else{
+                FX.deferAction(function():Void{
+                    level++;
+                    ui = Game2{};
+                    model = Model{};
+                    ui.start();
+                    gamestat = -1;
+                });
+            }
     }
 }
 public var mainscene : Scene;
