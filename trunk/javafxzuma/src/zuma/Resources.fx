@@ -236,13 +236,17 @@ public def fireIcon = [Image { url: "{__DIR__}images/fireball_cursor.jpg" }
 public def background_bottom : Image = Image { url: "{__DIR__}images/background/background_bottom.png" };
 public def background_upper : Image = Image { url: "{__DIR__}images/background/background_upper.png" };
 public def progress_fill : Image = Image { url: "{__DIR__}images/background/progress_fill.jpg" };
+
+public def spear_ball : Image = Image{url: "{__DIR__}images/power/spear_ball.png"};
+
+//------------------------------sound-------------------------------------
 public def ballclick_sound = "ball_hit.wav";
 public def ballclick_sound_2 = "ballclick1.wav";
 public def purge_sound = "chain1.wav";
 public def rolling_sound = "initialfill.wav";
 public def send_bullet_sound = "pop.wav";
 public def switch_door_sound = "doorswitch.wav";
-
+//-------------------------------------------------------------------------
 
 
 public def fortest = Image { url: "{__DIR__}images/background/background2.jpg" };

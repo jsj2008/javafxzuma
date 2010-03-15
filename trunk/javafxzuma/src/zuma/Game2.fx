@@ -129,7 +129,7 @@ override function setEmitter() {
    }
 //   var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
-   Main.model.currentbullet.setTXY(Main.model.curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+20);
+   Main.model.currentbullet.setTXY(Main.model.curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+5);
 }
 public var gamecontent = Group {
         translateY : 21

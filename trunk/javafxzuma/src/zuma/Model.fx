@@ -920,11 +920,6 @@ public function detectAndRemoveBonus(ex : Number, ey : Number):Void{
         bonus = it.next() as Bonus;
         bx = bonus.translateX + Config.BONUS_DIAMETER/2;
         by = bonus.translateY + Config.BONUS_DIAMETER/2;
-//        if(bonus.translateX + Config.BONUS_DIAMETER > ex - Config.EMITTER_DIAMETER/2 and
-//                                    bonus.translateX < ex + Config.EMITTER_DIAMETER/2 and
-//                                    bonus.translateY + Config.BONUS_DIAMETER > ey - Config.EMITTER_DIAMETER/2 and
-//                                    bonus.translateY < ey + Config.EMITTER_DIAMETER/2){
-//        }
         if(Math.sqrt(Util.square(ex-bx)+Util.square(ey-by))<(Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2)){
              println("{Math.sqrt(Util.square(ex-bx)+Util.square(ey-by))}<{(Config.BONUS_DIAMETER/2 + Config.EMITTER_DIAMETER/2)}");
              it.remove();
