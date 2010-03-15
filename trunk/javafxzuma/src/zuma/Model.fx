@@ -27,7 +27,6 @@ import javafx.animation.Timeline;
 import zuma.GameBall;
 
 import java.util.Collections;
-import zuma.SpearBullet.PowerBullet;
 
 public class Model {
 public var lastGenered : ScrollBall = null;

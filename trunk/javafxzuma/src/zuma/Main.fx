@@ -27,7 +27,7 @@ var data : LevelData[] = [LevelData{
                             END_DOOR_Y : 500;
                             PATH_DATA_FILE : "/zuma/svg/map1";
                             max_ball : 10
-                            target : 30
+                            target : 5
                           }
                           LevelData{
                             EMITTER_X : 50
