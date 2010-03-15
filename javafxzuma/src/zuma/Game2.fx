@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
+import java.lang.Void;
+import zuma.SpearBullet.PowerBullet;
 
 
 
@@ -41,9 +43,9 @@ var backgroundview = ImageView {
                     emitter.dy = e.y - Config.EMITTER_DIAMETER/2;
 //                    Logger.log("before send, bullet is at {Main.model.getCurrentBullet().translateX} {Main.model.getCurrentBullet().translateY}");
                     Main.model.currentbullet.translate();
-                    if(Main.model.runningbullets.size() >= 1){
-                            Main.model.runningbullets.poll();
-                    }
+//                    if(Main.model.runningbullets.size() >= 1){
+//                            Main.model.runningbullets.poll();
+//                    }
                     Main.model.runningbullets.add(Main.model.currentbullet);
                     emitter.hitmove();
                     Main.model.setCurrentBullet(null);
@@ -73,7 +75,7 @@ var backgroundview = ImageView {
 }
 function sepcialEffect(x : Number,y : Number,type : Integer):Void{
         var bonus = Main.model.getBonusFromRecycled();
-        bonus.image = Resources.specialEffectImage[type];
+        bonus.powerType = type;
         bonus.startx = x;
         bonus.starty = y;
         bonus.translateX = 0;
@@ -138,9 +140,13 @@ public var gamecontent = Group {
 public var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];
 override public function ready():Void{
     patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
-    while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
+    while (sizeof Main.model.bullets < Config.PRE_CREATE_BULLET){
          def ball0 = BulletBall{group : gamecontent,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
          Main.model.addBullet(ball0);
+    }
+    while (sizeof Main.model.powerBullets < Config.PRE_CREATE_SPEAR){
+         def ball0 = PowerBullet{group : gamecontent,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};
+         Main.model.addPowerBullet(ball0);
     }
     while (Main.model.sizeofRecycledBonus() < Config.PRE_CREATE_BONUS){
          def bonus = Bonus{group : gamecontent};
@@ -161,7 +167,7 @@ override public function ready():Void{
          ball0.vis = false;
          Main.model.recycleSpecial(ball0,null);
     }
-    for(bullet in Main.model.getBullets()){
+    for(bullet in Main.model.bullets){
             bullet.rate = 1;
     }
     Main.model.setSpecialEffect(sepcialEffect);

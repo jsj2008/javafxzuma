@@ -27,6 +27,7 @@ import javafx.animation.Timeline;
 import zuma.GameBall;
 
 import java.util.Collections;
+import zuma.SpearBullet.PowerBullet;
 
 public class Model {
 public var lastGenered : ScrollBall = null;
@@ -58,7 +59,9 @@ var shiftinghead : ScrollBall;
 var recycled : Stack = new Stack();
 var recycledSpecial : Stack = new Stack();
 var recycledBonus : Stack = new Stack();
-var bullets : BulletBall[]= [];
+public-read var bullets : BulletBall[]= [];
+public-read var powerBullets : PowerBullet[] = [];
+public var currentPower = 0;
 var currentHitMovingRate : Integer;
 var currentHitMovingT : Integer;
 public var currentbullet : BulletBall;
@@ -271,7 +274,7 @@ public function playDoorSwitchSound(){
 *   useful public functions
 */
 public function specialEffectBegin(){
-    specialeffect_counter = 200;
+    specialeffect_counter = Config.SPECIALL_DUR_COUNT;
 }
 public function specialEffectCount(){
     if(specialeffect_counter == 0){
@@ -403,16 +406,37 @@ public function setCurrentBullet() : Void{
     if(not (currentbullet == null)){
         return;
     }
-    for(bullet in Model.getBullets()){
+    if(specialeffect_counter > 0){
+        setPowerBullet(currentPower);
+    }else{
+        for(bullet in bullets){
+                        if(bullet.state == GameBall.STOPED_STATE){
+    //                        Logger.log("reuse bullet {bullet}");
+                            setCurrentBullet(bullet);
+                            if(runningBalls.size() <= 5){
+
+                            }
+                            var tmp = currentImageIndexs();
+                            bullet.imageIndex = tmp[Util.random(sizeof tmp)] as Integer;
+                            Model.getCurrentBullet().ready();
+                            break;
+                        }
+         }
+    }
+}
+public function setPowerBullet(type : Integer):Void{
+    if(bullet_stop){
+        return;
+    }
+    if(not (currentbullet == null)){
+        currentbullet.stop();
+    }
+    for(bullet in powerBullets){
                     if(bullet.state == GameBall.STOPED_STATE){
 //                        Logger.log("reuse bullet {bullet}");
-                        Model.setCurrentBullet(bullet);
-                        if(runningBalls.size() <= 5){
-                                
-                        }
-                        var tmp = currentImageIndexs();
-                        bullet.imageIndex = tmp[Util.random(sizeof tmp)] as Integer;
-                        Model.getCurrentBullet().ready();
+                        bullet.powerIndex = type;
+                        setCurrentBullet(bullet);
+                        currentbullet.ready();
                         break;
                     }
      }
@@ -434,8 +458,8 @@ public function setCurrentBullet(bullet : BulletBall){
 public function addBullet(bullet : BulletBall){
     insert bullet into bullets;
 }
-public function getBullets(){
-    return bullets;
+public function addPowerBullet(bullet : PowerBullet){
+    insert bullet into powerBullets;
 }
 public function addtoRunningHead(ball : ScrollBall){
     if(ball == null){
@@ -598,8 +622,6 @@ public function findToBePurged(hitmove : Boolean ,sepcialEffect : function(x : N
         var pball = Model.getRunningBallAt(counter);
         if(pball instanceof SpecialScrollBall){
                 sepcialEffect(pball.translateX,pball.translateY,(pball as SpecialScrollBall).SPECIAL_TYPE);
-//                effectAction((pball as SpecialScrollBall).effectIndex);
-                specialEffectBegin();
 
         }
         popScore(pball.translateX,pball.translateY,t_add,(pball.imageIndex));
@@ -751,7 +773,7 @@ public function dectectHitandMove(){
         if(runningbullets.isEmpty()){
                 detect = false;
         }
-        var bullet : BulletBall = runningbullets.peek() as BulletBall;
+//        var bullet : BulletBall = runningbullets.peek() as BulletBall;
         var it : ListIterator  = runningBalls.listIterator();
         var lastball : ScrollBall;
         var ball : ScrollBall;
@@ -796,15 +818,29 @@ public function dectectHitandMove(){
                 (((ball as ScrollBall).anim1)as Schedulable).scheduledUpdate(it);
                 (((ball as ScrollBall).animball)as Schedulable).scheduledUpdate(it);
                 //detect if bullet hitted
-                if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
-                     bullet.pause();
-                     playHitSound();
-                     var newBall = bullet.hitmove(ball as ScrollBall,function(newBall : ScrollBall){
-                        it.add(newBall);
-                     });
-                     runningbullets.poll();
-                     detect = false;
-                 }
+                var rit = runningbullets.listIterator();
+                var bullet;
+                while(detect and rit.hasNext()){
+                    bullet = rit.next() as BulletBall;
+                    if (detect and Model.hitted(bullet,(ball as ScrollBall))) {
+                         if(bullet instanceof PowerBullet){
+                            //TODO : another sound
+                             bullet.hitmove(ball as ScrollBall,function(oldBall : ScrollBall):Void{
+                                popScore(oldBall.translateX,oldBall.translateY,10,(oldBall.imageIndex));
+                                addScore(10);
+                                oldBall.stop(it);
+                             });
+                         }else{
+                             bullet.pause();
+                             playHitSound();
+                             bullet.hitmove(ball as ScrollBall,function(newBall : ScrollBall){
+                                it.add(newBall);
+                             });
+                         }
+                         rit.remove();
+                         break;
+                     }
+                }
                  lastball = ball;
         }
 }

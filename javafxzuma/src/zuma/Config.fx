@@ -23,6 +23,7 @@ public def BONUS_DIAMETER = 30;
 public def PRE_CREATE_BALL = 80;
 public def PRE_CREATE_BALL_SPECIAL = 20;
 public def PRE_CREATE_BULLET = 20;
+public def PRE_CREATE_SPEAR = 10;
 public def PRE_CREATE_BONUS = 10;
 public def PATH_WIDTH = 1;
 public def BULLET_DURIATION = 1s;
@@ -30,7 +31,7 @@ public def BULLET_HIT_DURIATION = 0.1s;
 public def DETECTOR_FREQUENCY = 0.001s;
 public def DEBUG = false;
 public def SPECILA_PERCENTAGE = 20;
-
+public def SPECIALL_DUR_COUNT = 5000;
 //-------------------ball move rate config  ----------------------
 public def MOVE_ROLL_FREQUENCY = 0.02s;
 public def END_RATE : Integer = 10; //0.003s

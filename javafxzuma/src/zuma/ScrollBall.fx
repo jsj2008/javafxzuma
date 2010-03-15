@@ -216,6 +216,10 @@ public function stop(){
     anim1.stop();
     Main.model.recycleBall(this,null);
 }
+public function stop(it : Object){
+    anim1.stop();
+    Main.model.recycleBall(this,it);
+}
 public function debuginfo(){
     println("status : ({statusList[0]},{statusList[1]},{statusList[2]},{statusList[3]},{statusList[4]},{statusList[5]},{statusList[6]})");
     anim1.debuginfo();

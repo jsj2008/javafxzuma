@@ -10,35 +10,36 @@ import javafx.scene.CustomNode;
 
 import javafx.scene.Node;
 
-import javafx.scene.image.ImageView;
 
 import zuma.components.ParabolaTransition;
 
-import javafx.scene.image.Image;
 
 import javafx.scene.Group;
 
 import javafx.animation.transition.FadeTransition;
 import javafx.animation.transition.ParallelTransition;
 import javafx.animation.transition.ScaleTransition;
+import zuma.components.HorizontalImagePlayer;
 
 /**
  * @author javatest
  */
 
 public class Bonus extends CustomNode{
-public var image : Image;
+public var powerType : Integer = 0;
 public var startx : Number;
 public var starty : Number;
 public var group : Group;
 init{
     insert this into group.content;
 }
-def specialimageview = ImageView {
-        image: bind image
-        cache : true
-        opacity : bind opacity
-};
+protected var bullet = HorizontalImagePlayer{
+        startFrom: 0
+        image : bind Resources.powerbulletarray[powerType];
+        cy_w: Config.BALL_DIAMETER
+        cy_h: Config.BALL_DIAMETER
+        dur : 0.1s
+        };
 public-read var transiton = ParabolaTransition{
             node : this
             vy : 10
@@ -64,7 +65,8 @@ var specialparTransition = ParallelTransition {
         }
 }
 override public function create(): Node {
-        specialimageview;
+        bullet.start();
+        bullet;
 }
 public function start(){
     opacity = 1.0;
@@ -73,12 +75,16 @@ public function start(){
 public function stop(){
     opacity = 0;
     transiton.stop();
+    bullet.stop();
 }
 public function eatted(){
     println("bonus eatted at {translateX} {translateY}");
     stop();
+    Main.model.currentPower = powerType;
+    Main.model.setPowerBullet(powerType);
 //    opacity = 1.0;
     Main.model.recycleBonus(this);
+    Main.model.specialEffectBegin();
 //    specialparTransition.playFromStart();
 }
 public function hasOutOfWindow():Boolean{
