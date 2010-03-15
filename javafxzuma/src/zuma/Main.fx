@@ -25,7 +25,7 @@ var data : LevelData[] = [LevelData{
                             background : Image { url: "{__DIR__}images/background/background1.jpg" }
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
-                            PATH_DATA_FILE : "/zuma/svg/map3";
+                            PATH_DATA_FILE : "/zuma/svg/map1";
                             max_ball : 10
                             target : 30
                           }
@@ -35,7 +35,48 @@ var data : LevelData[] = [LevelData{
                             background : Image { url: "{__DIR__}images/background/background2.jpg" }
                             END_DOOR_X : 430;
                             END_DOOR_Y : 500;
+                            PATH_DATA_FILE : "/zuma/svg/map2";
+                            INITIAL_RATE: 6
+                            max_ball : 60
+                          }
+                          LevelData{
+                            EMITTER_X : 50
+                            EMITTER_Y : 280
+                            background : Image { url: "{__DIR__}images/background/background3.jpg" }
+                            END_DOOR_X : 430;
+                            END_DOOR_Y : 500;
+                            PATH_DATA_FILE : "/zuma/svg/map3";
+                            INITIAL_RATE: 6
+                            max_ball : 60
+                            target : 10
+                          }
+                          LevelData{
+                            EMITTER_X : 50
+                            EMITTER_Y : 280
+                            background : Image { url: "{__DIR__}images/background/background4.jpg" }
+                            END_DOOR_X : 430;
+                            END_DOOR_Y : 500;
                             PATH_DATA_FILE : "/zuma/svg/map4";
+                            INITIAL_RATE: 6
+                            max_ball : 60
+                          }
+                          LevelData{
+                            EMITTER_X : 50
+                            EMITTER_Y : 280
+                            background : Image { url: "{__DIR__}images/background/background5.jpg" }
+                            END_DOOR_X : 430;
+                            END_DOOR_Y : 500;
+                            PATH_DATA_FILE : "/zuma/svg/map5";
+                            INITIAL_RATE: 6
+                            max_ball : 60
+                          }
+                          LevelData{
+                            EMITTER_X : 50
+                            EMITTER_Y : 280
+                            background : Image { url: "{__DIR__}images/background/background6.jpg" }
+                            END_DOOR_X : 430;
+                            END_DOOR_Y : 500;
+                            PATH_DATA_FILE : "/zuma/svg/map6";
                             INITIAL_RATE: 6
                             max_ball : 60
                           }];

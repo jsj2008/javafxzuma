@@ -54,6 +54,7 @@ override public function update(object : Object):Void{
    }
    if(count < 0){
            count = -1;
+           rate = 0;
            stopped = true;
            action(object);
            return;
