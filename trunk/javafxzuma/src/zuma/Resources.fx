@@ -48,12 +48,6 @@ public def ballarray = [Image {
                         width : Config.BALL_DIAMETER
                         height: 1600/32*Config.BALL_DIAMETER
                         url: "{__DIR__}images/ball/baBallYellow.gif" }];
-//public def ballarray = [Image { url: "{__DIR__}images/level2/blueball.png" },
-//                        Image { url: "{__DIR__}images/level2/greenball.png" },
-//                        Image { url: "{__DIR__}images/level2/purpleball.png" },
-//                        Image { url: "{__DIR__}images/level2/redball.png" },
-//                        Image { url: "{__DIR__}images/level2/whiteball.png" },
-//                        Image { url: "{__DIR__}images/level2/yellowball.png" }];
 public def bomImage = [Image {
                        width : Config.BALL_DIAMETER
                        height: Config.BALL_DIAMETER
@@ -237,7 +231,23 @@ public def background_bottom : Image = Image { url: "{__DIR__}images/background/
 public def background_upper : Image = Image { url: "{__DIR__}images/background/background_upper.png" };
 public def progress_fill : Image = Image { url: "{__DIR__}images/background/progress_fill.jpg" };
 
-public def spear_ball : Image = Image{url: "{__DIR__}images/power/spear_ball.png"};
+public def spear_ball : Image = Image{
+                                width : Config.BALL_DIAMETER*10
+                                height: Config.BALL_DIAMETER
+                                url: "{__DIR__}images/ball/power/spear_ball.png"};
+public def mutilcolor_bullet : Image = Image{
+                                width : Config.BALL_DIAMETER*20
+                                height: Config.BALL_DIAMETER
+                                url: "{__DIR__}images/ball/power/mutilcolor_bullet.png"};
+public def fire_bullet : Image = Image{
+                                width : Config.BALL_DIAMETER*12
+                                height: Config.BALL_DIAMETER
+                                url: "{__DIR__}images/ball/power/pup_fireball.png"};
+public def strike_bullet : Image = Image{
+                                width : Config.BALL_DIAMETER*10
+                                height: Config.BALL_DIAMETER
+                                url: "{__DIR__}images/ball/power/strike_ball.png"};
+public def powerbulletarray = [spear_ball,mutilcolor_bullet,fire_bullet,strike_bullet];
 
 //------------------------------sound-------------------------------------
 public def ballclick_sound = "ball_hit.wav";

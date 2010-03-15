@@ -11,15 +11,17 @@ import zuma.Resources;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import zuma.Config;
 /**
  * @author javatest
  */
 var player : HorizontalImagePlayer = HorizontalImagePlayer{
-        startFrom: 5
-        image : Resources.arrowImage[0];
-        cy_w: 32
-        cy_h: 32
-        dur : 5s
+        startFrom: 0
+        image : Resources.spear_ball;
+        cy_w: Config.BALL_DIAMETER
+        cy_h: Config.BALL_DIAMETER
+        dur : 0.1s
         };
 Stage {
     title: "Application title"

@@ -32,10 +32,8 @@ import zuma.util.Util;
 
 public class BulletBall extends GameBall{
 public-read var state = STOPED_STATE;
-public var imageIndex = Util.random(6) on replace{
-    ballImage = Resources.ballarray[imageIndex];
-};
-var ballImage = Resources.ballarray[imageIndex];
+public var imageIndex = Util.random(6);
+var ballImage = bind Resources.ballarray[imageIndex];
 public var rate : Number = 1;
 public var dur : Duration = Config.BULLET_DURIATION;
 public var opac = 1.0;
@@ -72,10 +70,10 @@ public def move = TranslateTransition {
         duration: bind dur
         action : function () {
             state = STOPED_STATE;
-            
+            Main.model.runningbullets.remove(this);
         }
 };
-var animball = AnimBall {
+protected var animball = AnimBall {
         ball_deameter : Config.BALL_DIAMETER
         smooth: true
         image: bind ballImage
@@ -102,10 +100,6 @@ public function setTXY(x: Float,y : Float){
     translateX = x;
     translateY = y;
 }
-public function background(){
-state = BACKGROUND_STATE;
-vis = false;
-}
 public function pause(){
 state = PAUSED_STATE;
 move.pause();
@@ -113,6 +107,11 @@ move.pause();
 public function start(){
 state = RUNNING_STATE;
 move.play();
+}
+public function stop(){
+move.stop();
+state = GameBall.STOPED_STATE;
+vis = false;
 }
 public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall):Void) : ScrollBall{
 //        Logger.log("sizeof queue is {Main.model.sizeofRunning()}");
@@ -136,8 +135,7 @@ public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall
                 interpolator: Interpolator.EASEIN
                 duration: Config.BULLET_HIT_DURIATION;
                 action : function () {
-                    background();
-                    move.play();
+                    stop();
                     newBall.makeVisable();
                     Main.model.containsBall = newBall;
                     Main.model.findToBePurged(false,Main.model.specialEffect);

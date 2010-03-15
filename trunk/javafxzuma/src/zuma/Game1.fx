@@ -168,7 +168,7 @@ public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
         ];
 override public function ready():Void{
     patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
-    while (sizeof Main.model.getBullets() < Config.PRE_CREATE_BULLET){
+    while (sizeof Main.model.bullets < Config.PRE_CREATE_BULLET){
          def ball0 = BulletBall{group : group, tx : Main.currentData.EMITTER_X - Config.BALL_DIAMETER/2, ty : Main.currentData.EMITTER_Y - Config.BALL_DIAMETER/2};
          Main.model.addBullet(ball0);
     }
@@ -187,7 +187,7 @@ override public function ready():Void{
          ball0.vis = false;
          Main.model.recycleSpecial(ball0,null);
     }
-    for(bullet in Main.model.getBullets()){
+    for(bullet in Main.model.bullets){
             bullet.rate = 1;
     }
     Main.model.setSpecialEffect(sepcialEffect);
