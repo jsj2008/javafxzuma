@@ -13,7 +13,7 @@ import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
 import java.lang.Void;
-import zuma.SpearBullet.PowerBullet;
+import zuma.PowerBullet;
 
 
 
@@ -80,6 +80,7 @@ function sepcialEffect(x : Number,y : Number,type : Integer):Void{
         bonus.starty = y;
         bonus.translateX = 0;
         bonus.translateY = 0;
+        bonus.toFront();
         bonus.start();
 //        bonus.opacity = 1;
 //        bonus.translateX = 200;
