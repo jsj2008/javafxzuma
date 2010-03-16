@@ -582,7 +582,6 @@ public function findToBePurged(sepcialEffect : function(x : Number,y : Number,ty
         addScore(10);
         playPurgeSound();
         pball.ScalingAndUnvisable();
-        pball.rate = (Config.END_RATE);
         insert pball into temparray;
     }
     for(pball in temparray){

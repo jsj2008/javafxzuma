@@ -235,19 +235,36 @@ public def spear_ball : Image = Image{
                                 width : Config.BALL_DIAMETER*10
                                 height: Config.BALL_DIAMETER
                                 url: "{__DIR__}images/ball/power/spear_ball.png"};
+public def spear_ball_big : Image = Image{
+                                width : Config.BALL_DIAMETER*10*2
+                                height: Config.BALL_DIAMETER*2
+                                url: "{__DIR__}images/ball/power/spear_ball.png"};
 public def mutilcolor_bullet : Image = Image{
                                 width : Config.BALL_DIAMETER*20
                                 height: Config.BALL_DIAMETER
+                                url: "{__DIR__}images/ball/power/mutilcolor_bullet.png"};
+public def mutilcolor_bullet_big : Image = Image{
+                                width : Config.BALL_DIAMETER*20*2
+                                height: Config.BALL_DIAMETER*2
                                 url: "{__DIR__}images/ball/power/mutilcolor_bullet.png"};
 public def fire_bullet : Image = Image{
                                 width : Config.BALL_DIAMETER*12
                                 height: Config.BALL_DIAMETER
                                 url: "{__DIR__}images/ball/power/pup_fireball.png"};
+public def fire_bullet_big : Image = Image{
+                                width : Config.BALL_DIAMETER*12*2
+                                height: Config.BALL_DIAMETER*2
+                                url: "{__DIR__}images/ball/power/pup_fireball.png"};
 public def strike_bullet : Image = Image{
                                 width : Config.BALL_DIAMETER*10
                                 height: Config.BALL_DIAMETER
                                 url: "{__DIR__}images/ball/power/strike_ball.png"};
+public def strike_bullet_big : Image = Image{
+                                width : Config.BALL_DIAMETER*10*2
+                                height: Config.BALL_DIAMETER*2
+                                url: "{__DIR__}images/ball/power/strike_ball.png"};
 public def powerbulletarray = [spear_ball,mutilcolor_bullet,fire_bullet,strike_bullet];
+public def powerbulletbigarray = [spear_ball_big,mutilcolor_bullet_big,fire_bullet_big,strike_bullet_big];
 
 //------------------------------sound-------------------------------------
 public def ballclick_sound = "ball_hit.wav";
