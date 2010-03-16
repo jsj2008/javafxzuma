@@ -41,6 +41,7 @@ public def HIT_MOVE_G : Integer = 1;
 public def HIT_MOVE_RATE : Integer = -5;
 public def HIT_MOVE_CHECK_COUNT = 100;
 public def RUNNING_RATE = 1;
+public def CATCH_RATE = 2;
 public def PAUSED_STOPPED_RATE = 0;
 //-----------------------------------------------------------------
 

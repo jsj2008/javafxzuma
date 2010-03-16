@@ -48,6 +48,7 @@ public var cury : Double= 0;
 //the ball the pointer currently pointed
 public var pointedball : ScrollBall;
 public-read var hitmoving : Boolean = false;
+public-read var pauseing : Boolean = false;
 var hitmoveneedstop : Boolean = false;
 var hitmovecheckcount : Integer = Config.HIT_MOVE_CHECK_COUNT;
 var dohitmove : Boolean = false;
@@ -76,7 +77,9 @@ var sendbulletsound = Sound{fileName:Resources.send_bullet_sound};
 var doorswitchsound = Sound{fileName:Resources.switch_door_sound};
 public var defaultRate = Main.currentData.INITIAL_RATE on replace oldvalue{
     applyToAll(function(ball : ScrollBall):Boolean{
-        ball.rate = (defaultRate);
+        if(not ball.isInStatus(GameBall.PAUSED_STATE)){
+            ball.rate = (defaultRate);
+        }
         return false;
     });
 };
@@ -301,7 +304,7 @@ public function generBall() : ScrollBall{
        if(generedBall == 0){
                playRollingSound();
        }
-       if(generedBall > Main.currentData.max_ball or sucess or ending){
+       if(generedBall > Main.currentData.max_ball or sucess or ending or hitmoving){
                return null;
        }
        var ox = (Main.ui as Game).patharray.get(0) as Float;
@@ -627,7 +630,6 @@ public function findToBePurged(hitmove : Boolean ,sepcialEffect : function(x : N
         addScore(10);
         playPurgeSound();
         pball.ScalingAndUnvisable();
-        pball.rate = (Config.END_RATE);
         insert pball into temparray;
     }
     for(pball in temparray){
@@ -653,7 +655,6 @@ public function stopShift():Void{
      if(not shifting){
              return;
      }
-     var reached = (Main.ui as Game).patharray.indexOf(shiftinghead.translateX)/3;
      var indexOfShift = runningBalls.indexOf(shiftinghead);
      //when all balls are shifting
      if(indexOfShift <=0){
@@ -667,6 +668,22 @@ public function stopShift():Void{
         return;
      }
      var newBall = runningBalls.get(indexOfShift-1);
+//     if((newBall as ScrollBall).isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+//            for(ball in runningBalls){
+//                if((ball as ScrollBall).isInStatus(GameBall.SHIFT_RUNNING_STATE)){
+//                    (ball as ScrollBall).unsetStatus(GameBall.SHIFT_RUNNING_STATE);
+//                    (ball as ScrollBall).rate = (defaultRate);
+//                    //restore the rate,backrunning has a higher priority
+//                    if((ball as ScrollBall).isInStatus(GameBall.PAUSED_STATE)){
+//                        (ball as ScrollBall).rate = (Config.PAUSED_STOPPED_RATE);
+//                    }
+//                    if((ball as ScrollBall).isInStatus(GameBall.BACK_RUNNING_STATE)){
+//                        (ball as ScrollBall).rate =(Config.BACK_RATE);
+//                    }
+//                }
+//            }
+//            return;
+//     }
      var ox = (newBall as ScrollBall).translateX;
      var oy = (newBall as ScrollBall).translateY;
      var x = shiftinghead.translateX;
@@ -762,6 +779,7 @@ public function stopHitMove():Void{
 public function dectectHitandMove(){
         //clear variables to be set
         hitmoving = false;
+        pauseing = false;
         shifting = false;
         hitmoveneedstop = false;
         backing = false;
@@ -796,6 +814,10 @@ public function dectectHitandMove(){
                         }
                         ball.rate = lastball.rate;
                 }
+                //check if there is a pausing ball
+                if(not pauseing and ball.isInStatus(GameBall.PAUSED_STATE)){
+                        pauseing = true;
+                }
                 //get head of shift balls
                 if(shiftinghead == null and ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                         shifting = true;
@@ -828,6 +850,22 @@ public function dectectHitandMove(){
                                 popScore(oldBall.translateX,oldBall.translateY,10,(oldBall.imageIndex));
                                 addScore(10);
                                 oldBall.stop(it);
+                                //check if need backrunning
+                                var preball : ScrollBall;
+                                var nextball : ScrollBall;
+                                if(it.hasPrevious() and it.hasNext()){
+                                    preball = it.previous() as ScrollBall;
+                                    it.next();
+                                    nextball = it.next() as ScrollBall;
+                                    //restore
+                                    it.previous();
+                                }
+                                if(preball.imageIndex == nextball.imageIndex){
+                                    Main.model.backRunningBall(nextball);
+                                }else{
+                                    Main.model.pauseRunningBall(nextball);
+                                }
+                                
                              });
                          }else{
                              bullet.pause();
@@ -842,6 +880,10 @@ public function dectectHitandMove(){
                 }
                  lastball = ball;
         }
+        //let others move quickly to catch the paused ball
+//        if(pauseing){
+//                defaultRate = Config.CATCH_RATE;
+//        }
 }
 public function shiftFrom(ball : GameBall){
     var index = (Model.runningBalls as LinkedList).indexOf(ball);

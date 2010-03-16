@@ -45,7 +45,7 @@ function detect() {
         }
         Main.model.specialEffectCount();
         Main.model.generBall();
-        if(Main.model.sizeofRunning() >= 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE){
+        if(Main.model.sucess or (Main.model.sizeofRunning() >= 10 and Main.model.defaultRate == Main.currentData.INITIAL_RATE)){
                     Main.model.defaultRate = Config.RUNNING_RATE;
                     Main.model.restoreAllRunning();
                     Main.model.startBulletGenor();

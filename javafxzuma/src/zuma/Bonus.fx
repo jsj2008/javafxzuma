@@ -35,9 +35,9 @@ init{
 }
 protected var bullet = HorizontalImagePlayer{
         startFrom: 0
-        image : bind Resources.powerbulletarray[powerType];
-        cy_w: Config.BALL_DIAMETER
-        cy_h: Config.BALL_DIAMETER
+        image : bind Resources.powerbulletbigarray[powerType];
+        cy_w: Config.BALL_DIAMETER*2
+        cy_h: Config.BALL_DIAMETER*2
         dur : 0.1s
         };
 public-read var transiton = ParabolaTransition{
