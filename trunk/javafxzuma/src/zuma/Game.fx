@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import java.util.ArrayList;
 
 import zuma.components.Progress;
+import javafx.scene.Group;
 
 /**
  * @author javatest
@@ -23,6 +24,7 @@ public var emitter = Emitter{translateX: Main.currentData.EMITTER_X
                       translateY: Main.currentData.EMITTER_Y
                       degrees : bind degrees};
 public var patharray : ArrayList;
+public var gamecontent : Group;
 public def progress = Progress{
             progressImage:Resources.background_upper;
             fillImage:Resources.progress_fill

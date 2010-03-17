@@ -30,6 +30,7 @@ public var fromIndex : Integer = 0;
 public var offsetX : Float;
 public var offsetY : Float;
 public var action : function(object : Object):Void;
+public var onError : function(object : Object):Void;
 var stopped = false;
 var direct = 1;
 var count : Integer= bind fromIndex*3;
@@ -54,6 +55,7 @@ override public function update(object : Object):Void{
    }
    if(count < 0){
            count = 0;
+           onError(object);
            return;
    }
    if(count >= pathArray.size()){

@@ -322,15 +322,8 @@ public function generBall() : ScrollBall{
            }
        }
         //Logger.log("ball generating ...");
-       var newBall;
-       if(Model.isRecycledEmpty()){
-         newBall = ScrollBall{};
-         newBall.start();
-       }else{
-        //Logger.log("reuse ball");
-         newBall = Model.getBallOrSpecialFromRecycled();
-         newBall.restart();
-       }
+       var newBall = Model.getBallOrSpecialFromRecycled();
+       newBall.restart();
        generedBall++;
        Model.addtoRunningTail(newBall);
        newBall.makeVisable();
@@ -496,11 +489,27 @@ public function getRunningBallAt(index : Number){
     return (runningBalls as LinkedList).get(index) as ScrollBall;
 }
 public function getBallFromRecycled(){
+    if(recycled.isEmpty()){
+//         def ball0 = ScrollBall{patharray : (Main.ui as Game).patharray};
+//         insert ball0 into (Main.ui as Game).gamecontent.content;
+//         insert ball0.effectplayer into (Main.ui as Game).gamecontent.content;
+//         ball0.setStatus(GameBall.DEAD_STATE);
+//         ball0.vis = false;
+//         Main.model.recycleBall(ball0,null);
+    }
     var ball = recycled.pop() as ScrollBall;
 //    Logger.log("get {ball} from recycled");
     return ball;
 }
 public function getSpecialBallRromRecycled(){
+    if(recycledSpecial.isEmpty()){
+//         def ball0 = ScrollBall{patharray : (Main.ui as Game).patharray};
+//         insert ball0 into (Main.ui as Game).gamecontent.content;
+//         insert ball0.effectplayer into (Main.ui as Game).gamecontent.content;
+//         ball0.setStatus(GameBall.DEAD_STATE);
+//         ball0.vis = false;
+//         Main.model.recycleBall(ball0,null);
+    }
     var ball = recycledSpecial.pop() as ScrollBall;
 //    Logger.log("get {ball} from recycledSpecial");
     return ball;
@@ -789,6 +798,7 @@ public function dectectHitandMove(){
         shiftinghead = null;
         backinghead = null;
         pointedball = null;
+        var allPaused = true;
         var detect = true;
         if(runningbullets.isEmpty()){
                 detect = false;
@@ -800,12 +810,18 @@ public function dectectHitandMove(){
         var shorter : Double = 10000;
         while(it.hasNext()){
                 ball = it.next() as ScrollBall;
-//                if(lastball != null and
-//                   not lastball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
-//                   lastball.overredBall(ball)){
-//                        ball.stop(it);
-//                        continue;
-//                }
+                //check and remove the ball at a wrong position
+                if(lastball != null and
+                   not ball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
+                   lastball.overredBall(ball)){
+                        println("error position! -> lastball at {lastball.svgCount()} and ball at {ball.svgCount()}");
+                        ball.stop(it);
+                        continue;
+                }
+                //check if all ball are paused
+                if(allPaused and not ball.isInStatus(GameBall.PAUSED_STATE)){
+                        allPaused = false;
+                }
                 //find the currently pointed ball
                 if(curx > ball.translateX and curx < ball.translateX + Config.BALL_DIAMETER){
                     if((cury - ball.translateY) < shorter){
@@ -841,7 +857,6 @@ public function dectectHitandMove(){
                 if(not hitmoving and ball.isInStatus(GameBall.HIT_MOVING_STATE)){
                         hitmoving = true;
                         if(ball.rate >= 0){
-                                println("hitmove need stop");
                                 hitmoveneedstop = true;
                         }
                 };
@@ -889,6 +904,11 @@ public function dectectHitandMove(){
                      }
                 }
                  lastball = ball;
+        }
+        if(allPaused){
+                for(tball in runningBalls){
+                        (tball as ScrollBall).rate = defaultRate;
+                }
         }
         //let others move quickly to catch the paused ball
 //        if(pauseing){
