@@ -912,7 +912,11 @@ public function dectectHitandMove(){
         }
         //let others move quickly to catch the paused ball
 //        if(pauseing){
-//                defaultRate = Config.CATCH_RATE;
+//                for(pball in runningBalls){
+//                        if(not (pball as ScrollBall).isInStatus(GameBall.PAUSED_STATE)){
+//                            (pball as ScrollBall).rate = Config.CATCH_RATE;
+//                        }
+//                }
 //        }
 }
 public function shiftFrom(ball : GameBall){
