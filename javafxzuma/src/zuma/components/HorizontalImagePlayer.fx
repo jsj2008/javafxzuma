@@ -48,7 +48,6 @@ def imageview = ImageView {
         opacity : bind opacity
 };
 public var startFrom : Number = 0 on replace{
-    println("star from {startFrom}");
     imageview.translateX = imageview.translateX-cy_w*startFrom;
     cy.x = cy.x+cy_w*startFrom;
 };
