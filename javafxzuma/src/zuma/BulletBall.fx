@@ -114,7 +114,6 @@ state = GameBall.STOPED_STATE;
 vis = false;
 }
 public function hitmove(ball : ScrollBall,action : function(newBall : ScrollBall):Void) : ScrollBall{
-//        Logger.log("sizeof queue is {Main.model.sizeofRunning()}");
         var newBall = Main.model.getNextBall(ball) as ScrollBall;
         newBall.start();
         newBall.imageIndex = imageIndex;

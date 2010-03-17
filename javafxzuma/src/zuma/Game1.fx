@@ -163,9 +163,11 @@ override function setEmitter() {
    var by : Float = Util.getCoordy(Main.currentData.EMITTER_X,Main.currentData.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(bx-Config.BALL_DIAMETER/2, by-Config.BALL_DIAMETER/2);
 }
-public var gamecontent = [backgroundview,Resources.track,door,specialimageview,
+override public var gamecontent = Group {
+        translateY : 21
+        content : [backgroundview,Resources.track,door,specialimageview,
                 group,scoreText,totlescoreText,pointer
-        ];
+        ]};
 override public function ready():Void{
     patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
     while (sizeof Main.model.bullets < Config.PRE_CREATE_BULLET){

@@ -14,6 +14,7 @@ import zuma.components.AnimText;
 import zuma.util.Util;
 import java.lang.Void;
 import zuma.PowerBullet;
+import java.lang.Void;
 
 
 
@@ -109,6 +110,7 @@ function generBall() : Void{
 override function setEmitter() {
    var deg = 270;
    emitter.translateX = Main.model.curx - Config.EMITTER_DIAMETER/2;
+   emitter.translateY = Main.currentData.EMITTER_Y;
    var eox = Main.model.curx;
    var eoy = emitter.translateY + Config.EMITTER_DIAMETER/2;
    emitter.tx = eox;
@@ -134,12 +136,12 @@ override function setEmitter() {
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
    Main.model.currentbullet.setTXY(Main.model.curx-Config.BALL_DIAMETER/2, emitter.translateY-Config.BALL_DIAMETER/2+5);
 }
-public var gamecontent = Group {
+override public function ready():Void{
+    gamecontent = Group {
         translateY : 21
         content : [backgroundview,emitter,scoreText,pointer]
         };
-public var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];
-override public function ready():Void{
+    var totlecontent = [backgroundbuttom,progress,totlescoreText,gamecontent];
     patharray =  MapLoader.getMap(Main.currentData.PATH_DATA_FILE);
     while (sizeof Main.model.bullets < Config.PRE_CREATE_BULLET){
          def ball0 = BulletBall{group : gamecontent,tx : bind emitter.translateX+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2,ty : bind emitter.translateY+Config.EMITTER_DIAMETER/2-Config.BALL_DIAMETER/2};

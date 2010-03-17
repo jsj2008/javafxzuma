@@ -126,14 +126,13 @@ public var anim1 = SVGTransition {
         orientation : OrientationType.ORTHOGONAL_TO_TANGENT
         maxrate : (Config.MOVE_ROLL_FREQUENCY/Config.DETECTOR_FREQUENCY) as Integer
         action : atTheEndOfTransition
+        onError : onError
 };
 public function atTheEndOfTransition(object : Object):Void{
-//        if(this.isInStatus(GameBall.RUNNING_STATE)){
-//            Main.model.endingRunning();
-//        }
-        if(not Main.model.hitmoving){
-            Main.model.ending = true;
-        }
+        Main.model.ending = true;
+        Main.model.recycleBall(this,object);
+}
+public function onError(object : Object):Void{
         Main.model.recycleBall(this,object);
 }
 var scaleTransition = ScaleTransition {
@@ -234,5 +233,8 @@ public function sameStatusWith(ball : ScrollBall):Boolean{
 }
 public function overredBall(ball : ScrollBall){
      return anim1.getCount() > ball.anim1.getCount();
+}
+public function svgCount(){
+    return anim1.getCount();
 }
 }
