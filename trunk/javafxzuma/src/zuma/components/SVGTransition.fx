@@ -53,10 +53,7 @@ override public function update(object : Object):Void{
            return;
    }
    if(count < 0){
-           count = -1;
-           rate = 0;
-           stopped = true;
-           action(object);
+           count = 0;
            return;
    }
    if(count >= pathArray.size()){

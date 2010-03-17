@@ -29,7 +29,7 @@ import zuma.GameBall;
 import java.util.Collections;
 
 public class Model {
-public var lastGenered : ScrollBall = null;
+//public var lastGenered : ScrollBall = null;
 public var containsBall : ScrollBall = null;
 public-read var runningBalls : LinkedList = new LinkedList();
 public-read var runningBonus : LinkedList = new LinkedList();
@@ -295,7 +295,7 @@ public function setScoreUpdator(pc : function(x : Number,y : Number,score : Inte
 public function reGenerBall(){
         defaultRate = Main.currentData.INITIAL_RATE;
         generedBall = 0;
-        lastGenered = null;
+//        lastGenered = null;
 }
 public function stopGenerBall(){
         generedBall = 100000;
@@ -307,31 +307,35 @@ public function generBall() : ScrollBall{
        if(generedBall > Main.currentData.max_ball or sucess or ending or hitmoving){
                return null;
        }
-       var ox = (Main.ui as Game).patharray.get(0) as Float;
-       var oy = (Main.ui as Game).patharray.get(1) as Float;
-       var x = (lastGenered.translateX as Float);
-       var y = (lastGenered.translateY as Float);
-       if(x < 0 and y < 0){
-               return null;
+       if(runningBalls.size() > 0){
+           var lastGenered = (runningBalls as LinkedList).getFirst() as ScrollBall;
+           var ox = (Main.ui as Game).patharray.get(0) as Float;
+           var oy = (Main.ui as Game).patharray.get(1) as Float;
+           var x = (lastGenered.translateX as Float);
+           var y = (lastGenered.translateY as Float);
+           if(x < 0 and y < 0){
+                   return null;
+           }
+           var dist = getDistance(ox,oy,x,y) - (Config.BALL_DIAMETER);
+           if((not (lastGenered == null)) and dist < -generedoffset){
+                return null;
+           }
        }
-       var dist = getDistance(ox,oy,x,y) - (Config.BALL_DIAMETER);
-       if((not (lastGenered == null)) and dist < -generedoffset){
-            return null;
-       }
-//       Logger.log("ball generating ...");
+        //Logger.log("ball generating ...");
+       var newBall;
        if(Model.isRecycledEmpty()){
-         lastGenered = ScrollBall{};
-         lastGenered.start();
+         newBall = ScrollBall{};
+         newBall.start();
        }else{
-//         Logger.log("reuse ball");
-         lastGenered = Model.getBallOrSpecialFromRecycled();
-         lastGenered.restart();
+        //Logger.log("reuse ball");
+         newBall = Model.getBallOrSpecialFromRecycled();
+         newBall.restart();
        }
        generedBall++;
-       Model.addtoRunningTail(lastGenered);
-       lastGenered.makeVisable();
-       lastGenered.rate = (defaultRate);
-       return  lastGenered;
+       Model.addtoRunningTail(newBall);
+       newBall.makeVisable();
+       newBall.rate = (defaultRate);
+       return  newBall;
 }
 public function endingRunning(){
     for(ball in runningBalls){
@@ -742,11 +746,10 @@ public function stopHitMove():Void{
     }
     if(hitmovecheckcount != 0){
             hitmovecheckcount--;
-            dohitmove = false;
             return;
     }
+    println("hitmove rat at {Config.HIT_MOVE_RATE + Config.HIT_MOVE_G*currentHitMovingT}");
     hitmovecheckcount = Config.HIT_MOVE_CHECK_COUNT;
-    dohitmove = true;
     Collections.reverse(runningBalls);
     var lastball : ScrollBall;
     for(ball in runningBalls){
@@ -757,7 +760,7 @@ public function stopHitMove():Void{
                     hitted(lastball as ScrollBall,ball as ScrollBall)){
                     (ball as ScrollBall).setStatus(GameBall.HIT_MOVING_STATE);
                     (ball as ScrollBall).rate = lastball.rate;
-                    break;
+                    continue;
          }
          if((ball as ScrollBall).isInStatus(GameBall.HIT_MOVING_STATE)){
             if(hitmoveneedstop){
@@ -797,6 +800,12 @@ public function dectectHitandMove(){
         var shorter : Double = 10000;
         while(it.hasNext()){
                 ball = it.next() as ScrollBall;
+//                if(lastball != null and
+//                   not lastball.isInStatus(GameBall.SHIFT_RUNNING_STATE) and
+//                   lastball.overredBall(ball)){
+//                        ball.stop(it);
+//                        continue;
+//                }
                 //find the currently pointed ball
                 if(curx > ball.translateX and curx < ball.translateX + Config.BALL_DIAMETER){
                     if((cury - ball.translateY) < shorter){
@@ -815,9 +824,9 @@ public function dectectHitandMove(){
                         ball.rate = lastball.rate;
                 }
                 //check if there is a pausing ball
-                if(not pauseing and ball.isInStatus(GameBall.PAUSED_STATE)){
-                        pauseing = true;
-                }
+//                if(not pauseing and ball.isInStatus(GameBall.PAUSED_STATE)){
+//                        pauseing = true;
+//                }
                 //get head of shift balls
                 if(shiftinghead == null and ball.isInStatus(GameBall.SHIFT_RUNNING_STATE)){
                         shifting = true;
@@ -832,6 +841,7 @@ public function dectectHitandMove(){
                 if(not hitmoving and ball.isInStatus(GameBall.HIT_MOVING_STATE)){
                         hitmoving = true;
                         if(ball.rate >= 0){
+                                println("hitmove need stop");
                                 hitmoveneedstop = true;
                         }
                 };
@@ -928,6 +938,7 @@ public function hitMovingBall(fromBall : ScrollBall){
          println("fromball not found");
          return;
     }
+    println("hit move start from {index}");
     var iter : Iterator = runningBalls.iterator();
     var counter = 0;
     var tmpball : ScrollBall;
@@ -939,12 +950,12 @@ public function hitMovingBall(fromBall : ScrollBall){
             if(lastball != null and not hitted(tmpball, lastball,5)){
                     break;
             };
-//             Logger.log("back change rate : {counter} of runningballs sizeof {balls.size()}");
              tmpball.setStatus(GameBall.HIT_MOVING_STATE);
              tmpball.rate = Config.HIT_MOVE_RATE;
              currentHitMovingRate = Config.HIT_MOVE_RATE;
              currentHitMovingT = 0;
              lastball = tmpball;
+             println("set ball at {counter} to {Config.HIT_MOVE_RATE}");
         }
         counter ++;
     }
