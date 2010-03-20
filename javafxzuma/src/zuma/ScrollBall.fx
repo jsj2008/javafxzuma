@@ -157,7 +157,7 @@ var parTransition = ParallelTransition {
             this.scaleY = 1;
         }
 }
-public def effectplayer = ImagesPlayer{repeatCount:9,images: Resources.purgeffectImage,rate : 1,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
+public def effectplayer = ImagesPlayer{max : sizeof Resources.purgeffectImage+1 ,repeatCount:sizeof Resources.purgeffectImage,images: Resources.purgeffectImage,rate : 1,opacity:0,width:Config.BALL_DIAMETER*3,height:Config.BALL_DIAMETER*3};
 public function ScalingAndUnvisable(){
     makeUnvisable();
 //    var exploded = ExplodedBall{group : (Main.ui as Game2).gamecontent,x : translateX + Config.BALL_DIAMETER/2, y : translateY + Config.BALL_DIAMETER/2};

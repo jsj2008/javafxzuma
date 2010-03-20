@@ -31,7 +31,7 @@ public var height : Number = 30;
 public-read var paused = false;
 var ajust = false;
 var index = 0;
-var max = bind sizeof(images);
+public var max = sizeof(images);
 public var repeatCount = Timeline.INDEFINITE;
 public var rate = 0;
 def imageview = ImageView {
@@ -51,7 +51,7 @@ var timer = Timeline {
         ]
 };
 public function update():Void{
-    if(index >= max){
+    if(index >= max-1){
         index = 0;
     }
     index++;

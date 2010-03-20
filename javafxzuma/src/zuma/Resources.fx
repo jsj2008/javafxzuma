@@ -207,7 +207,8 @@ public def purgeffectImage = [Image {
                               Image {
                                 width : Config.BALL_DIAMETER*Config.BALL_PURGE_RATIO
                                 height: Config.BALL_DIAMETER*Config.BALL_PURGE_RATIO
-                                url: "{__DIR__}images/effect/effect.008.png" }];
+                                url: "{__DIR__}images/effect/effect.008.png" }
+                              ];
 public def patharray = MapLoader.getMap("/zuma/svg/map1");
 public def track = SVGPath {
                             stroke: Color.BLACK
@@ -265,6 +266,39 @@ public def strike_bullet_big : Image = Image{
                                 url: "{__DIR__}images/ball/power/strike_ball.png"};
 public def powerbulletarray = [spear_ball,mutilcolor_bullet,fire_bullet,strike_bullet];
 public def powerbulletbigarray = [spear_ball_big,mutilcolor_bullet_big,fire_bullet_big,strike_bullet_big];
+public def powerlightningImage = [Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0001.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0002.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0003.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0004.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0005.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0006.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0007.png" }
+                                  Image {
+                                    width : 16
+                                    height: 320
+                                    url: "{__DIR__}images/ball/power/pak_lightning_0008.png" }
+                                 ];
 
 //------------------------------sound-------------------------------------
 public def ballclick_sound = "ball_hit.wav";
