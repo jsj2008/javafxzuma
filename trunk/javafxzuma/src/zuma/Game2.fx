@@ -24,7 +24,8 @@ import java.lang.Void;
 
 public class Game2 extends Game{
 def scoreText = AnimText{visible:false};
-var pointer = Pointer{opacity:0.5};
+var pointer = Pointer{opacity:0.3};
+//var arrow = Arrow{};
 def totlescoreText = AnimText{translateX:10,translateY:20};
 var backgroundbuttom = ImageView {
                 translateY : 280+21
@@ -120,6 +121,8 @@ override function setEmitter() {
    if(ball != null){
        var ox = ball.translateX + Config.BALL_DIAMETER/2;
        var oy = ball.translateY + Config.BALL_DIAMETER/2;
+//       arrow.translateX = Main.model.curx;
+//       arrow.translateY = Math.sqrt(Util.square(Config.BALL_DIAMETER/2)-Util.square(Main.model.curx - ox)) + oy;
        pointer.visible = true;
        pointer.topx = Main.model.curx;
        pointer.topy = Math.sqrt(Util.square(Config.BALL_DIAMETER/2)-Util.square(Main.model.curx - ox)) + oy;
@@ -130,7 +133,17 @@ override function setEmitter() {
        pointer.genPoints();
        pointer.color = Main.model.currentbullet.imageIndex;
    }else{
-       pointer.visible = false;
+       pointer.visible = true;
+       pointer.topx = Main.model.curx;
+       pointer.topy = 0;
+       pointer.botm_left_x = Util.getCoordxByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_lefx_y = Util.getCoordyByDegree(eox,eoy, deg+10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_x = Util.getCoordxByDegree(eox,eoy, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.botm_right_y = Util.getCoordyByDegree(eox,eoy, deg-10, Config.EMITTER_DIAMETER/2);
+       pointer.genPoints();
+       pointer.color = Main.model.currentbullet.imageIndex;
+//       arrow.translateX = Main.model.curx;
+//       arrow.translateY = 0;
    }
 //   var bx : Float = Util.getCoordx(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
 //   var by : Float = Util.getCoordy(Config.EMITTER_X,Config.EMITTER_Y,curx,cury, Config.EMITTER_DIAMETER/2-15);
@@ -177,6 +190,7 @@ override public function ready():Void{
     Main.model.setScoreUpdator(popScore,addScore);
     Main.model.detectThread = detector;
     Main.mainscene.content = totlecontent;
+//    arrow.start();
 }
 override public function start(){
     detector.play();

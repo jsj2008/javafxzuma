@@ -30,8 +30,8 @@ import javafx.scene.paint.Paint;
 
 public class Arrow extends CustomNode{
 public var minw : Integer = 10;
-public var maxw : Integer = 20;
-public var maxh : Integer= 200;
+public var maxw : Integer = 30;
+public var maxh : Integer= 600;
 public var imageUrl : String = "{__DIR__}images/ball/arrow_blue_up.png";
 public var arrows : HorizontalImagePlayer[] = [];
 var h = maxh/10;
@@ -47,17 +47,17 @@ var colors : Color[] = [Color.BLUE,
                         Color.RED,
                         Color.WHITE,
                         Color.YELLOW];
-var p = Polygon {
-    points: [ -5.0, 0.0, 5.0, 0.0, -10.0, 100.0, 10.0, 100.0 ];
-    fill : bind color0;
-}
+//var p = Polygon {
+//    points: [ -5.0, 0.0, 5.0, 0.0, -10.0, 100.0, 10.0, 100.0 ];
+//    fill : bind color0;
+//}
 override public function create(): Node {
        var ty = 0;
        var w;
        var player;
        var array  : Number[];
        for(n in [0..10]){
-            if(n < 4){
+            if(n < 5){
                 continue;
             }
             w = maxw*h*(n+1)/maxh;
@@ -80,12 +80,12 @@ override public function create(): Node {
                     dur : 0.1s
                     };
             insert player into arrows;
-//            insert player into group.content;
+            insert player into group.content;
             ty = ty + h;
        };
 //       point = array;
 //       println(point);
-       insert p into group.content;
+//       insert p into group.content;
        return group;
 }
 public function start(){
