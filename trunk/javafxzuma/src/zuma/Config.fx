@@ -7,7 +7,7 @@
 package zuma;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public def EMITTER_RANGE = 500;
