@@ -9,7 +9,7 @@ package zuma;
 import javafx.scene.Group;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class ExplodedBall {

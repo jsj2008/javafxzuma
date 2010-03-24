@@ -7,7 +7,7 @@
 package zuma.components;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 mixin public class Schedulable {

@@ -11,7 +11,7 @@ import zuma.components.HorizontalImagePlayer;
 import javafx.scene.Node;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class PowerBullet extends BulletBall{

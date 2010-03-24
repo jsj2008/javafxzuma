@@ -28,7 +28,7 @@ import zuma.Resources;
 import java.util.ArrayList;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class ScrollBall extends GameBall{

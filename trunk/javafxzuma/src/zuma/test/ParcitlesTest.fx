@@ -22,7 +22,7 @@ import zuma.util.Util;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 var x : Number;
 var y : Number;

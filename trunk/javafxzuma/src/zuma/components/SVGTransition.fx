@@ -16,7 +16,7 @@ import javafx.util.Math;
 
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 
 public class SVGTransition extends Schedulable{

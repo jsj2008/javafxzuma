@@ -34,7 +34,7 @@ import javafx.util.Math;
 import zuma.Main;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
  var S = 1.0;
 def arrayofarray = [[1,2],[2,3]];

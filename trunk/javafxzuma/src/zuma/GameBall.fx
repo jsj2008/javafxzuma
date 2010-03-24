@@ -11,7 +11,7 @@ import javafx.scene.CustomNode;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 public def RUNNING_STATE = 0;
 public def PAUSED_STATE = 1;

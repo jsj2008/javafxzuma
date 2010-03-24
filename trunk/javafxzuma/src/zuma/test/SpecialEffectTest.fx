@@ -24,7 +24,7 @@ import javafx.scene.input.KeyEvent;
 import zuma.Main;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 def specialimageview = ImageView {
         fitWidth : Config.BALL_DIAMETER

@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class AnimText  extends CustomNode {

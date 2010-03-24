@@ -15,7 +15,7 @@ import zuma.components.Progress;
 import javafx.scene.Group;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 abstract public class Game extends UI{

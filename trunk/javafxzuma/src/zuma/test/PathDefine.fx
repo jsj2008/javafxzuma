@@ -7,7 +7,7 @@
 package zuma.test;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 public var xyarray = [[343.68066,474.87497],
 [343.68066,474.87497],

@@ -29,7 +29,7 @@ import javafx.animation.KeyFrame;
 
 import zuma.Main;
 /**
- * @author tzp
+ * @author perkin tang
  */
 var cy  = Circle {
                 centerX: 0  centerY: 0

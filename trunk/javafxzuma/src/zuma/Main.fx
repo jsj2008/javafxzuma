@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 /*

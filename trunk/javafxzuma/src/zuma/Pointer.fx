@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Pointer extends CustomNode{

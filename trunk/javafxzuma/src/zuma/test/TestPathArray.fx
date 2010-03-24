@@ -23,7 +23,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 var cy  = Circle {
                 centerX: 0  centerY: 0

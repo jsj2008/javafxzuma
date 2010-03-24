@@ -17,7 +17,7 @@ import javafx.animation.transition.TranslateTransition;
 import zuma.util.Util;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Emitter extends CustomNode{

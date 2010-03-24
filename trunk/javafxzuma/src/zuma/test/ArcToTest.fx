@@ -7,7 +7,7 @@
 package zuma.test;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class ArcToTest {

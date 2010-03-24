@@ -18,7 +18,6 @@ import javafx.scene.image.Image;
 
 import zuma.components.HorizontalImagePlayer;
 
-import javafx.scene.shape.Polygon;
 
 import javafx.scene.paint.Color;
 

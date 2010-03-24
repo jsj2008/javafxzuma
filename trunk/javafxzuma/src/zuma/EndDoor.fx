@@ -15,7 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class EndDoor extends CustomNode{

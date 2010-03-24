@@ -21,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 import zuma.components.ParabolaTransition;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 var ty = 0;
 var tx = 0;

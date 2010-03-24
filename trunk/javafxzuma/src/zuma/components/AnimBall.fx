@@ -15,7 +15,7 @@ import zuma.Config;
 import javafx.util.Math;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class AnimBall extends Ball,Schedulable{

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import zuma.PowerBullet;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
  var bullet = PowerBullet{powerIndex:2,translateX:200,translateY:200,vis:true};
 Stage {

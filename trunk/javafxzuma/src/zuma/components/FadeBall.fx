@@ -12,7 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class FadeBall extends Ball,Schedulable{
