@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import zuma.Config;
 /**
- * @author javatest
+ * @author perkin tang
  */
 var player : HorizontalImagePlayer = HorizontalImagePlayer{
         startFrom: 0

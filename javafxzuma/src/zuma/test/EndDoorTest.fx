@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 import zuma.Main;
 /**
- * @author javatest
+ * @author perkin tang
  */
 var door = EndDoor{translateX : 100, translateY : 100};
 var backgroundview = ImageView {

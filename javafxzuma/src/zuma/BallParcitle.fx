@@ -20,7 +20,7 @@ import javafx.scene.Node;
 import zuma.util.Util;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class BallParcitle extends CustomNode{

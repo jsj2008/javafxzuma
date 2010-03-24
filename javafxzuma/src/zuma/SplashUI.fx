@@ -10,7 +10,7 @@ package zuma;
 import javafx.scene.Node;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class SplashUI extends UI{

@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 def pool : ExecutorService = Executors.newFixedThreadPool(10);
 def timer : Timer = Timer{};

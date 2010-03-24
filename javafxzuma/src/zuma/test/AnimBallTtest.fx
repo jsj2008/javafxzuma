@@ -42,7 +42,7 @@ import zuma.components.SVGTransition;
 import zuma.Main;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 def path = [
         MoveTo       {         x:  400         y: 300 },

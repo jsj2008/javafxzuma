@@ -11,7 +11,7 @@ import javafx.scene.CustomNode;
 import javafx.scene.image.Image;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public abstract class Ball extends CustomNode {

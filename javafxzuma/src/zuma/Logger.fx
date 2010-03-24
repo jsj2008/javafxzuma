@@ -7,7 +7,7 @@
 package zuma;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 def debug = Config.DEBUG;
 public function log(s){

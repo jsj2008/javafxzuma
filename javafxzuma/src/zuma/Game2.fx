@@ -19,7 +19,7 @@ import java.lang.Void;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Game2 extends Game{

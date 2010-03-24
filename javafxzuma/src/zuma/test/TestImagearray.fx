@@ -36,7 +36,7 @@ import java.lang.Throwable;
 
 import zuma.Main;
 /**
- * @author javatest
+ * @author perkin tang
  */
 def eh : Thread.UncaughtExceptionHandler = Thread.UncaughtExceptionHandler{
                         var defaultUncaughtExceptionHandler;

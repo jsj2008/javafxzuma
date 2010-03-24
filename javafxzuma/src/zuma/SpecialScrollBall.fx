@@ -14,7 +14,7 @@ import zuma.util.Util;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 public var SPECIAL_BOM = 0;
 public var SPECIAL_BACK = 1;

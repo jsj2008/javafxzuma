@@ -22,7 +22,7 @@ import javafx.animation.transition.ScaleTransition;
 import zuma.components.HorizontalImagePlayer;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Bonus extends CustomNode{

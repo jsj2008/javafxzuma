@@ -19,7 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Progress extends CustomNode{

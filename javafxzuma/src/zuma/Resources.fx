@@ -14,7 +14,7 @@ import javafx.scene.transform.Transform;
 
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 public def emitterImage = Image {
                             width : Config.EMITTER_DIAMETER

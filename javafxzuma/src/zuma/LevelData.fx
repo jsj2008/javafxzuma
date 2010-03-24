@@ -9,7 +9,7 @@ package zuma;
 import javafx.scene.image.Image;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 public class LevelData{
     public var EMITTER_X = 320;

@@ -19,7 +19,7 @@ import javafx.util.Math;
 import zuma.components.AnimText;
 import zuma.util.Util;
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class Game1 extends Game{

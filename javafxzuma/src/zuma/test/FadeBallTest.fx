@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 def ball = FadeBall{
                         image : Resources.bomImage[0],

@@ -11,7 +11,7 @@ import zuma.MapLoader;
 import java.io.FileWriter;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 var list = MapLoader.getMap("/zuma/svg/mobile/map2");

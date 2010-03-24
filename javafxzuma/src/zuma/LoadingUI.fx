@@ -9,7 +9,7 @@ package zuma;
 import javafx.scene.image.ImageView;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class LoadingUI extends UI{

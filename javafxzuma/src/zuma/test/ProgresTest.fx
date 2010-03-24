@@ -18,7 +18,7 @@ import zuma.components.Progress;
 import zuma.Resources;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 var progress = Progress{

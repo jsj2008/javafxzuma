@@ -35,7 +35,7 @@ import zuma.Config;
 import java.io.FileWriter;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 var content;
 def track = SVGPath {

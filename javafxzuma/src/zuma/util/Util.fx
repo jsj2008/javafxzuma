@@ -10,7 +10,7 @@ import javafx.util.Math;
 
 def RANDOM = new java.util.Random();
 /**
- * @author javatest
+ * @author perkin tang
  */
 public function mergeSeq(seq: java.lang.Object[],to : java.lang.Object[]) : java.lang.Object[]{
     var tmp : java.lang.Object[] = [];

@@ -21,7 +21,7 @@ import javafx.scene.Node;
 import javafx.util.Math;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 public class ImagesPlayer extends CustomNode{

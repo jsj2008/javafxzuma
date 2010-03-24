@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 def clip = ImageView{
             translateX : 0

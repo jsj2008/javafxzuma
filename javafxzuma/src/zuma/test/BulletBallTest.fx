@@ -16,7 +16,7 @@ import zuma.ScrollBall;
 import javafx.scene.shape.Circle;
 
 /**
- * @author tzp
+ * @author perkin tang
  */
 def ball = BulletBall{vis : true};
 def sball = ScrollBall{translateX : 100,translateY : 100};

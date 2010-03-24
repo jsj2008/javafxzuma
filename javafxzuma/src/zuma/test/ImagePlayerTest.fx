@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import zuma.Resources;
 import zuma.components.ImagesPlayer;
 /**
- * @author javatest
+ * @author perkin tang
  */
 
 var player = ImagesPlayer{images: Resources.powerlightningImage,rate : 1 ,opacity:1.0};

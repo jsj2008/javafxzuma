@@ -16,7 +16,7 @@ import zuma.components.AnimText;
 
 import zuma.Main;
 /**
- * @author javatest
+ * @author perkin tang
  */
 var text = AnimText{translateX:200,translateY:200};
 var counter = 1;

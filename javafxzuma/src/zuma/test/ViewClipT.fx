@@ -21,7 +21,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 /**
- * @author javatest
+ * @author perkin tang
  */
 var cy  = Circle {
                 centerX: Config.BALL_DIAMETER/2 centerY: Config.BALL_DIAMETER/2+(Config.BALL_DIAMETER*49)
